@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Module 3 — Editor–Author Relationship</title>
-
-<style>
+<!DOCTYPE html><html lang="en">
+<head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Module 3 — Editor–Author Relationship | Litdom Editor Academy</title><style>
 
 :root {
   --obsidian: #0B0B0F;
@@ -16,10 +10,15 @@
   --charcoal: #17171C;
   --muted: #AAA595;
   --border: #8C7625;
+  --success: #F4D58D;
 }
 
 * {
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -35,7 +34,9 @@ body {
   margin: auto;
 }
 
-/* HEADER */
+/* =========================
+   HEADER
+========================= */
 
 header {
   padding: 28px 0 22px;
@@ -55,7 +56,9 @@ header {
   margin-top: 7px;
 }
 
-/* HERO */
+/* =========================
+   HERO
+========================= */
 
 .hero {
   padding: 55px 0 30px;
@@ -83,19 +86,22 @@ h1 {
 
 .hero-text {
   color: var(--muted);
-  max-width: 700px;
+  max-width: 720px;
   font-size: 16px;
 }
 
-/* PROGRESS */
+/* =========================
+   MODULE PROGRESS
+========================= */
 
 .progress-wrapper {
-  margin: 15px 0 45px;
+  margin: 15px 0 55px;
 }
 
 .progress-top {
   display: flex;
   justify-content: space-between;
+  gap: 20px;
   color: var(--muted);
   font-size: 12px;
   margin-bottom: 8px;
@@ -109,19 +115,22 @@ h1 {
 }
 
 .progress-fill {
-  width: 40%;
+  width: 0%;
   height: 100%;
   background: linear-gradient(
     90deg,
     var(--gold),
     var(--champagne)
   );
+  transition: width .4s ease;
 }
 
-/* SECTIONS */
+/* =========================
+   SECTIONS
+========================= */
 
 .lesson-section {
-  margin-bottom: 55px;
+  margin-bottom: 70px;
 }
 
 .section-label {
@@ -141,7 +150,9 @@ h1 {
   max-width: 720px;
 }
 
-/* CARDS */
+/* =========================
+   CARDS
+========================= */
 
 .card-grid {
   display: grid;
@@ -173,9 +184,13 @@ h1 {
   margin: 0;
 }
 
-/* PRESENTATION */
+/* =========================
+   PRESENTATION
+========================= */
 
 .presentation {
+  display: grid;
+  gap: 18px;
   margin-top: 30px;
 }
 
@@ -190,12 +205,7 @@ h1 {
 
   border: 1px solid rgba(212,175,55,.35);
   border-radius: 20px;
-  padding: 42px 30px;
-  min-height: 390px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  padding: 35px 30px;
 }
 
 .slide-number {
@@ -206,7 +216,7 @@ h1 {
 }
 
 .slide h3 {
-  font-size: 35px;
+  font-size: 30px;
   margin: 0 0 18px;
 }
 
@@ -217,7 +227,7 @@ h1 {
 
 .quote {
   font-family: Georgia, serif;
-  font-size: 24px;
+  font-size: 23px;
   color: var(--champagne);
   border-left: 2px solid var(--gold);
   padding-left: 18px;
@@ -239,7 +249,9 @@ h1 {
   border-radius: 7px;
 }
 
-/* SCENARIO */
+/* =========================
+   SCENARIO
+========================= */
 
 .scenario {
   margin-top: 28px;
@@ -268,22 +280,9 @@ h1 {
   color: var(--champagne);
 }
 
-/* CHOICES */
-
-.choice {
-  background: var(--charcoal);
-  border: 1px solid rgba(212,175,55,.25);
-  border-radius: 12px;
-  padding: 17px;
-  margin: 12px 0;
-  color: var(--muted);
-}
-
-.choice strong {
-  color: var(--champagne);
-}
-
-/* PRACTICAL */
+/* =========================
+   PRACTICAL
+========================= */
 
 .practice-grid {
   display: grid;
@@ -315,11 +314,20 @@ h1 {
   color: var(--muted);
 }
 
-/* TEST */
+/* =========================
+   TEST
+========================= */
+
+.test-box {
+  background: var(--charcoal);
+  border: 1px solid rgba(212,175,55,.35);
+  border-radius: 20px;
+  padding: 30px;
+}
 
 .question {
-  background: var(--charcoal);
-  border: 1px solid rgba(212,175,55,.25);
+  background: var(--obsidian);
+  border: 1px solid rgba(212,175,55,.20);
   border-radius: 16px;
   padding: 22px;
   margin: 18px 0;
@@ -339,15 +347,29 @@ h1 {
 
 .option {
   display: block;
-  padding: 10px 0;
+  padding: 11px 0;
   color: var(--muted);
+  cursor: pointer;
+}
+
+.option:hover {
+  color: var(--ivory);
 }
 
 input {
   accent-color: var(--gold);
+  margin-right: 8px;
 }
 
-/* BUTTONS */
+.test-message {
+  margin-top: 18px;
+  font-weight: bold;
+  min-height: 25px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
 
 .button {
   display: inline-block;
@@ -357,11 +379,16 @@ input {
   padding: 13px 20px;
   font-weight: bold;
   cursor: pointer;
+  font-size: 14px;
 }
 
 .primary {
   background: var(--gold);
   color: var(--obsidian);
+}
+
+.primary:hover {
+  opacity: .9;
 }
 
 .secondary {
@@ -370,9 +397,13 @@ input {
   color: var(--champagne);
 }
 
-/* COMPLETION */
+/* =========================
+   COMPLETION
+========================= */
 
 .completion {
+  display: none;
+
   background:
     radial-gradient(
       circle at center,
@@ -385,7 +416,7 @@ input {
   border-radius: 20px;
   padding: 45px 25px;
   text-align: center;
-  margin: 50px 0;
+  margin: 60px 0 40px;
 }
 
 .completion-icon {
@@ -401,6 +432,14 @@ input {
   color: var(--muted);
 }
 
+.completion.show {
+  display: block;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
 .navigation {
   display: flex;
   justify-content: space-between;
@@ -409,7 +448,9 @@ input {
   border-top: 1px solid rgba(212,175,55,.2);
 }
 
-/* MOBILE */
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 700px) {
 
@@ -422,12 +463,11 @@ input {
   }
 
   .slide {
-    min-height: 430px;
-    padding: 30px 22px;
+    padding: 28px 22px;
   }
 
   .slide h3 {
-    font-size: 29px;
+    font-size: 27px;
   }
 
   .quote {
@@ -443,1288 +483,694 @@ input {
     text-align: center;
   }
 
+  .test-box {
+    padding: 20px;
+  }
+
 }
 
-</style>
-</head>
-
-
-<body>
-<main>
-
-<div class="container">
-
-
-<header>
-
-  <div class="brand">
+</style></head><body><main><div class="container"><!-- =========================
+     HEADER
+========================= --><header>  <div class="brand">
     Litdom Editor Academy
-  </div>
-
-  <div class="lesson-number">
+  </div>  <div class="lesson-number">
     Lesson 01 / Fundamentals of Editing
-  </div>
-
-</header>
-
-
-<section class="hero">
-
-  <div class="eyebrow">
+  </div></header><!-- =========================
+     HERO
+========================= --><section class="hero">  <div class="eyebrow">
     Module 03
-  </div>
-
-  <h1>
+  </div>  <h1>
     Editor–Author Relationship
-  </h1>
-
-  <p class="hero-text">
+  </h1>  <p class="hero-text">
     Great editing is built on more than technical skill.
     It requires communication, trust, respect, professional
     boundaries, and a shared commitment to making the
     manuscript stronger.
-  </p>
-
-</section>
-
-
-<div class="progress-wrapper">
-
-  <div class="progress-top">
-    <span>Module Progress</span>
-    <span id="progressText">3 / 5</span>
-  </div>
-
-  <div class="progress-bar">
-    <div class="progress-fill" id="progressFill"></div>
-  </div>
-
-</div>
-
-
-<!-- SECTION 1 -->
-<section id="section1">
-
-<section class="lesson-section">
-
-  <div class="section-label">
+  </p></section><!-- =========================
+     PROGRESS
+========================= --><div class="progress-wrapper">  <div class="progress-top">
+    <span>Module 3 Progress</span>
+    <span id="progressText">In Progress</span>
+  </div>  <div class="progress-bar">
+    <div
+      class="progress-fill"
+      id="progressFill">
+    </div>
+  </div></div><!-- =========================
+     PART 01
+========================= --><section class="lesson-section">  <div class="section-label">
     Part 01
-  </div>
-
-  <h2 class="section-title">
+  </div>  <h2 class="section-title">
     Two People. One Manuscript.
-  </h2>
-
-  <p class="section-intro">
+  </h2>  <p class="section-intro">
     The author creates the manuscript. The editor helps
     strengthen it. Their responsibilities are different,
     but their work should move toward the same goal.
+  </p>  <div class="card-grid"><article class="card">
+
+  <div class="card-icon">✍🏽</div>
+
+  <h3>The Author</h3>
+
+  <p>
+    Brings the story, ideas, characters, voice,
+    creative vision, and purpose behind the manuscript.
   </p>
 
+</article>
 
-  <div class="card-grid">
+<article class="card">
 
-    <article class="card">
+  <div class="card-icon">✦</div>
 
-      <div class="card-icon">✍🏽</div>
+  <h3>The Editor</h3>
 
-      <h3>The Author</h3>
+  <p>
+    Brings objectivity, editorial knowledge, technical
+    skill, and a reader-focused perspective.
+  </p>
 
-      <p>
-        Brings the story, ideas, characters, voice,
-        creative vision, and purpose behind the manuscript.
-      </p>
+</article>
 
-    </article>
+<article class="card">
 
+  <div class="card-icon">◆</div>
 
-    <article class="card">
+  <h3>The Shared Goal</h3>
 
-      <div class="card-icon">✦</div>
+  <p>
+    To help the manuscript communicate its ideas clearly
+    and provide the strongest possible reading experience.
+  </p>
 
-      <h3>The Editor</h3>
+</article>
 
-      <p>
-        Brings objectivity, editorial knowledge, technical
-        skill, and a reader-focused perspective.
-      </p>
-
-    </article>
-
-
-    <article class="card">
-
-      <div class="card-icon">◆</div>
-
-      <h3>The Shared Goal</h3>
-
-      <p>
-        To help the manuscript communicate its ideas clearly
-        and provide the strongest possible reading experience.
-      </p>
-
-    </article>
-
-  </div>
-
-</section>
-
-
-<!-- SECTION 2 -->
-<section id="section2">
-
-<section class="lesson-section">
-
-  <div class="section-label">
+  </div></section><!-- =========================
+     PART 02
+========================= --><section class="lesson-section">  <div class="section-label">
     Part 02
-  </div>
-
-  <h2 class="section-title">
-    Presentation
-  </h2>
-
-  <p class="section-intro">
+  </div>  <h2 class="section-title">
+    The Editor–Author Relationship
+  </h2>  <p class="section-intro">
     Working with authors requires both editorial skill
     and emotional intelligence. Study each principle below.
-  </p>
+  </p>  <div class="presentation"><article class="slide">
 
-
-  <div class="presentation">
-
-
-    <article class="slide">
-
-      <div class="slide-number">
-        SLIDE 01
-      </div>
-
-      <h3>
-        Two People, One Manuscript
-      </h3>
-
-      <p>
-        The editor and author may have different roles,
-        but they are working toward the same result:
-        a stronger manuscript.
-      </p>
-
-      <div class="quote">
-        “The manuscript is the shared ground.”
-      </div>
-
-    </article>
-
-
-    <article class="slide">
-
-      <div class="slide-number">
-        SLIDE 02
-      </div>
-
-      <h3>
-        Different Roles. Shared Goal.
-      </h3>
-
-      <ul class="slide-list">
-        <li>The author protects the creative vision.</li>
-        <li>The editor protects the quality of the manuscript.</li>
-        <li>Both work toward a better reading experience.</li>
-      </ul>
-
-    </article>
-
-
-    <article class="slide">
-
-      <div class="slide-number">
-        SLIDE 03
-      </div>
-
-      <h3>
-        What the Author Brings
-      </h3>
-
-      <p>
-        An author brings something an editor cannot
-        manufacture: the author's creative vision.
-      </p>
-
-      <ul class="slide-list">
-        <li>Story and ideas</li>
-        <li>Character intentions</li>
-        <li>Personal voice and style</li>
-        <li>Creative purpose</li>
-      </ul>
-
-    </article>
-
-
-    <article class="slide">
-
-      <div class="slide-number">
-        SLIDE 04
-      </div>
-
-      <h3>
-        What the Editor Brings
-      </h3>
-
-      <p>
-        The editor provides an outside perspective and
-        professional judgment.
-      </p>
-
-      <ul class="slide-list">
-        <li>Objectivity</li>
-        <li>Technical knowledge</li>
-        <li>Reader awareness</li>
-        <li>Editorial experience</li>
-      </ul>
-
-    </article>
-
-
-    <article class="slide">
-
-      <div class="slide-number">
-        SLIDE 05
-      </div>
-
-      <h3>
-        Trust, Communication &amp; Respect
-      </h3>
-
-      <p>
-        Good editing requires communication. An editor should
-        be able to explain recommendations clearly without
-        belittling the author.
-      </p>
-
-      <div class="quote">
-        “Professional feedback improves the manuscript
-        without attacking the person.”
-      </div>
-
-    </article>
-
-
-    <article class="slide">
-
-      <div class="slide-number">
-        SLIDE 06
-      </div>
-
-      <h3>
-        When You Disagree
-      </h3>
-
-      <ul class="slide-list">
-        <li>Explain the editorial concern.</li>
-        <li>Listen to the author's reasoning.</li>
-        <li>Consider alternatives.</li>
-        <li>Return the discussion to the manuscript.</li>
-      </ul>
-
-    </article>
-
-
-    <article class="slide">
-
-      <div class="slide-number">
-        SLIDE 07
-      </div>
-
-      <h3>
-        Professional Boundaries
-      </h3>
-
-      <ul class="slide-list">
-        <li>Respect deadlines and agreed responsibilities.</li>
-        <li>Keep manuscript information confidential.</li>
-        <li>Do not insult or humiliate the author.</li>
-        <li>Do not impose your personal writing style.</li>
-      </ul>
-
-    </article>
-
-
-    <article class="slide">
-
-      <div class="slide-number">
-        SLIDE 08
-      </div>
-
-      <h3>
-        The Golden Rule
-      </h3>
-
-      <div class="quote">
-        “Edit the manuscript, not the author.”
-      </div>
-
-      <p>
-        Your responsibility is to improve the work while
-        respecting the person who created it.
-      </p>
-
-    </article>
-
+  <div class="slide-number">
+    LESSON 01
   </div>
-
-
-  <p style="text-align:center; margin-top:25px;">
-    <span class="button primary">
-      ✓ I've Completed the Presentation
-    </span>
-  </p>
-
-</section>
-
-
-<!-- SECTION 3 -->
-<section id="section3">
-
-<section class="lesson-section">
-
-  <div class="section-label">
-    Part 03
-  </div>
-
-  <h2 class="section-title">
-    When Editor and Author Disagree
-  </h2>
-
-  <p class="section-intro">
-    Disagreement is a normal part of editing. What matters
-    is how the disagreement is handled.
-  </p>
-
-
-  <div class="scenario">
-
-    <div class="dialogue editor">
-
-      <strong>Editor:</strong>
-
-      <br>
-
-      “I think this scene could be shortened because
-      the middle section slows the pacing.”
-
-    </div>
-
-
-    <div class="dialogue author">
-
-      <strong>Author:</strong>
-
-      <br>
-
-      “I understand, but that section is important to
-      the character's emotional development.”
-
-    </div>
-
-  </div>
-
 
   <h3>
-    What should the editor do?
+    Two People, One Manuscript
   </h3>
 
-
-  <div class="choice">
-
-    <strong>Option A</strong>
-
-    <br>
-
-    Tell the author that the editor knows best
-    and remove the section.
-
-  </div>
-
-
-  <div class="choice">
-
-    <strong>Option B</strong>
-
-    <br>
-
-    Discuss the concern, listen to the author's reasoning,
-    and explore whether the scene can be strengthened
-    without losing its purpose.
-
-  </div>
-
-
-  <div class="choice">
-
-    <strong>Option C</strong>
-
-    <br>
-
-    Stop communicating with the author and simply make
-    whatever changes seem necessary.
-
-  </div>
-
-</section>
-
-
-<!-- SECTION 4 -->
-
-<section class="lesson-section">
-
-  <div class="section-label">
-    Part 04
-  </div>
-
-  <h2 class="section-title">
-    Professional or Unprofessional?
-  </h2>
-
-  <p class="section-intro">
-    A good editor knows that technical skill alone is not
-    enough. Professional conduct matters too.
+  <p>
+    The editor and author may have different roles,
+    but they are working toward the same result:
+    a stronger manuscript.
   </p>
 
-
-  <div class="practice-grid">
-
-    <article class="practice-card professional">
-
-      <h3>
-        ✓ Professional
-      </h3>
-
-      <p>
-        Explain why you are recommending a change.
-      </p>
-
-    </article>
-
-
-    <article class="practice-card unprofessional">
-
-      <h3>
-        ✕ Unprofessional
-      </h3>
-
-      <p>
-        Tell the author their writing is terrible.
-      </p>
-
-    </article>
-
-
-    <article class="practice-card professional">
-
-      <h3>
-        ✓ Professional
-      </h3>
-
-      <p>
-        Respect the author's creative voice while identifying
-        genuine problems in the manuscript.
-      </p>
-
-    </article>
-
-
-    <article class="practice-card unprofessional">
-
-      <h3>
-        ✕ Unprofessional
-      </h3>
-
-      <p>
-        Rewrite every sentence simply because you prefer
-        your own writing style.
-      </p>
-
-    </article>
-
-
-    <article class="practice-card professional">
-
-      <h3>
-        ✓ Professional
-      </h3>
-
-      <p>
-        Keep communication focused on the manuscript
-        and agreed editorial goals.
-      </p>
-
-    </article>
-
-
-    <article class="practice-card unprofessional">
-
-      <h3>
-        ✕ Unprofessional
-      </h3>
-
-      <p>
-        Attack or humiliate the author when they disagree
-        with your recommendation.
-      </p>
-
-    </article>
-
+  <div class="quote">
+    “The manuscript is the shared ground.”
   </div>
 
+</article>
 
-  <div class="card" style="margin-top:25px;">
 
-    <h3>
-      Remember
-    </h3>
+<article class="slide">
 
-    <p>
-      A professional editor does not need to agree with
-      everything an author writes. They need to communicate
-      their concerns respectfully and provide sound
-      editorial reasoning.
-    </p>
-
+  <div class="slide-number">
+    LESSON 02
   </div>
 
-</section>
+  <h3>
+    Different Roles. Shared Goal.
+  </h3>
+
+  <ul class="slide-list">
+
+    <li>
+      The author protects the creative vision.
+    </li>
+
+    <li>
+      The editor protects the quality of the manuscript.
+    </li>
+
+    <li>
+      Both work toward a better reading experience.
+    </li>
+
+  </ul>
+
+</article>
 
 
-<!-- SECTION 5 -->
+<article class="slide">
 
-<section class="lesson-section">
-
-  <div class="section-label">
-    Part 05
+  <div class="slide-number">
+    LESSON 03
   </div>
 
-  <h2 class="section-title">
-    Module 3 Mini Test
-  </h2>
-
-  <p class="section-intro">
-    Answer all three questions. You need at least 2/3
-    to pass this module.
-  </p>
-
-
-  <div class="question">
-
-    <div class="question-number">
-      Question 01
-    </div>
-
-    <h3>
-      What is one of the editor's main responsibilities
-      in the editor–author relationship?
-    </h3>
-
-    <label class="option">
-      <input type="radio" name="q1">
-      To control every creative decision.
-    </label>
-
-    <label class="option">
-      <input type="radio" name="q1">
-      To provide professional editorial guidance.
-    </label>
-
-    <label class="option">
-      <input type="radio" name="q1">
-      To replace the author's voice.
-    </label>
-
-  </div>
-
-
-  <div class="question">
-
-    <div class="question-number">
-      Question 02
-    </div>
-
-    <h3>
-      What should an editor do when an author disagrees
-      with an editorial recommendation?
-    </h3>
-
-    <label class="option">
-      <input type="radio" name="q2">
-      Ignore the author.
-    </label>
-
-    <label class="option">
-      <input type="radio" name="q2">
-      Insist that the editor is always right.
-    </label>
-
-    <label class="option">
-      <input type="radio" name="q2">
-      Discuss the concern and consider the author's reasoning.
-    </label>
-
-  </div>
-
-
-  <div class="question">
-
-    <div class="question-number">
-      Question 03
-    </div>
-
-    <h3>
-      Which principle best describes professional editing?
-    </h3>
-
-    <label class="option">
-      <input type="radio" name="q3">
-      Edit the manuscript, not the author.
-    </label>
-
-    <label class="option">
-      <input type="radio" name="q3">
-      Rewrite everything in your own style.
-    </label>
-
-    <label class="option">
-      <input type="radio" name="q3">
-      Avoid giving authors honest feedback.
-    </label>
-
-  </div>
-
-
-  <p style="margin-top:25px;">
-    <span class="button primary">
-      Submit Test
-    </span>
-  </p>
-
-</section>
-
-
-<!-- COMPLETION -->
-
-<section class="completion" id="completion">
-
-  <div class="completion-icon">
-    ✓
-  </div>
-
-  <h2>
-    Module Complete
-  </h2>
+  <h3>
+    What the Author Brings
+  </h3>
 
   <p>
-    You've successfully completed
-    <strong>Editor–Author Relationship</strong>.
+    An author brings something an editor cannot
+    manufacture: the author's creative vision.
   </p>
+
+  <ul class="slide-list">
+
+    <li>Story and ideas</li>
+    <li>Character intentions</li>
+    <li>Personal voice and style</li>
+    <li>Creative purpose</li>
+
+  </ul>
+
+</article>
+
+
+<article class="slide">
+
+  <div class="slide-number">
+    LESSON 04
+  </div>
+
+  <h3>
+    What the Editor Brings
+  </h3>
 
   <p>
-    Your next module is now unlocked.
+    The editor provides an outside perspective and
+    professional judgment.
   </p>
 
-  <a
-    href="lesson-04.html"
-    class="button primary">
-    Continue to Module 4 →
-  </a>
+  <ul class="slide-list">
 
-</section>
+    <li>Objectivity</li>
+    <li>Technical knowledge</li>
+    <li>Reader awareness</li>
+    <li>Editorial experience</li>
+
+  </ul>
+
+</article>
 
 
-<!-- NAVIGATION -->
+<article class="slide">
 
-<nav class="navigation">
+  <div class="slide-number">
+    LESSON 05
+  </div>
 
-  <a
-  href="lesson-02.html"
-  class="button secondary"
-  id="backButton">
-  ← Previous Module
-</a>
+  <h3>
+    Trust, Communication &amp; Respect
+  </h3>
 
-  <a
-  href="lesson-04.html"
-  class="button primary"
-  id="nextButton">
-  Next Module →
-</a>
+  <p>
+    Good editing requires communication. An editor should
+    be able to explain recommendations clearly without
+    belittling the author.
+  </p>
 
-</nav>
+  <div class="quote">
+    “Professional feedback improves the manuscript
+    without attacking the person.”
+  </div>
 
+</article>
+
+
+<article class="slide">
+
+  <div class="slide-number">
+    LESSON 06
+  </div>
+
+  <h3>
+    When You Disagree
+  </h3>
+
+  <ul class="slide-list">
+
+    <li>
+      Explain the editorial concern.
+    </li>
+
+    <li>
+      Listen to the author's reasoning.
+    </li>
+
+    <li>
+      Consider alternatives.
+    </li>
+
+    <li>
+      Return the discussion to the manuscript.
+    </li>
+
+  </ul>
+
+</article>
+
+
+<article class="slide">
+
+  <div class="slide-number">
+    LESSON 07
+  </div>
+
+  <h3>
+    Professional Boundaries
+  </h3>
+
+  <ul class="slide-list">
+
+    <li>
+      Respect deadlines and agreed responsibilities.
+    </li>
+
+    <li>
+      Keep manuscript information confidential.
+    </li>
+
+    <li>
+      Do not insult or humiliate the author.
+    </li>
+
+    <li>
+      Do not impose your personal writing style.
+    </li>
+
+  </ul>
+
+</article>
+
+
+<article class="slide">
+
+  <div class="slide-number">
+    LESSON 08
+  </div>
+
+  <h3>
+    The Golden Rule
+  </h3>
+
+  <div class="quote">
+    “Edit the manuscript, not the author.”
+  </div>
+
+  <p>
+    Your responsibility is to improve the work while
+    respecting the person who created it.
+  </p>
+
+</article>
+
+  </div></section><!-- =========================
+     PART 03
+========================= --><section class="lesson-section">  <div class="section-label">
+    Part 03
+  </div>  <h2 class="section-title">
+    When Editor and Author Disagree
+  </h2>  <p class="section-intro">
+    Disagreement is a normal part of editing. What matters
+    is how the disagreement is handled.
+  </p>  <div class="scenario"><div class="dialogue editor">
+
+  <strong>Editor:</strong>
+
+  <br>
+
+  “I think this scene could be shortened because
+  the middle section slows the pacing.”
 
 </div>
 
-</main>
-<script>
-/* =================================
+<div class="dialogue author">
+
+  <strong>Author:</strong>
+
+  <br>
+
+  “I understand, but that section is important to
+  the character's emotional development.”
+
+</div>
+
+  </div>  <h3>
+    What should the editor do?
+  </h3>  <div class="practice-grid"><article class="practice-card unprofessional">
+
+  <h3>
+    Option A
+  </h3>
+
+  <p>
+    Tell the author that the editor knows best
+    and remove the section.
+  </p>
+
+</article>
+
+
+<article class="practice-card professional">
+
+  <h3>
+    Option B — Correct Approach
+  </h3>
+
+  <p>
+    Discuss the concern, listen to the author's reasoning,
+    and explore whether the scene can be strengthened
+    without losing its purpose.
+  </p>
+
+</article>
+
+
+<article class="practice-card unprofessional">
+
+  <h3>
+    Option C
+  </h3>
+
+  <p>
+    Stop communicating with the author and simply make
+    whatever changes seem necessary.
+  </p>
+
+</article>
+
+  </div></section><!-- =========================
+     PART 04
+========================= --><section class="lesson-section">  <div class="section-label">
+    Part 04
+  </div>  <h2 class="section-title">
+    Professional or Unprofessional?
+  </h2>  <p class="section-intro">
+    A good editor knows that technical skill alone is not
+    enough. Professional conduct matters too.
+  </p>  <div class="practice-grid"><article class="practice-card professional">
+
+  <h3>
+    ✓ Professional
+  </h3>
+
+  <p>
+    Explain why you are recommending a change.
+  </p>
+
+</article>
+
+
+<article class="practice-card unprofessional">
+
+  <h3>
+    ✕ Unprofessional
+  </h3>
+
+  <p>
+    Tell the author their writing is terrible.
+  </p>
+
+</article>
+
+
+<article class="practice-card professional">
+
+  <h3>
+    ✓ Professional
+  </h3>
+
+  <p>
+    Respect the author's creative voice while identifying
+    genuine problems in the manuscript.
+  </p>
+
+</article>
+
+
+<article class="practice-card unprofessional">
+
+  <h3>
+    ✕ Unprofessional
+  </h3>
+
+  <p>
+    Rewrite every sentence simply because you prefer
+    your own writing style.
+  </p>
+
+</article>
+
+
+<article class="practice-card professional">
+
+  <h3>
+    ✓ Professional
+  </h3>
+
+  <p>
+    Keep communication focused on the manuscript
+    and agreed editorial goals.
+  </p>
+
+</article>
+
+
+<article class="practice-card unprofessional">
+
+  <h3>
+    ✕ Unprofessional
+  </h3>
+
+  <p>
+    Attack or humiliate the author when they disagree
+    with your recommendation.
+  </p>
+
+</article>
+
+  </div>  <div class="card" style="margin-top:25px;"><h3>
+  Remember
+</h3>
+
+<p>
+  A professional editor does not need to agree with
+  everything an author writes. They need to communicate
+  their concerns respectfully and provide sound
+  editorial reasoning.
+</p>
+
+  </div></section><!-- =========================
+     PART 05 — TEST
+========================= --><section class="lesson-section">  <div class="section-label">
+    Part 05
+  </div>  <h2 class="section-title">
+    Module 3 Mini Test
+  </h2>  <p class="section-intro">
+    Answer all three questions. You need at least
+    2 out of 3 correct answers to pass this module.
+  </p>  <div class="test-box"><!-- QUESTION 1 -->
+
+<div class="question">
+
+  <div class="question-number">
+    Question 01
+  </div>
+
+  <h3>
+    What is one of the editor's main responsibilities
+    in the editor–author relationship?
+  </h3>
+
+  <label class="option">
+    <input
+      type="radio"
+      name="q1"
+      value="a">
+    To control every creative decision.
+  </label>
+
+  <label class="option">
+    <input
+      type="radio"
+      name="q1"
+      value="b">
+    To provide professional editorial guidance.
+  </label>
+
+  <label class="option">
+    <input
+      type="radio"
+      name="q1"
+      value="c">
+    To replace the author's voice.
+  </label>
+
+</div>
+
+
+<!-- QUESTION 2 -->
+
+<div class="question">
+
+  <div class="question-number">
+    Question 02
+  </div>
+
+  <h3>
+    What should an editor do when an author disagrees
+    with an editorial recommendation?
+  </h3>
+
+  <label class="option">
+    <input
+      type="radio"
+      name="q2"
+      value="a">
+    Ignore the author.
+  </label>
+
+  <label class="option">
+    <input
+      type="radio"
+      name="q2"
+      value="b">
+    Insist that the editor is always right.
+  </label>
+
+  <label class="option">
+    <input
+      type="radio"
+      name="q2"
+      value="c">
+    Discuss the concern and consider the author's reasoning.
+  </label>
+
+</div>
+
+
+<!-- QUESTION 3 -->
+
+<div class="question">
+
+  <div class="question-number">
+    Question 03
+  </div>
+
+  <h3>
+    Which principle best describes professional editing?
+  </h3>
+
+  <label class="option">
+    <input
+      type="radio"
+      name="q3"
+      value="a">
+    Edit the manuscript, not the author.
+  </label>
+
+  <label class="option">
+    <input
+      type="radio"
+      name="q3"
+      value="b">
+    Rewrite everything in your own style.
+  </label>
+
+  <label class="option">
+    <input
+      type="radio"
+      name="q3"
+      value="c">
+    Avoid giving authors honest feedback.
+  </label>
+
+</div>
+
+
+<button
+  type="button"
+  class="button primary"
+  id="submitTest">
+  Submit Test
+</button>
+
+
+<div
+  class="test-message"
+  id="testMessage">
+</div>
+
+  </div></section><!-- =========================
+     COMPLETION
+========================= --><section
+  class="completion"
+  id="completion">  <div class="completion-icon">
+    ✓
+  </div>  <h2>
+    Module Complete
+  </h2>  <p>
+    Congratulations! You've successfully passed
+    <strong>Editor–Author Relationship</strong>.
+  </p>  <p>
+    Module 4 is now unlocked.
+  </p><a
+href="lesson-04.html"
+class="button primary">
+Continue to Module 4 →
+</a>
+
+</section><!-- =========================
+     NAVIGATION
+========================= --><nav class="navigation"><a
+href="lesson-02.html"
+class="button secondary">
+← Previous Module
+</a>
+
+<a
+href="lesson-04.html"
+class="button primary"
+id="nextModule">
+Module 4 →
+</a>
+
+</nav></div></main><script>
+
+/* ==========================================
    LITDOM EDITOR ACADEMY
-   MODULE 3 — EDITOR–AUTHOR RELATIONSHIP
-================================= */
+   MODULE 3 — FINAL SIMPLE SYSTEM
+========================================== */
 
-let currentSection = 1;
-const totalSections = 5;
 
-let presentationCompleted = false;
-let activityCompleted = false;
-let practicalCompleted = false;
-let testCompleted = false;
+/*
+   IMPORTANT:
 
-const progressFill =
-  document.getElementById("progressFill");
+   The previous broken version may already have
+   saved Module 3 as completed.
 
-const progressText =
-  document.getElementById("progressText");
+   This removes that FALSE completion when this
+   new version is opened.
 
-const backButton =
-  document.getElementById("backButton");
+   Once the learner genuinely passes the test,
+   the key will be saved again.
+*/
 
-const nextButton =
-  document.getElementById("nextButton");
+localStorage.removeItem(
+  "litdom_lesson_1_module_3_complete"
+);
 
-const completion =
-  document.getElementById("completion");
 
-const testResult =
-  document.getElementById("testResult");
+/* =========================
+   ELEMENTS
+========================= */
 
-
-/* ---------------------------------
-   SECTION PROGRESS
---------------------------------- */
-
-function updateProgress() {
-
-  const percentage =
-    ((currentSection - 1) /
-    (totalSections - 1)) * 100;
-
-  if (progressFill) {
-    progressFill.style.width =
-      percentage + "%";
-  }
-
-  if (progressText) {
-    progressText.textContent =
-      currentSection + " / " +
-      totalSections;
-  }
-}
-
-
-/* ---------------------------------
-   SHOW SECTION
---------------------------------- */
-
-function showSection(number) {
-
-  document
-    .querySelectorAll(".lesson-section")
-    .forEach(section => {
-      section.style.display = "none";
-    });
-
-  const selected =
-    document.getElementById(
-      "section" + number
-    );
-
-  if (selected) {
-    selected.style.display = "block";
-  }
-
-  currentSection = number;
-
-  if (backButton) {
-    backButton.style.display =
-      currentSection === 1
-        ? "none"
-        : "inline-flex";
-  }
-
-  if (nextButton) {
-    nextButton.style.display =
-      currentSection === totalSections
-        ? "none"
-        : "inline-flex";
-  }
-
-  updateProgress();
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-}
-
-
-/* ---------------------------------
-   NEXT SECTION
---------------------------------- */
-
-function nextSection() {
-
-  /* Section 1 — Introduction */
-
-  if (currentSection === 1) {
-    showSection(2);
-    return;
-  }
-
-
-  /* Section 2 — Presentation */
-
-  if (currentSection === 2) {
-
-    if (!presentationCompleted) {
-
-      alert(
-        "Please complete the presentation before continuing."
-      );
-
-      return;
-    }
-
-    showSection(3);
-    return;
-  }
-
-
-  /* Section 3 — Scenario Activity */
-
-  if (currentSection === 3) {
-
-    if (!activityCompleted) {
-
-      alert(
-        "Please complete the activity before continuing."
-      );
-
-      return;
-    }
-
-    showSection(4);
-    return;
-  }
-
-
-  /* Section 4 — Practical Activity */
-
-  if (currentSection === 4) {
-
-    if (!practicalCompleted) {
-
-      alert(
-        "Please complete the practical activity before continuing."
-      );
-
-      return;
-    }
-
-    showSection(5);
-    return;
-  }
-}
-
-
-/* ---------------------------------
-   PREVIOUS SECTION
---------------------------------- */
-
-function previousSection() {
-
-  if (currentSection > 1) {
-
-    showSection(
-      currentSection - 1
-    );
-
-  }
-}
-
-
-/* ---------------------------------
-   PRESENTATION
---------------------------------- */
-
-let currentSlide = 1;
-const totalSlides = 8;
-
-const slides =
-  document.querySelectorAll(".presentation-slide");
-
-const slideCounter =
-  document.getElementById("slideCounter");
-
-const previousSlideButton =
-  document.getElementById("previousSlide");
-
-const nextSlideButton =
-  document.getElementById("nextSlide");
-
-const presentationCompleteButton =
-  document.getElementById(
-    "presentationComplete"
-  );
-
-
-function showSlide(number) {
-
-  slides.forEach(slide => {
-    slide.style.display = "none";
-  });
-
-  const selectedSlide =
-    document.getElementById(
-      "slide" + number
-    );
-
-  if (selectedSlide) {
-    selectedSlide.style.display =
-      "block";
-  }
-
-  currentSlide = number;
-
-  if (slideCounter) {
-    slideCounter.textContent =
-      currentSlide + " / " +
-      totalSlides;
-  }
-
-  if (previousSlideButton) {
-
-    previousSlideButton.disabled =
-      currentSlide === 1;
-
-  }
-
-  if (nextSlideButton) {
-
-    nextSlideButton.disabled =
-      currentSlide === totalSlides;
-
-  }
-}
-
-
-function nextSlide() {
-
-  if (currentSlide < totalSlides) {
-
-    showSlide(
-      currentSlide + 1
-    );
-
-  }
-}
-
-
-function previousSlide() {
-
-  if (currentSlide > 1) {
-
-    showSlide(
-      currentSlide - 1
-    );
-
-  }
-}
-
-
-if (nextSlideButton) {
-
-  nextSlideButton.addEventListener(
-    "click",
-    nextSlide
-  );
-
-}
-
-
-if (previousSlideButton) {
-
-  previousSlideButton.addEventListener(
-    "click",
-    previousSlide
-  );
-
-}
-
-
-if (presentationCompleteButton) {
-
-  presentationCompleteButton.addEventListener(
-    "click",
-    () => {
-
-      if (currentSlide < totalSlides) {
-
-        alert(
-          "Please view all presentation slides first."
-        );
-
-        return;
-      }
-
-      presentationCompleted = true;
-
-      presentationCompleteButton.textContent =
-        "✓ Presentation Completed";
-
-      presentationCompleteButton.disabled =
-        true;
-
-    }
-  );
-
-}
-
-
-/* ---------------------------------
-   ACTIVITY CARDS
---------------------------------- */
-
-const activityCards =
-  document.querySelectorAll(
-    ".activity-card"
-  );
-
-let openedActivities =
-  new Set();
-
-
-function toggleActivity(card) {
-
-  card.classList.toggle("active");
-
-  const activityId =
-    card.dataset.activity ||
-    card.querySelector("h3")?.textContent ||
-    Math.random();
-
-  openedActivities.add(
-    activityId
-  );
-
-  if (openedActivities.size >= 3) {
-
-    activityCompleted = true;
-
-  }
-}
-
-
-/* ---------------------------------
-   PRACTICAL ACTIVITY
---------------------------------- */
-
-const practicalOptions =
-  document.querySelectorAll(
-    ".practical-option"
-  );
-
-
-practicalOptions.forEach(option => {
-
-  option.addEventListener(
-    "click",
-    () => {
-
-      practicalOptions.forEach(item => {
-        item.classList.remove("selected");
-      });
-
-      option.classList.add("selected");
-
-      practicalCompleted = true;
-
-    }
-  );
-
-});
-
-
-/* ---------------------------------
-   MINI TEST
---------------------------------- */
-
-function submitTest() {
-
-  let score = 0;
-
-  const answers = {
-
-    q1: "b",
-    q2: "c",
-    q3: "a"
-
-  };
-
-
-  Object.keys(answers).forEach(
-    question => {
-
-      const selected =
-        document.querySelector(
-          'input[name="' +
-          question +
-          '"]:checked'
-        );
-
-      if (
-        selected &&
-        selected.value ===
-        answers[question]
-      ) {
-
-        score++;
-
-      }
-
-    }
-  );
-
-
-  if (score >= 2) {
-
-    testCompleted = true;
-
-    if (testResult) {
-
-      testResult.textContent =
-        "Passed — " +
-        score +
-        "/3";
-
-      testResult.style.color =
-        "#F4D58D";
-
-    }
-
-    completeModule();
-
-  } else {
-
-    if (testResult) {
-
-      testResult.textContent =
-        "You scored " +
-        score +
-        "/3. You need at least 2/3 to pass.";
-
-      testResult.style.color =
-        "#AAA595";
-
-    }
-
-  }
-}
-
-
-/* ---------------------------------
-   COMPLETE MODULE
---------------------------------- */
-
-function completeModule() {
-
-  localStorage.setItem(
-    "litdom_lesson_1_module_3_complete",
-    "true"
-  );
-
-
-  if (completion) {
-
-    completion.style.display =
-      "block";
-
-  }
-
-
-  if (nextButton) {
-
-    nextButton.style.display =
-      "none";
-
-  }
-
-
-  if (backButton) {
-
-    backButton.style.display =
-      "none";
-
-  }
-
-
-  window.scrollTo({
-
-    top:
-      document.body.scrollHeight,
-
-    behavior:
-      "smooth"
-
-  });
-
-}
-
-
-/* ---------------------------------
-   NAVIGATION BUTTONS
---------------------------------- */
-
-if (nextButton) {
-
-  nextButton.addEventListener(
-    "click",
-    nextSection
-  );
-
-}
-
-
-if (backButton) {
-
-  backButton.addEventListener(
-    "click",
-    previousSection
-  );
-
-}
-
-
-/* ---------------------------------
-   INITIAL STATE
---------------------------------- */
-
-showSection(1);
-
-showSlide(1);
-
-
-/* ---------------------------------
-   IF ALREADY COMPLETED
---------------------------------- */
-
-if (
-  localStorage.getItem(
-    "litdom_lesson_1_module_3_complete"
-  ) === "true"
-) {
-
-  presentationCompleted = true;
-  activityCompleted = true;
-  practicalCompleted = true;
-  testCompleted = true;
-
-}
-</script>
-</body>
-</html>
+const submitTest =
+  documen
