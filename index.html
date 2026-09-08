@@ -650,5 +650,149 @@
     Learn the craft. Refine the words. Become the editor.
   </footer>
 
+<script>
+/* ================================
+   LITDOM EDITOR ACADEMY
+   HOMEPAGE PROGRESS SYSTEM
+================================ */
+
+const modules = [
+  "litdom_lesson_1_module_1_complete",
+  "litdom_lesson_1_module_2_complete",
+  "litdom_lesson_1_module_3_complete",
+  "litdom_lesson_1_module_4_complete",
+  "litdom_lesson_1_module_5_complete"
+];
+
+const moduleLinks = [
+  "lesson-01.html",
+  "lesson-02.html",
+  "lesson-03.html",
+  "lesson-04.html",
+  "lesson-05.html"
+];
+
+/* Check whether a module is completed */
+function isComplete(index) {
+  return localStorage.getItem(modules[index]) === "true";
+}
+
+/* Find the first unfinished module */
+function getFirstUnfinishedModule() {
+  for (let i = 0; i < modules.length; i++) {
+    if (!isComplete(i)) {
+      return i;
+    }
+  }
+
+  return -1;
+}
+
+/* Update homepage progress */
+function updateProgress() {
+  let completed = 0;
+
+  modules.forEach((key) => {
+    if (localStorage.getItem(key) === "true") {
+      completed++;
+    }
+  });
+
+  const percentage = Math.round((completed / modules.length) * 100);
+
+  const progressFill = document.querySelector(".progress-fill");
+  const progressText = document.querySelector(".progress-top span:last-child");
+
+  if (progressFill) {
+    progressFill.style.width = percentage + "%";
+  }
+
+  if (progressText) {
+    progressText.textContent = percentage + "% Complete";
+  }
+}
+
+/* Update module status indicators */
+function updateModuleStatuses() {
+  const pills = document.querySelectorAll(".lesson-pill");
+
+  pills.forEach((pill, index) => {
+    if (index >= modules.length) return;
+
+    if (isComplete(index)) {
+      pill.innerHTML = "✓ " + pill.dataset.name;
+      pill.style.color = "#F4D58D";
+      pill.style.borderColor = "rgba(244,213,141,0.35)";
+    } 
+    else if (
+      index === 0 ||
+      isComplete(index - 1)
+    ) {
+      pill.innerHTML = "→ " + pill.dataset.name;
+      pill.style.color = "#FFF8E7";
+      pill.style.borderColor = "rgba(212,175,55,0.35)";
+    } 
+    else {
+      pill.innerHTML = "🔒 " + pill.dataset.name;
+      pill.style.opacity = "0.55";
+    }
+  });
+}
+
+/* Set up module names */
+function setupModules() {
+  const pills = document.querySelectorAll(".lesson-pill");
+
+  pills.forEach((pill) => {
+    if (!pill.dataset.name) {
+      pill.dataset.name = pill.textContent.trim();
+    }
+  });
+}
+
+/* Make the main button open the first unfinished module */
+function setupBeginButton() {
+  const beginButton = document.querySelector(".begin");
+
+  if (!beginButton) return;
+
+  const firstUnfinished = getFirstUnfinishedModule();
+
+  if (firstUnfinished === -1) {
+    beginButton.innerHTML =
+      '✓ Course Modules Complete <span class="arrow">→</span>';
+
+    beginButton.href = "#";
+    return;
+  }
+
+  beginButton.href = moduleLinks[firstUnfinished];
+
+  if (firstUnfinished === 0) {
+    beginButton.innerHTML =
+      'Begin Module 1 <span class="arrow">→</span>';
+  } else {
+    beginButton.innerHTML =
+      'Continue Module ' +
+      (firstUnfinished + 1) +
+      ' <span class="arrow">→</span>';
+  }
+}
+
+/* Run everything */
+setupModules();
+updateProgress();
+updateModuleStatuses();
+setupBeginButton();
+
+/* Update again whenever the page becomes visible */
+window.addEventListener("pageshow", () => {
+  setupModules();
+  updateProgress();
+  updateModuleStatuses();
+  setupBeginButton();
+});
+</script>
+
 </body>
 </html>
