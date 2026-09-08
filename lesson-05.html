@@ -1774,4 +1774,934 @@ Next →
     </div>
 
   </section>
+
+<!-- =========================
+       COMPLETION
+  ========================== -->
+
+  <section
+    class="completion"
+    id="completion">
+
+    <div class="completion-symbol">
+      ✦
+    </div>
+
+    <h2>
+      Module 5 Complete
+    </h2>
+
+    <p>
+      Excellent work. You've completed the final module of
+      Fundamentals of Editing. Lesson 1 is now complete,
+      and the next lesson is ready for you.
+    </p>
+
+    <!--
+      CHANGE THIS FILE NAME LATER
+      TO YOUR ACTUAL LESSON 2 MODULE 1 FILE.
+    -->
+
+    <a
+      href="lesson-06.html"
+      class="lesson-two-button">
+      Continue to Lesson 2 →
+    </a>
+
+  </section>
+
+</main>
+
+
+<script>
+
+/* =====================================================
+   LITDOM EDITOR ACADEMY
+   LESSON 1 — MODULE 5
+   THE EDITING WORKFLOW
+===================================================== */
+
+
+/* =========================
+   STORAGE KEYS
+========================= */
+
+const MODULE_KEY =
+  "litdom_lesson_1_module_5_complete";
+
+const VIDEO_TIME_KEY =
+  "litdom_lesson_1_module_5_video_seconds";
+
+const VIDEO_DONE_KEY =
+  "litdom_lesson_1_module_5_video_complete";
+
+const PRESENTATION_KEY =
+  "litdom_lesson_1_module_5_presentation_complete";
+
+const WORKBOOK_KEY =
+  "litdom_lesson_1_module_5_workbook_complete";
+
+const TEST_KEY =
+  "litdom_lesson_1_module_5_test_passed";
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const sections = [
+  document.getElementById("section1"),
+  document.getElementById("section2"),
+  document.getElementById("section3"),
+  document.getElementById("section4"),
+  document.getElementById("section5")
+];
+
+const steps = [
+  document.getElementById("step1"),
+  document.getElementById("step2"),
+  document.getElementById("step3"),
+  document.getElementById("step4"),
+  document.getElementById("step5")
+];
+
+const progressFill =
+  document.getElementById("progressFill");
+
+const progressText =
+  document.getElementById("progressText");
+
+
+/* =========================
+   CURRENT SECTION
+========================= */
+
+let currentSection = 0;
+
+
+/* =========================
+   COMPLETION CHECKS
+========================= */
+
+function videoCompleted() {
+  return localStorage.getItem(VIDEO_DONE_KEY) === "true";
+}
+
+function presentationCompleted() {
+  return localStorage.getItem(PRESENTATION_KEY) === "true";
+}
+
+function workbookCompleted() {
+  return localStorage.getItem(WORKBOOK_KEY) === "true";
+}
+
+function testPassed() {
+  return localStorage.getItem(TEST_KEY) === "true";
+}
+
+
+/* =========================
+   PROGRESS
+========================= */
+
+function updateProgress() {
+
+  if (testPassed()) {
+
+    progressFill.style.width = "100%";
+    progressText.textContent = "Complete";
+
+    return;
+  }
+
+
+  let percentage = 20;
+
+
+  if (videoCompleted()) {
+    percentage = 40;
+  }
+
+  if (presentationCompleted()) {
+    percentage = 60;
+  }
+
+  if (workbookCompleted()) {
+    percentage = 80;
+  }
+
+
+  progressFill.style.width =
+    percentage + "%";
+
+
+  progressText.textContent =
+    Math.round(percentage / 20) + " / 5";
+}
+
+
+/* =========================
+   SHOW SECTION
+========================= */
+
+function showSection(index) {
+
+  currentSection = index;
+
+
+  sections.forEach(function(section, i) {
+
+    section.classList.toggle(
+      "active",
+      i === index
+    );
+
+  });
+
+
+  steps.forEach(function(step, i) {
+
+    step.classList.toggle(
+      "active",
+      i === index
+    );
+
+    step.classList.toggle(
+      "completed",
+      i < index
+    );
+
+  });
+
+
+  updateProgress();
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+
+/* =====================================================
+   SECTION 1 — IMAGE
+===================================================== */
+
+document.getElementById("next1")
+.addEventListener("click", function() {
+
+  showSection(1);
+
+});
+
+
+/* =====================================================
+   SECTION 2 — VIDEO
+   5 MINUTE REQUIREMENT
+===================================================== */
+
+const REQUIRED_SECONDS = 300;
+
+let videoSeconds =
+  parseInt(
+    localStorage.getItem(VIDEO_TIME_KEY) || "0",
+    10
+  );
+
+
+if (videoSeconds > REQUIRED_SECONDS) {
+  videoSeconds = REQUIRED_SECONDS;
+}
+
+
+let videoTimerInterval = null;
+
+
+const videoTimer =
+  document.getElementById("videoTimer");
+
+const timerMessage =
+  document.getElementById("timerMessage");
+
+const videoCheck =
+  document.getElementById("videoCheck");
+
+const videoComplete =
+  document.getElementById("videoComplete");
+
+const next2 =
+  document.getElementById("next2");
+
+
+/* =========================
+   FORMAT TIMER
+========================= */
+
+function formatTime(seconds) {
+
+  const minutes =
+    Math.floor(seconds / 60);
+
+  const remaining =
+    seconds % 60;
+
+
+  return (
+    String(minutes).padStart(2, "0")
+    + ":" +
+    String(remaining).padStart(2, "0")
+  );
+}
+
+
+/* =========================
+   UPDATE TIMER
+========================= */
+
+function updateVideoTimer() {
+
+  const remaining =
+    REQUIRED_SECONDS - videoSeconds;
+
+
+  videoTimer.textContent =
+    formatTime(
+      Math.max(remaining, 0)
+    );
+
+
+  if (
+    videoSeconds >=
+    REQUIRED_SECONDS
+  ) {
+
+    videoCheck.classList.add(
+      "visible"
+    );
+
+
+    timerMessage.textContent =
+      "Five minutes completed. Tick the box to continue.";
+
+
+    if (videoComplete.checked) {
+
+      next2.disabled = false;
+
+    }
+
+  } else {
+
+    videoCheck.classList.remove(
+      "visible"
+    );
+
+
+    timerMessage.textContent =
+      "Please remain in this section until the five-minute requirement is complete.";
+
+
+    next2.disabled = true;
+  }
+}
+
+
+/* =========================
+   START VIDEO TIMER
+========================= */
+
+function startVideoTimer() {
+
+  if (videoCompleted()) {
+
+    videoSeconds =
+      REQUIRED_SECONDS;
+
+    updateVideoTimer();
+
+    return;
+  }
+
+
+  if (videoTimerInterval) {
+    return;
+  }
+
+
+  videoTimerInterval =
+    setInterval(function() {
+
+
+      /*
+        Only count time while the
+        learner is actually on the
+        video section.
+      */
+
+      if (currentSection !== 1) {
+        return;
+      }
+
+
+      if (
+        videoSeconds >=
+        REQUIRED_SECONDS
+      ) {
+
+        clearInterval(
+          videoTimerInterval
+        );
+
+        videoTimerInterval = null;
+
+        updateVideoTimer();
+
+        return;
+      }
+
+
+      videoSeconds++;
+
+
+      localStorage.setItem(
+        VIDEO_TIME_KEY,
+        String(videoSeconds)
+      );
+
+
+      updateVideoTimer();
+
+
+    }, 1000);
+}
+
+
+/* =========================
+   VIDEO CHECKBOX
+========================= */
+
+videoComplete.addEventListener(
+  "change",
+  function() {
+
+
+    if (
+      this.checked &&
+      videoSeconds >=
+      REQUIRED_SECONDS
+    ) {
+
+      localStorage.setItem(
+        VIDEO_DONE_KEY,
+        "true"
+      );
+
+
+      next2.disabled = false;
+
+
+      updateProgress();
+
+
+    } else {
+
+      localStorage.removeItem(
+        VIDEO_DONE_KEY
+      );
+
+
+      next2.disabled = true;
+    }
+
+  }
+);
+
+
+/* =========================
+   VIDEO BACK
+========================= */
+
+document.getElementById("back2")
+.addEventListener("click", function() {
+
+  showSection(0);
+
+});
+
+
+/* =========================
+   VIDEO NEXT
+========================= */
+
+next2.addEventListener(
+  "click",
+  function() {
+
+    if (!videoCompleted()) {
+      return;
+    }
+
+    showSection(2);
+
+  }
+);
+
+
+/* =====================================================
+   SECTION 3 — CANVA PRESENTATION
+===================================================== */
+
+const presentationComplete =
+  document.getElementById(
+    "presentationComplete"
+  );
+
+const next3 =
+  document.getElementById("next3");
+
+
+/* Restore saved presentation state */
+
+if (presentationCompleted()) {
+
+  presentationComplete.checked = true;
+
+  next3.disabled = false;
+}
+
+
+/* =========================
+   PRESENTATION CHECKBOX
+========================= */
+
+presentationComplete.addEventListener(
+  "change",
+  function() {
+
+
+    if (this.checked) {
+
+      localStorage.setItem(
+        PRESENTATION_KEY,
+        "true"
+      );
+
+      next3.disabled = false;
+
+
+    } else {
+
+      localStorage.removeItem(
+        PRESENTATION_KEY
+      );
+
+      next3.disabled = true;
+    }
+
+
+    updateProgress();
+
+  }
+);
+
+
+/* =========================
+   PRESENTATION BACK
+========================= */
+
+document.getElementById("back3")
+.addEventListener("click", function() {
+
+  showSection(1);
+
+});
+
+
+/* =========================
+   PRESENTATION NEXT
+========================= */
+
+next3.addEventListener(
+  "click",
+  function() {
+
+    if (!presentationCompleted()) {
+      return;
+    }
+
+    showSection(3);
+
+  }
+);
+
+
+/* =====================================================
+   SECTION 4 — WORKBOOK
+===================================================== */
+
+const workbookComplete =
+  document.getElementById(
+    "workbookComplete"
+  );
+
+const next4 =
+  document.getElementById("next4");
+
+
+/* Restore saved workbook state */
+
+if (workbookCompleted()) {
+
+  workbookComplete.checked = true;
+
+  next4.disabled = false;
+}
+
+
+/* =========================
+   WORKBOOK DOWNLOAD
+========================= */
+
+document.getElementById(
+  "downloadWorkbook"
+)
+.addEventListener(
+  "click",
+  function(event) {
+
+    /*
+      The real PDF will be connected
+      later. This prevents the placeholder
+      from taking the learner somewhere.
+    */
+
+    event.preventDefault();
+
+  }
+);
+
+
+/* =========================
+   WORKBOOK CHECKBOX
+========================= */
+
+workbookComplete.addEventListener(
+  "change",
+  function() {
+
+
+    if (this.checked) {
+
+      localStorage.setItem(
+        WORKBOOK_KEY,
+        "true"
+      );
+
+      next4.disabled = false;
+
+
+    } else {
+
+      localStorage.removeItem(
+        WORKBOOK_KEY
+      );
+
+      next4.disabled = true;
+    }
+
+
+    updateProgress();
+
+  }
+);
+
+
+/* =========================
+   WORKBOOK BACK
+========================= */
+
+document.getElementById("back4")
+.addEventListener("click", function() {
+
+  showSection(2);
+
+});
+
+
+/* =========================
+   WORKBOOK NEXT
+========================= */
+
+next4.addEventListener(
+  "click",
+  function() {
+
+    if (!workbookCompleted()) {
+      return;
+    }
+
+    showSection(4);
+
+  }
+);
+
+
+/* =====================================================
+   SECTION 5 — 10 QUESTION TEST
+===================================================== */
+
+const testForm =
+  document.getElementById("testForm");
+
+const testResult =
+  document.getElementById("testResult");
+
+
+/* =========================
+   CORRECT ANSWERS
+========================= */
+
+const answers = {
+
+  q1: "b",
+  q2: "b",
+  q3: "b",
+  q4: "b",
+  q5: "b",
+  q6: "a",
+  q7: "a",
+  q8: "b",
+  q9: "b",
+  q10: "b"
+
+};
+
+
+/* =========================
+   SUBMIT TEST
+========================= */
+
+testForm.addEventListener(
+  "submit",
+  function(event) {
+
+    event.preventDefault();
+
+
+    let score = 0;
+
+
+    for (
+      let i = 1;
+      i <= 10;
+      i++
+    ) {
+
+
+      const selected =
+        document.querySelector(
+          'input[name="q' +
+          i +
+          '"]:checked'
+        );
+
+
+      if (
+        selected &&
+        selected.value ===
+        answers["q" + i]
+      ) {
+
+        score++;
+
+      }
+
+    }
+
+
+    testResult.className =
+      "test-result show";
+
+
+    /* =====================
+       PASSED
+    ===================== */
+
+    if (score >= 7) {
+
+      testResult.classList.add(
+        "pass"
+      );
+
+
+      testResult.innerHTML =
+        "<h3>✓ You Passed!</h3>" +
+        "<p>You scored <strong>" +
+        score +
+        "/10</strong>. Excellent work. " +
+        "Module 5 is now complete.</p>";
+
+
+      localStorage.setItem(
+        TEST_KEY,
+        "true"
+      );
+
+
+      localStorage.setItem(
+        MODULE_KEY,
+        "true"
+      );
+
+
+      progressFill.style.width =
+        "100%";
+
+      progressText.textContent =
+        "Complete";
+
+
+      setTimeout(function() {
+
+        const completion =
+          document.getElementById(
+            "completion"
+          );
+
+
+        completion.classList.add(
+          "show"
+        );
+
+
+        completion.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+
+
+      }, 500);
+
+
+    }
+
+
+    /* =====================
+       FAILED
+    ===================== */
+
+    else {
+
+      testResult.classList.add(
+        "fail"
+      );
+
+
+      testResult.innerHTML =
+        "<h3>Not Quite Yet</h3>" +
+        "<p>You scored <strong>" +
+        score +
+        "/10</strong>. You need at least " +
+        "<strong>7/10</strong> to pass. " +
+        "Review the module and try again.</p>";
+
+
+      localStorage.removeItem(
+        TEST_KEY
+      );
+
+
+      localStorage.removeItem(
+        MODULE_KEY
+      );
+
+    }
+
+  }
+);
+
+
+/* =========================
+   TEST BACK
+========================= */
+
+document.getElementById("back5")
+.addEventListener("click", function() {
+
+  showSection(3);
+
+});
+
+
+/* =====================================================
+   RESTORE SAVED VIDEO STATE
+===================================================== */
+
+if (videoCompleted()) {
+
+  videoSeconds =
+    REQUIRED_SECONDS;
+}
+
+
+updateVideoTimer();
+
+startVideoTimer();
+
+
+/* =====================================================
+   RESTORE COMPLETED MODULE
+===================================================== */
+
+if (testPassed()) {
+
+  progressFill.style.width =
+    "100%";
+
+  progressText.textContent =
+    "Complete";
+
+
+  document.getElementById(
+    "completion"
+  ).classList.add("show");
+
+}
+
+
+/* =====================================================
+   OPEN FIRST UNFINISHED SECTION
+===================================================== */
+
+if (testPassed()) {
+
+  showSection(4);
+
+}
+else if (workbookCompleted()) {
+
+  showSection(3);
+
+}
+else if (presentationCompleted()) {
+
+  showSection(2);
+
+}
+else if (videoCompleted()) {
+
+  showSection(2);
+
+}
+else {
+
+  showSection(0);
+
+}
+
+</script>
+
+</body>
+</html>
     
