@@ -1,524 +1,825 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Module 5 — The Editing Workflow | Litdom Editor Academy</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    :root {
-      --obsidian: #0B0B0F;
-      --charcoal: #17171C;
-      --gold: #D4AF37;
-      --champagne: #F4D58D;
-      --ivory: #FFF8E7;
-      --muted: #AAA595;
-      --line: #8C7625;
-    }
-
-    body {
-      background: var(--obsidian);
-      color: var(--ivory);
-      font-family: Arial, sans-serif;
-      line-height: 1.7;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    /* =========================
-       HEADER
-    ========================= */
-
-    header {
-      border-bottom: 1px solid rgba(212,175,55,.22);
-      padding: 20px;
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(11,11,15,.94);
-      backdrop-filter: blur(14px);
-    }
-
-    .header-inner {
-      max-width: 1050px;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .brand {
-      font-family: Georgia, serif;
-      font-size: 20px;
-      font-weight: bold;
-      color: var(--champagne);
-    }
-
-    .lesson-label {
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-    }
-
-    /* =========================
-       PAGE
-    ========================= */
-
-    main {
-      max-width: 1050px;
-      margin: auto;
-      padding: 55px 20px 90px;
-    }
-
-    /* =========================
-       HERO
-    ========================= */
-
-    .hero {
-      padding: 55px 30px;
-      border: 1px solid rgba(212,175,55,.25);
-      border-radius: 28px;
-      background:
-        radial-gradient(circle at top right, rgba(212,175,55,.13), transparent 35%),
-        linear-gradient(145deg, #17171C, #0B0B0F);
-      box-shadow: 0 25px 70px rgba(0,0,0,.35);
-      margin-bottom: 55px;
-    }
-
-    .eyebrow {
-      color: var(--gold);
-      font-size: 12px;
-      font-weight: bold;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 15px;
-    }
-
-    h1 {
-      font-family: Georgia, serif;
-      font-size: clamp(38px, 8vw, 68px);
-      line-height: 1.05;
-      color: var(--ivory);
-      margin-bottom: 22px;
-    }
-
-    .hero p {
-      max-width: 720px;
-      color: var(--muted);
-      font-size: 17px;
-    }
-
-    /* =========================
-       PROGRESS
-    ========================= */
-
-    .progress-box {
-      margin-top: 32px;
-    }
-
-    .progress-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      margin-bottom: 9px;
-      font-size: 13px;
-    }
-
-    .progress-top span:first-child {
-      color: var(--muted);
-    }
-
-    #progressText {
-      color: var(--champagne);
-      font-weight: bold;
-    }
-
-    .progress-bar {
-      width: 100%;
-      height: 7px;
-      border-radius: 99px;
-      background: #24242B;
-      overflow: hidden;
-    }
-
-    #progressFill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, var(--gold), var(--champagne));
-      transition: width .5s ease;
-    }
-
-    /* =========================
-       SECTION
-    ========================= */
-
-    .section {
-      margin-bottom: 70px;
-    }
-
-    .section-number {
-      color: var(--gold);
-      font-size: 12px;
-      letter-spacing: 2px;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-
-    h2 {
-      font-family: Georgia, serif;
-      font-size: clamp(28px, 6vw, 43px);
-      line-height: 1.15;
-      margin-bottom: 16px;
-      color: var(--ivory);
-    }
-
-    .section-intro {
-      color: var(--muted);
-      max-width: 720px;
-      margin-bottom: 28px;
-    }
-
-    /* =========================
-       IMAGE RESOURCE
-    ========================= */
-
-    .image-frame {
-      min-height: 330px;
-      border-radius: 24px;
-      border: 1px solid rgba(212,175,55,.25);
-      background:
-        linear-gradient(135deg, rgba(212,175,55,.07), rgba(255,255,255,.015)),
-        var(--charcoal);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 35px;
-      overflow: hidden;
-    }
-
-    .image-frame img {
-      width: 100%;
-      display: block;
-      border-radius: 18px;
-    }
-
-    .resource-placeholder {
-      max-width: 450px;
-    }
-
-    .resource-icon {
-      font-size: 42px;
-      margin-bottom: 15px;
-    }
-
-    .resource-placeholder strong {
-      display: block;
-      color: var(--champagne);
-      font-family: Georgia, serif;
-      font-size: 22px;
-      margin-bottom: 8px;
-    }
-
-    .resource-placeholder span {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    /* =========================
-       VIDEO
-    ========================= */
-
-    .video-frame {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      border-radius: 24px;
-      overflow: hidden;
-      border: 1px solid rgba(212,175,55,.25);
-      background: #121217;
-    }
-
-    .video-frame iframe {
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-
-    .video-placeholder {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 30px;
-      background:
-        radial-gradient(circle, rgba(212,175,55,.08), transparent 55%),
-        #121217;
-    }
-
-    .play-circle {
-      width: 72px;
-      height: 72px;
-      border: 1px solid var(--gold);
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      margin: 0 auto 18px;
-      color: var(--champagne);
-      font-size: 25px;
-    }
-
-    .video-placeholder strong {
-      display: block;
-      font-family: Georgia, serif;
-      font-size: 23px;
-      color: var(--champagne);
-      margin-bottom: 7px;
-    }
-
-    .video-placeholder span {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    /* =========================
-       CANVA PRESENTATION
-    ========================= */
-
-    .presentation-shell {
-      padding: 12px;
-      border-radius: 28px;
-      background: linear-gradient(
-        135deg,
-        rgba(212,175,55,.24),
-        rgba(212,175,55,.04)
-      );
-      box-shadow: 0 25px 70px rgba(0,0,0,.4);
-    }
-
-    .presentation-wrapper {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      overflow: hidden;
-      border-radius: 20px;
-      background: #111116;
-    }
-
-    .presentation-wrapper iframe {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-
-    .presentation-note {
-      margin-top: 18px;
-      color: var(--muted);
-      font-size: 14px;
-      text-align: center;
-    }
-
-    /* =========================
-       WORKBOOK
-    ========================= */
-
-    .workbook {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 30px;
-      align-items: center;
-      padding: 35px;
-      border-radius: 25px;
-      border: 1px solid rgba(212,175,55,.25);
-      background: var(--charcoal);
-    }
-
-    .workbook-tag {
-      color: var(--gold);
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      font-size: 11px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .workbook h3 {
-      font-family: Georgia, serif;
-      color: var(--ivory);
-      font-size: 28px;
-      margin-bottom: 9px;
-    }
-
-    .workbook p {
-      color: var(--muted);
-      max-width: 650px;
-    }
-
-    .download-button {
-      display: inline-block;
-      padding: 15px 22px;
-      border-radius: 12px;
-      background: var(--gold);
-      color: #111;
-      font-weight: bold;
-      white-space: nowrap;
-      transition: .2s ease;
-    }
-
-    .download-button:hover {
-      transform: translateY(-2px);
-      background: var(--champagne);
-    }
-
-    /* =========================
-       COMPLETION
-    ========================= */
-
-    .completion {
-      padding: 45px 30px;
-      border-radius: 27px;
-      border: 1px solid rgba(212,175,55,.35);
-      background:
-        radial-gradient(circle at top, rgba(212,175,55,.12), transparent 60%),
-        var(--charcoal);
-      text-align: center;
-    }
-
-    .completion-mark {
-      font-size: 38px;
-      margin-bottom: 12px;
-    }
-
-    .completion h2 {
-      font-size: 35px;
-    }
-
-    .completion p {
-      color: var(--muted);
-      max-width: 600px;
-      margin: 0 auto 25px;
-    }
-
-    .complete-button {
-      border: 0;
-      padding: 16px 25px;
-      border-radius: 12px;
-      background: var(--gold);
-      color: #111;
-      font-weight: bold;
-      font-size: 15px;
-      cursor: pointer;
-      transition: .2s ease;
-    }
-
-    .complete-button:hover {
-      background: var(--champagne);
-      transform: translateY(-2px);
-    }
-
-    .complete-button:disabled {
-      cursor: default;
-      opacity: .7;
-      transform: none;
-    }
-
-    /* =========================
-       NAVIGATION
-    ========================= */
-
-    .navigation {
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      margin-top: 55px;
-      padding-top: 30px;
-      border-top: 1px solid rgba(212,175,55,.18);
-    }
-
-    .nav-button {
-      padding: 13px 18px;
-      border: 1px solid rgba(212,175,55,.3);
-      border-radius: 11px;
-      color: var(--champagne);
-      font-size: 14px;
-    }
-
-    .nav-button.next {
-      opacity: .4;
-      pointer-events: none;
-    }
-
-    .nav-button.next.unlocked {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    /* =========================
-       MOBILE
-    ========================= */
-
-    @media (max-width: 700px) {
-
-      header {
-        padding: 16px;
-      }
-
-      .lesson-label {
-        display: none;
-      }
-
-      main {
-        padding: 30px 15px 70px;
-      }
-
-      .hero {
-        padding: 35px 22px;
-        border-radius: 22px;
-      }
-
-      .section {
-        margin-bottom: 55px;
-      }
-
-      .image-frame {
-        min-height: 240px;
-      }
-
-      .workbook {
-        grid-template-columns: 1fr;
-        padding: 27px;
-      }
-
-      .download-button {
-        width: 100%;
-        text-align: center;
-      }
-
-      .navigation {
-        flex-direction: column;
-      }
-
-      .nav-button {
-        text-align: center;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Module 5 — The Editing Workflow | Litdom Editor Academy</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --obsidian:#0B0B0F;
+  --charcoal:#17171C;
+  --gold:#D4AF37;
+  --champagne:#F4D58D;
+  --ivory:#FFF8E7;
+  --muted:#AAA595;
+  --line:#8C7625;
+  --success:#D9C47A;
+  --danger:#B97878;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:var(--obsidian);
+  color:var(--ivory);
+  font-family:Arial,sans-serif;
+  line-height:1.7;
+  min-height:100vh;
+}
+
+button,
+a{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(11,11,15,.94);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(212,175,55,.18);
+}
+
+.header-inner{
+  max-width:1050px;
+  margin:auto;
+  min-height:68px;
+  padding:0 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.brand{
+  font-family:Georgia,serif;
+  font-size:20px;
+  color:var(--champagne);
+  font-weight:bold;
+}
+
+.header-label{
+  color:var(--muted);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+main{
+  max-width:1000px;
+  margin:auto;
+  padding:35px 20px 90px;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+  padding:48px 30px;
+  border:1px solid rgba(212,175,55,.25);
+  border-radius:28px;
+  background:
+    radial-gradient(circle at 85% 10%,rgba(212,175,55,.13),transparent 30%),
+    linear-gradient(145deg,#17171C,#0B0B0F);
+  box-shadow:0 25px 70px rgba(0,0,0,.38);
+}
+
+.eyebrow{
+  color:var(--gold);
+  text-transform:uppercase;
+  letter-spacing:2px;
+  font-size:11px;
+  font-weight:bold;
+  margin-bottom:13px;
+}
+
+h1{
+  font-family:Georgia,serif;
+  font-size:clamp(38px,8vw,65px);
+  line-height:1.04;
+  margin-bottom:18px;
+}
+
+.hero-description{
+  color:var(--muted);
+  max-width:720px;
+  font-size:16px;
+}
+
+.progress-area{
+  margin-top:32px;
+}
+
+.progress-label{
+  display:flex;
+  justify-content:space-between;
+  font-size:12px;
+  margin-bottom:9px;
+}
+
+.progress-label span:first-child{
+  color:var(--muted);
+}
+
+#progressText{
+  color:var(--champagne);
+  font-weight:bold;
+}
+
+.progress-track{
+  width:100%;
+  height:7px;
+  background:#26262D;
+  border-radius:50px;
+  overflow:hidden;
+}
+
+#progressFill{
+  height:100%;
+  width:20%;
+  background:linear-gradient(90deg,var(--gold),var(--champagne));
+  transition:width .45s ease;
+}
+
+/* =========================
+   STEP INDICATOR
+========================= */
+
+.step-navigation{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:8px;
+  margin:25px 0 40px;
+}
+
+.step{
+  padding:11px 7px;
+  border:1px solid rgba(212,175,55,.15);
+  border-radius:12px;
+  text-align:center;
+  color:#77746B;
+  background:#111116;
+  font-size:11px;
+  transition:.25s;
+}
+
+.step-number{
+  display:block;
+  color:#5F5D57;
+  font-weight:bold;
+  margin-bottom:3px;
+}
+
+.step.active{
+  border-color:rgba(212,175,55,.5);
+  color:var(--champagne);
+  background:#19191F;
+}
+
+.step.active .step-number{
+  color:var(--gold);
+}
+
+.step.completed{
+  border-color:rgba(212,175,55,.35);
+  color:var(--success);
+}
+
+.step.completed .step-number{
+  color:var(--gold);
+}
+
+/* =========================
+   MODULE SECTIONS
+========================= */
+
+.module-section{
+  display:none;
+  animation:fadeIn .4s ease;
+}
+
+.module-section.active{
+  display:block;
+}
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.section-heading{
+  margin-bottom:25px;
+}
+
+.section-number{
+  color:var(--gold);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+h2{
+  font-family:Georgia,serif;
+  font-size:clamp(30px,6vw,46px);
+  line-height:1.12;
+  margin-bottom:12px;
+}
+
+.section-intro{
+  color:var(--muted);
+  max-width:720px;
+}
+
+/* =========================
+   IMAGE SECTION
+========================= */
+
+.image-card{
+  border:1px solid rgba(212,175,55,.25);
+  border-radius:25px;
+  overflow:hidden;
+  background:var(--charcoal);
+}
+
+.image-placeholder{
+  min-height:390px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:35px;
+  background:
+    radial-gradient(circle at center,rgba(212,175,55,.10),transparent 55%),
+    #141419;
+}
+
+.image-placeholder-inner{
+  max-width:500px;
+}
+
+.image-symbol{
+  font-size:48px;
+  color:var(--gold);
+  margin-bottom:14px;
+}
+
+.image-placeholder h3{
+  font-family:Georgia,serif;
+  color:var(--champagne);
+  font-size:27px;
+  margin-bottom:8px;
+}
+
+.image-placeholder p{
+  color:var(--muted);
+  font-size:14px;
+}
+
+.image-card img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+
+.reading-box{
+  padding:30px;
+}
+
+.reading-box h3{
+  font-family:Georgia,serif;
+  color:var(--champagne);
+  font-size:25px;
+  margin-bottom:12px;
+}
+
+.reading-box p{
+  color:var(--muted);
+  margin-bottom:13px;
+}
+
+.reading-box p:last-child{
+  margin-bottom:0;
+}
+
+/* =========================
+   VIDEO
+========================= */
+
+.video-container{
+  border:1px solid rgba(212,175,55,.25);
+  border-radius:25px;
+  overflow:hidden;
+  background:#121217;
+}
+
+.video-placeholder{
+  position:relative;
+  aspect-ratio:16/9;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:30px;
+  background:
+    radial-gradient(circle at center,rgba(212,175,55,.09),transparent 50%),
+    #121217;
+}
+
+.video-placeholder h3{
+  font-family:Georgia,serif;
+  font-size:25px;
+  color:var(--champagne);
+  margin-bottom:8px;
+}
+
+.video-placeholder p{
+  color:var(--muted);
+  font-size:14px;
+}
+
+.play-icon{
+  width:70px;
+  height:70px;
+  border:1px solid var(--gold);
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  margin:0 auto 18px;
+  color:var(--champagne);
+  font-size:23px;
+}
+
+.video-container iframe,
+.video-container video{
+  width:100%;
+  aspect-ratio:16/9;
+  display:block;
+  border:0;
+}
+
+.timer-box{
+  padding:25px;
+  border-top:1px solid rgba(212,175,55,.18);
+}
+
+.timer-title{
+  color:var(--muted);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:1.3px;
+}
+
+.timer{
+  font-family:Georgia,serif;
+  font-size:38px;
+  color:var(--champagne);
+  margin:3px 0 8px;
+}
+
+.timer-message{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.video-check{
+  display:none;
+  margin-top:20px;
+  padding:18px;
+  border:1px solid rgba(212,175,55,.3);
+  border-radius:15px;
+  background:#1B1B20;
+}
+
+.video-check.visible{
+  display:block;
+}
+
+.check-label{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  color:var(--ivory);
+  cursor:pointer;
+  font-size:14px;
+}
+
+.check-label input{
+  width:19px;
+  height:19px;
+  margin-top:3px;
+  accent-color:var(--gold);
+}
+
+/* =========================
+   CANVA
+========================= */
+
+.presentation-shell{
+  padding:11px;
+  border-radius:27px;
+  background:linear-gradient(
+    135deg,
+    rgba(212,175,55,.25),
+    rgba(212,175,55,.04)
+  );
+  box-shadow:0 25px 65px rgba(0,0,0,.42);
+}
+
+.presentation-wrapper{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  overflow:hidden;
+  border-radius:19px;
+  background:#111116;
+}
+
+.presentation-wrapper iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+}
+
+.presentation-complete{
+  margin-top:20px;
+  padding:18px;
+  border:1px solid rgba(212,175,55,.28);
+  border-radius:15px;
+  background:#17171C;
+}
+
+/* =========================
+   WORKBOOK
+========================= */
+
+.workbook{
+  border:1px solid rgba(212,175,55,.27);
+  border-radius:25px;
+  padding:34px;
+  background:
+    linear-gradient(145deg,rgba(212,175,55,.07),transparent),
+    var(--charcoal);
+}
+
+.workbook-icon{
+  font-size:42px;
+  margin-bottom:15px;
+}
+
+.workbook-tag{
+  color:var(--gold);
+  text-transform:uppercase;
+  letter-spacing:1.7px;
+  font-size:11px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.workbook h3{
+  font-family:Georgia,serif;
+  color:var(--ivory);
+  font-size:30px;
+  margin-bottom:10px;
+}
+
+.workbook p{
+  color:var(--muted);
+  max-width:680px;
+  margin-bottom:25px;
+}
+
+.download-button{
+  display:inline-block;
+  padding:14px 22px;
+  border-radius:11px;
+  background:var(--gold);
+  color:#111;
+  font-weight:bold;
+  transition:.2s;
+}
+
+.download-button:hover{
+  background:var(--champagne);
+  transform:translateY(-2px);
+}
+
+.download-note{
+  color:#77746B;
+  font-size:12px;
+  margin-top:12px;
+}
+
+/* =========================
+   TEST
+========================= */
+
+.test-intro{
+  padding:22px;
+  border-left:2px solid var(--gold);
+  background:#15151A;
+  border-radius:0 14px 14px 0;
+  color:var(--muted);
+  margin-bottom:28px;
+}
+
+.question{
+  padding:27px;
+  margin-bottom:18px;
+  border:1px solid rgba(212,175,55,.18);
+  border-radius:19px;
+  background:var(--charcoal);
+}
+
+.question-number{
+  color:var(--gold);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:1.4px;
+  font-weight:bold;
+  margin-bottom:7px;
+}
+
+.question h3{
+  font-family:Georgia,serif;
+  font-size:20px;
+  line-height:1.35;
+  margin-bottom:17px;
+}
+
+.options{
+  display:grid;
+  gap:9px;
+}
+
+.option{
+  position:relative;
+}
+
+.option input{
+  position:absolute;
+  opacity:0;
+}
+
+.option label{
+  display:block;
+  padding:13px 15px;
+  border:1px solid rgba(212,175,55,.15);
+  border-radius:11px;
+  color:var(--muted);
+  cursor:pointer;
+  transition:.2s;
+}
+
+.option label:hover{
+  border-color:rgba(212,175,55,.45);
+  color:var(--ivory);
+}
+
+.option input:checked + label{
+  border-color:var(--gold);
+  background:rgba(212,175,55,.09);
+  color:var(--champagne);
+}
+
+.submit-test{
+  width:100%;
+  border:0;
+  border-radius:13px;
+  padding:16px;
+  background:var(--gold);
+  color:#111;
+  font-weight:bold;
+  font-size:15px;
+  margin-top:10px;
+}
+
+.submit-test:hover{
+  background:var(--champagne);
+}
+
+.test-result{
+  display:none;
+  margin-top:22px;
+  padding:22px;
+  border-radius:15px;
+  text-align:center;
+}
+
+.test-result.show{
+  display:block;
+}
+
+.test-result.pass{
+  border:1px solid rgba(212,175,55,.35);
+  background:rgba(212,175,55,.08);
+}
+
+.test-result.fail{
+  border:1px solid rgba(185,120,120,.3);
+  background:rgba(185,120,120,.06);
+}
+
+.test-result h3{
+  font-family:Georgia,serif;
+  margin-bottom:7px;
+}
+
+.test-result p{
+  color:var(--muted);
+}
+
+/* =========================
+   SECTION NAVIGATION
+========================= */
+
+.section-navigation{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  margin-top:35px;
+}
+
+.nav-button{
+  border:1px solid rgba(212,175,55,.28);
+  border-radius:12px;
+  padding:13px 20px;
+  background:transparent;
+  color:var(--champagne);
+  transition:.2s;
+}
+
+.nav-button:hover:not(:disabled){
+  border-color:var(--gold);
+  background:rgba(212,175,55,.07);
+}
+
+.nav-button:disabled{
+  opacity:.3;
+  cursor:not-allowed;
+}
+
+.next-button{
+  background:var(--gold);
+  color:#111;
+  border-color:var(--gold);
+  font-weight:bold;
+}
+
+.next-button:hover:not(:disabled){
+  background:var(--champagne);
+}
+
+/* =========================
+   COMPLETION
+========================= */
+
+.completion{
+  display:none;
+  text-align:center;
+  padding:50px 25px;
+  margin-top:35px;
+  border:1px solid rgba(212,175,55,.4);
+  border-radius:27px;
+  background:
+    radial-gradient(circle at top,rgba(212,175,55,.13),transparent 60%),
+    var(--charcoal);
+}
+
+.completion.show{
+  display:block;
+  animation:fadeIn .5s ease;
+}
+
+.completion-symbol{
+  font-size:43px;
+  color:var(--gold);
+  margin-bottom:12px;
+}
+
+.completion h2{
+  font-size:34px;
+}
+
+.completion p{
+  max-width:620px;
+  color:var(--muted);
+  margin:0 auto 25px;
+}
+
+.lesson-two-button{
+  display:inline-block;
+  padding:15px 23px;
+  border-radius:12px;
+  background:var(--gold);
+  color:#111;
+  font-weight:bold;
+}
+
+.lesson-two-button:hover{
+  background:var(--champagne);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px){
+
+  .header-inner{
+    min-height:60px;
+  }
+
+  .brand{
+    font-size:17px;
+  }
+
+  .header-label{
+    display:none;
+  }
+
+  main{
+    padding:25px 14px 70px;
+  }
+
+  .hero{
+    padding:34px 21px;
+    border-radius:22px;
+  }
+
+  .step-navigation{
+    gap:5px;
+  }
+
+  .step{
+    padding:9px 3px;
+    font-size:9px;
+  }
+
+  .image-placeholder{
+    min-height:270px;
+  }
+
+  .reading-box{
+    padding:24px;
+  }
+
+  .workbook{
+    padding:27px;
+  }
+
+  .section-navigation{
+    flex-direction:column;
+  }
+
+  .nav-button{
+    width:100%;
+    text-align:center;
+  }
+
+  .question{
+    padding:22px 18px;
+  }
+}
+</style>
 </head>
 
 <body>
@@ -526,36 +827,42 @@
 <header>
   <div class="header-inner">
     <div class="brand">Litdom Editor Academy</div>
-    <div class="lesson-label">Lesson 01 · Fundamentals of Editing</div>
+    <div class="header-label">Lesson 01 · Fundamentals of Editing</div>
   </div>
 </header>
 
 
 <main>
 
-  <!-- HERO -->
+  <!-- =========================
+       HERO
+  ========================== -->
 
   <section class="hero">
 
-    <div class="eyebrow">Module 05 · Final Module of Lesson 01</div>
+    <div class="eyebrow">
+      Module 05 · The Editing Workflow
+    </div>
 
-    <h1>The Editing Workflow</h1>
+    <h1>
+      The Editing Workflow
+    </h1>
 
-    <p>
-      Great editing is not a random series of corrections.
-      It is a deliberate process. In this module, you'll learn how
-      an editor moves from receiving a manuscript to delivering
-      polished work—and how to organize yourself throughout that process.
+    <p class="hero-description">
+      Editing becomes easier, more consistent, and more professional when
+      you have a clear process. In this module, you'll learn how to move
+      through an editing project from beginning to final delivery—and how
+      to organize yourself along the way.
     </p>
 
-    <div class="progress-box">
+    <div class="progress-area">
 
-      <div class="progress-top">
+      <div class="progress-label">
         <span>Module Progress</span>
-        <span id="progressText">0%</span>
+        <span id="progressText">1 / 5</span>
       </div>
 
-      <div class="progress-bar">
+      <div class="progress-track">
         <div id="progressFill"></div>
       </div>
 
@@ -564,64 +871,174 @@
   </section>
 
 
-  <!-- SECTION 1 -->
+  <!-- =========================
+       STEP INDICATOR
+  ========================== -->
 
-  <section class="section">
+  <div class="step-navigation">
 
-    <div class="section-number">01 · SEE THE PROCESS</div>
+    <div class="step active" id="step1">
+      <span class="step-number">01</span>
+      Visual
+    </div>
 
-    <h2>The Editor's Workflow</h2>
+    <div class="step" id="step2">
+      <span class="step-number">02</span>
+      Video
+    </div>
 
-    <p class="section-intro">
-      Before you begin making changes to a manuscript, you need to understand
-      the journey an edited project takes. Start by exploring the visual below.
-    </p>
+    <div class="step" id="step3">
+      <span class="step-number">03</span>
+      Interactive
+    </div>
 
-    <div class="image-frame">
+    <div class="step" id="step4">
+      <span class="step-number">04</span>
+      Workbook
+    </div>
+
+    <div class="step" id="step5">
+      <span class="step-number">05</span>
+      Test
+    </div>
+
+  </div>
+
+
+  <!-- ==================================================
+       SECTION 1 — IMAGE + READING
+  =================================================== -->
+
+  <section class="module-section active" id="section1">
+
+    <div class="section-heading">
+
+      <div class="section-number">
+        Section 01 · Begin Here
+      </div>
+
+      <h2>
+        See the Workflow
+      </h2>
+
+      <p class="section-intro">
+        Before you begin editing, understand the journey a manuscript
+        takes through an editor's hands.
+      </p>
+
+    </div>
+
+
+    <div class="image-card">
 
       <!--
-        REPLACE THIS PLACEHOLDER LATER.
+        ADD YOUR IMAGE LATER.
 
-        Example:
+        Replace this placeholder with:
+
         <img src="images/editing-workflow.jpg"
              alt="The Editing Workflow">
       -->
 
-      <div class="resource-placeholder">
-        <div class="resource-icon">◈</div>
+      <div class="image-placeholder">
 
-        <strong>Workflow Visual</strong>
+        <div class="image-placeholder-inner">
 
-        <span>
-          Your editing workflow infographic will go here.
-        </span>
+          <div class="image-symbol">◈</div>
+
+          <h3>
+            Your Workflow Image
+          </h3>
+
+          <p>
+            Your editing workflow infographic will be placed here.
+          </p>
+
+        </div>
+
       </div>
+
+
+      <div class="reading-box">
+
+        <h3>
+          Why Workflow Matters
+        </h3>
+
+        <p>
+          Professional editing is more than correcting sentences.
+          An editor needs a repeatable process that keeps the project
+          organized from the first conversation with the author to the
+          final delivery.
+        </p>
+
+        <p>
+          A strong workflow helps you understand the assignment,
+          identify what the manuscript needs, work systematically,
+          communicate clearly with the author, and perform a final
+          quality check before delivery.
+        </p>
+
+        <p>
+          The exact workflow may change depending on the project and
+          type of editing, but the principle remains the same:
+          <strong>know what you are doing before you start doing it.</strong>
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="section-navigation">
+
+      <span></span>
+
+      <button
+        class="nav-button next-button"
+        id="next1">
+        I've Read This — Next →
+      </button>
 
     </div>
 
   </section>
 
 
-  <!-- SECTION 2 -->
+  <!-- ==================================================
+       SECTION 2 — VIDEO
+  =================================================== -->
 
-  <section class="section">
+  <section class="module-section" id="section2">
 
-    <div class="section-number">02 · WATCH</div>
+    <div class="section-heading">
 
-    <h2>From Manuscript to Final Delivery</h2>
+      <div class="section-number">
+        Section 02 · Watch
+      </div>
 
-    <p class="section-intro">
-      Watch the lesson to see how the stages of an editing project connect
-      and how an editor can move through them without losing structure,
-      consistency, or control.
-    </p>
+      <h2>
+        From Manuscript to Final Delivery
+      </h2>
 
-    <div class="video-frame">
+      <p class="section-intro">
+        Watch the lesson and follow the complete editing workflow.
+        You must remain in this section for at least five minutes
+        before the completion checkbox becomes available.
+      </p>
+
+    </div>
+
+
+    <div class="video-container">
 
       <!--
-        REPLACE THIS PLACEHOLDER LATER.
+        ADD YOUR VIDEO LATER.
+
+        Replace the placeholder below with your video iframe.
 
         Example:
+
         <iframe
           src="YOUR_VIDEO_URL"
           allowfullscreen>
@@ -631,35 +1048,100 @@
       <div class="video-placeholder">
 
         <div>
-          <div class="play-circle">▶</div>
 
-          <strong>Workflow Video</strong>
+          <div class="play-icon">▶</div>
 
-          <span>
-            Your lesson video will be added here.
-          </span>
+          <h3>
+            Your Workflow Video
+          </h3>
+
+          <p>
+            Your video will be added here.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="timer-box">
+
+        <div class="timer-title">
+          Minimum Learning Time
+        </div>
+
+        <div class="timer" id="videoTimer">
+          05:00
+        </div>
+
+        <div class="timer-message" id="timerMessage">
+          Complete five minutes in this section before continuing.
+        </div>
+
+
+        <div class="video-check" id="videoCheck">
+
+          <label class="check-label">
+
+            <input
+              type="checkbox"
+              id="videoComplete">
+
+            <span>
+              I have watched the lesson and I'm ready to continue.
+            </span>
+
+          </label>
+
         </div>
 
       </div>
 
     </div>
 
+
+    <div class="section-navigation">
+
+      <button
+        class="nav-button"
+        id="back2">
+        ← Back
+      </button>
+
+      <button
+        class="nav-button next-button"
+        id="next2"
+        disabled>
+        Next →
+      </button>
+
+    </div>
+
   </section>
 
 
-  <!-- SECTION 3 -->
+  <!-- ==================================================
+       SECTION 3 — CANVA INTERACTIVE
+  =================================================== -->
 
-  <section class="section">
+  <section class="module-section" id="section3">
 
-    <div class="section-number">03 · INTERACT</div>
+    <div class="section-heading">
 
-    <h2>Step Into the Editor's Workflow</h2>
+      <div class="section-number">
+        Section 03 · Interactive
+      </div>
 
-    <p class="section-intro">
-      Now it's your turn. Explore the interactive presentation below.
-      Follow the workflow, consider each editorial decision, and see how
-      the stages connect in a real editing project.
-    </p>
+      <h2>
+        Step Into the Workflow
+      </h2>
+
+      <p class="section-intro">
+        Explore the interactive presentation below. Work through the
+        workflow and editorial decisions presented inside it.
+      </p>
+
+    </div>
 
 
     <div class="presentation-shell">
@@ -677,199 +1159,35 @@
 
     </div>
 
-    <p class="presentation-note">
-      Explore the presentation at your own pace before continuing.
-    </p>
 
-  </section>
+    <div class="presentation-complete">
 
+      <label class="check-label">
 
-  <!-- SECTION 4 -->
+        <input
+          type="checkbox"
+          id="presentationComplete">
 
-  <section class="section">
+        <span>
+          I have completed the interactive presentation and understand
+          the workflow it demonstrated.
+        </span>
 
-    <div class="section-number">04 · ORGANIZE</div>
-
-    <h2>Build Your Editing System</h2>
-
-    <p class="section-intro">
-      Good editors don't rely on memory alone. They build systems that help
-      them manage manuscripts, deadlines, notes, queries, revisions, and
-      final checks.
-    </p>
-
-
-    <div class="workbook">
-
-      <div>
-
-        <div class="workbook-tag">
-          Downloadable Workbook
-        </div>
-
-        <h3>Organizing Yourself as an Editor</h3>
-
-        <p>
-          Use this workbook to create your own practical editing system.
-          Record project details, organize your workflow, track editorial
-          decisions, and prepare yourself for real client work.
-        </p>
-
-      </div>
-
-
-      <!--
-        REPLACE THIS LINK LATER.
-
-        Example:
-        href="pdf/organizing-yourself-as-an-editor.pdf"
-      -->
-
-      <a
-        class="download-button"
-        href="#"
-        onclick="return false;">
-        ↓ Workbook Coming Soon
-      </a>
+      </label>
 
     </div>
 
-  </section>
 
+    <div class="section-navigation">
 
-  <!-- COMPLETION -->
+      <button
+        class="nav-button"
+        id="back3">
+        ← Back
+      </button>
 
-  <section class="completion" id="completion">
-
-    <div class="completion-mark">✦</div>
-
-    <h2>Ready to Complete Module 5?</h2>
-
-    <p>
-      Once you've explored the workflow, watched the lesson,
-      completed the interactive presentation, and reviewed the workbook,
-      mark this module as complete.
-    </p>
-
-    <button
-      class="complete-button"
-      id="completeButton">
-      ✓ I've Completed This Module
-    </button>
-
-  </section>
-
-
-  <!-- NAVIGATION -->
-
-  <nav class="navigation">
-
-    <a
-      href="lesson-04.html"
-      class="nav-button">
-      ← Previous Module
-    </a>
-
-    <a
-      href="lesson-06.html"
-      id="nextButton"
-      class="nav-button next">
-      Lesson 2 → 
-    </a>
-
-  </nav>
-
-</main>
-
-
-<script>
-
-  /*
-    ==========================================
-    MODULE 5 PROGRESS SYSTEM
-    ==========================================
-  */
-
-  const moduleKey =
-    "litdom_lesson_1_module_5_complete";
-
-
-  const completeButton =
-    document.getElementById("completeButton");
-
-  const nextButton =
-    document.getElementById("nextButton");
-
-  const progressFill =
-    document.getElementById("progressFill");
-
-  const progressText =
-    document.getElementById("progressText");
-
-
-  /*
-    Initial state
-  */
-
-  progressFill.style.width = "0%";
-  progressText.textContent = "0%";
-
-
-  /*
-    Complete module
-  */
-
-  completeButton.addEventListener("click", function () {
-
-    localStorage.setItem(moduleKey, "true");
-
-    progressFill.style.width = "100%";
-    progressText.textContent = "Complete";
-
-    completeButton.textContent =
-      "✓ Module Completed";
-
-    completeButton.disabled = true;
-
-    nextButton.classList.add("unlocked");
-
-    /*
-      Give the learner a moment to see
-      the completed state.
-    */
-
-    setTimeout(function () {
-
-      nextButton.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-      });
-
-    }, 250);
-
-  });
-
-
-  /*
-    If this module was already completed,
-    restore the completed state.
-  */
-
-  if (localStorage.getItem(moduleKey) === "true") {
-
-    progressFill.style.width = "100%";
-    progressText.textContent = "Complete";
-
-    completeButton.textContent =
-      "✓ Module Completed";
-
-    completeButton.disabled = true;
-
-    nextButton.classList.add("unlocked");
-
-  }
-
-</script>
-
-</body>
-</html>
+      <button
+        class="nav-button next-button"
+        id="next3"
+        disabled>
+    
