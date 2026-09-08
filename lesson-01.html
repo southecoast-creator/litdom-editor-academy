@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Lesson 01 — Who Is an Editor? | Litdom Editor Academy</title>
+
+  <style>
+    :root {
+      --obsidian: #0B0B0F;
+      --charcoal: #17171C;
+      --gold: #D4AF37;
+      --champagne: #F4D58D;
+      --ivory: #FFF8E7;
+      --muted: #AAA595;
+      --line: rgba(212, 175, 55, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(212,175,55,0.07), transparent 35%),
+        var(--obsidian);
+      color: var(--ivory);
+      font-family: Arial, sans-serif;
+    }
+
+    /* HEADER */
+
+    header {
+      border-bottom: 1px solid var(--line);
+      padding: 18px 20px;
+      background: rgba(11,11,15,0.9);
+    }
+
+    .header-inner {
+      max-width: 900px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      font-family: Georgia, serif;
+      font-size: 18px;
+    }
+
+    .brand span {
+      color: var(--gold);
+    }
+
+    .lesson-count {
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* MAIN */
+
+    main {
+      max-width: 850px;
+      margin: auto;
+      padding: 60px 20px 100px;
+    }
+
+    .lesson-label {
+      text-align: center;
+      color: var(--gold);
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      text-align: center;
+      font-family: Georgia, serif;
+      font-size: clamp(38px, 8vw, 64px);
+      font-weight: normal;
+      margin: 15px 0;
+    }
+
+    .intro {
+      text-align: center;
+      max-width: 600px;
+      margin: auto;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    /* PROGRESS */
+
+    .progress {
+      margin: 45px auto 60px;
+      max-width: 600px;
+    }
+
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 9px;
+    }
+
+    .progress-bar {
+      height: 3px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: 20%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        var(--gold),
+        var(--champagne)
+      );
+      transition: width 0.4s ease;
+    }
+
+    /* SECTIONS */
+
+    .lesson-section {
+      display: none;
+      animation: fadeIn 0.35s ease;
+    }
+
+    .lesson-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section-number {
+      color: var(--gold);
+      font-family: Georgia, serif;
+      font-size: 13px;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-family: Georgia, serif;
+      font-size: 31px;
+      font-weight: normal;
+      margin: 0 0 12px;
+    }
+
+    .section-description {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+
+    /* VISUALS */
+
+    .visual-card {
+      background: var(--charcoal);
+      border: 1px solid rgba(244,213,141,0.14);
+      border-radius: 22px;
+      overflow: hidden;
+    }
+
+    .visual-placeholder {
+      min-height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 30px;
+      background:
+        radial-gradient(circle, rgba(212,175,55,0.12), transparent 60%),
+        #121217;
+    }
+
+    .visual-placeholder-inner {
+      max-width: 400px;
+    }
+
+    .visual-icon {
+      font-size: 45px;
+      margin-bottom: 15px;
+    }
+
+    .visual-placeholder h3 {
+      font-family: Georgia, serif;
+      font-weight: normal;
+      font-size: 24px;
+      margin: 5px 0;
+    }
+
+    .visual-placeholder p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .visual-caption {
+      padding: 18px 20px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* VIDEO */
+
+    .video-box {
+      background: var(--charcoal);
+      border: 1px solid rgba(244,213,141,0.14);
+      border-radius: 22px;
+      overflow: hidden;
+    }
+
+    .video-placeholder {
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #111116;
+      text-align: center;
+      padding: 25px;
+    }
+
+    .play-circle {
+      width: 70px;
+      height: 70px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 25px;
+      margin: auto;
+    }
+
+    .video-placeholder p {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* INTERACTIVE */
+
+    .activity-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .activity-card {
+      min-height: 180px;
+      border: 1px solid rgba(244,213,141,0.15);
+      border-radius: 20px;
+      background: var(--charcoal);
+      padding: 25px 18px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .activity-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--gold);
+    }
+
+    .activity-circle {
+      width: 65px;
+      height: 65px;
+      margin: 0 auto 15px;
+      border-radius: 50%;
+      border: 1px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--champagne);
+      font-family: Georgia, serif;
+      font-size: 20px;
+    }
+
+    .activity-card h3 {
+      font-family: Georgia, serif;
+      font-size: 18px;
+      font-weight: normal;
+      margin: 0 0 8px;
+    }
+
+    .activity-card p {
+      display: none;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .activity-card.open p {
+      display: block;
+    }
+
+    .activity-note {
+      text-align: center;
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 20px;
+    }
+
+    /* PDF */
+
+    .pdf-box {
+      background: var(--charcoal);
+      border: 1px solid rgba(244,213,141,0.15);
+      border-radius: 22px;
+      padding: 30px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .pdf-icon {
+      width: 60px;
+      height: 60px;
+      flex-shrink: 0;
+      border: 1px solid var(--gold);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--champagne);
+      font-family: Georgia, serif;
+    }
+
+    .pdf-info h3 {
+      margin: 0 0 6px;
+      font-family: Georgia, serif;
+      font-weight: normal;
+    }
+
+    .pdf-info p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .download {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 17px;
+      border-radius: 999px;
+      background: var(--gold);
+      color: var(--obsidian);
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    /* TEST */
+
+    .question {
+      background: var(--charcoal);
+      border: 1px solid rgba(244,213,141,0.12);
+      border-radius: 18px;
+      padding: 23px;
+      margin-bottom: 15px;
+    }
+
+    .question h3 {
+      font-size: 14px;
+      line-height: 1.6;
+      font-weight: normal;
+      margin: 0 0 15px;
+    }
+
+    .option {
+      display: block;
+      padding: 11px 13px;
+      margin: 7px 0;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 12px;
+      transition: 0.2s;
+    }
+
+    .option:hover {
+      border-color: var(--gold);
+      color: var(--ivory);
+    }
+
+    .option input {
+      margin-right: 8px;
+    }
+
+    /* BUTTONS */
+
+    .navigation {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 40px;
+    }
+
+    .nav-button {
+      border: 1px solid var(--gold);
+      background: transparent;
+      color: var(--champagne);
+      padding: 13px 20px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .nav-button.primary {
+      background: var(--gold);
+      color: var(--obsidian);
+    }
+
+    .nav-button:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .completion {
+      display: none;
+      text-align: center;
+      padding: 45px 20px;
+      border: 1px solid var(--gold);
+      border-radius: 22px;
+      background: rgba(212,175,55,0.04);
+    }
+
+    .completion.show {
+      display: block;
+    }
+
+    .completion-symbol {
+      font-size: 42px;
+      color: var(--gold);
+    }
+
+    .completion h2 {
+      font-family: Georgia, serif;
+      font-weight: normal;
+      font-size: 30px;
+    }
+
+    .completion p {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 13px;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 650px) {
+
+      main {
+        padding-top: 45px;
+      }
+
+      .activity-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pdf-box {
+        align-items: flex-start;
+        padding: 22px;
+      }
+
+      .navigation {
+        position: sticky;
+        bottom: 10px;
+        background: rgba(11,11,15,0.95);
+        padding: 10px;
+        border-radius: 16px;
+        backdrop-filter: blur(10px);
+      }
+
+      .nav-button {
+        flex: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+
+    <div class="brand">
+      Litdom <span>Editor Academy</span>
+    </div>
+
+    <div class="lesson-count">
+      Lesson 01 / Fundamentals
+    </div>
+
+  </div>
+</header>
+
+
+<main>
+
+  <!-- LESSON INTRO -->
+
+  <div class="lesson-label">
+    Fundamentals of Editing
+  </div>
+
+  <h1>Who Is an Editor?</h1>
+
+  <p class="intro">
+    Before you can edit well, you must understand the person behind
+    the edits. Discover the editor's role, responsibility, and place
+    in the publishing process.
+  </p>
+
+
+  <!-- PROGRESS -->
+
+  <div class="progress">
+
+    <div class="progress-text">
+      <span>Lesson Progress</span>
+      <span id="progressText">1 / 5</span>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+  </div>
+
+
+  <!-- SECTION 1: VISUALS -->
+
+  <section class="lesson-section active" id="section1">
+
+    <div class="section-number">01 — VISUAL INTRODUCTION</div>
+
+    <h2 class="section-title">Meet the Editor</h2>
+
+    <p class="section-description">
+      Start with three visual snapshots of the editor's world.
+      Explore each one before moving forward.
+    </p>
+
+    <div class="visual-card">
+
+      <div class="visual-placeholder">
+        <div class="visual-placeholder-inner">
+          <div class="visual-icon">✦</div>
+          <h3>Visual One</h3>
+          <p>
+            Your first lesson image will appear here.
+          </p>
+        </div>
+      </div>
+
+      <div class="visual-caption">
+        The editor works between the author's ideas and the
+        reader's experience.
+      </div>
+
+    </div>
+
+    <br>
+
+    <div class="visual-card">
+
+      <div class="visual-placeholder">
+        <div class="visual-placeholder-inner">
+          <div class="visual-icon">◈</div>
+          <h3>Visual Two</h3>
+          <p>
+            Your second lesson image will appear here.
+          </p>
+        </div>
+      </div>
+
+      <div class="visual-caption">
+        Good editing protects the author's voice while improving
+        the manuscript.
+      </div>
+
+    </div>
+
+    <br>
+
+    <div class="visual-card">
+
+      <div class="visual-placeholder">
+        <div class="visual-placeholder-inner">
+          <div class="visual-icon">◇</div>
+          <h3>Visual Three</h3>
+          <p>
+            Your third lesson image will appear here.
+          </p>
+        </div>
+      </div>
+
+      <div class="visual-caption">
+        An editor does not simply find mistakes. An editor helps
+        writing communicate more effectively.
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- SECTION 2: VIDEO -->
+
+  <section class="lesson-section" id="section2">
+
+    <div class="section-number">02 — WATCH</div>
+
+    <h2 class="section-title">Learn From Your Instructor</h2>
+
+    <p class="section-description">
+      Watch the lesson video carefully. The ideas introduced here
+      will help you complete the activity and mini test.
+    </p>
+
+    <div class="video-box">
+
+      <div class="video-placeholder">
+
+        <div>
+          <div class="play-circle">▶</div>
+
+          <p>
+            Your YouTube lesson video will appear here.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- SECTION 3: INTERACTIVE -->
+
+  <section class="lesson-section" id="section3">
+
+    <div class="section-number">03 — EXPLORE</div>
+
+    <h2 class="section-title">The Editor's Three Roles</h2>
+
+    <p class="section-description">
+      Tap each circle to reveal an important part of an editor's
+      role.
+    </p>
+
+    <div class="activity-grid">
+
+      <div class="activity-card" onclick="toggleActivity(this)">
+        <div class="activity-circle">01</div>
+        <h3>The Reader</h3>
+        <p>
+          An editor considers how the manuscript will be understood
+          and experienced by its intended reader.
+        </p>
+      </div>
+
+      <div class="activity-card" onclick="toggleActivity(this)">
+        <div class="activity-circle">02</div>
+        <h3>The Craftsperson</h3>
+        <p>
+          An editor works with language, structure, clarity,
+          consistency, and technique to strengthen a manuscript.
+        </p>
+      </div>
+
+      <div class="activity-card" onclick="toggleActivity(this)">
+        <div class="activity-circle">03</div>
+        <h3>The Partner</h3>
+        <p>
+          An editor collaborates with the author while respecting
+          the author's purpose, voice, and creative ownership.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="activity-note">
+      Tap all three cards to explore them.
+    </div>
+
+  </section>
+
+
+  <!-- SECTION 4: PDF -->
+
+  <section class="lesson-section" id="section4">
+
+    <div class="section-number">04 — DOWNLOAD</div>
+
+    <h2 class="section-title">Take It With You</h2>
+
+    <p class="section-description">
+      Download the lesson workbook and keep it as part of your
+      editorial reference library.
+    </p>
+
+    <div class="pdf-box">
+
+      <div class="pdf-icon">
+        PDF
+      </div>
+
+      <div class="pdf-info">
+
+        <h3>Who Is an Editor? — Workbook</h3>
+
+        <p>
+          Lesson notes, key concepts, and space for your own
+          editorial observations.
+        </p>
+
+        <a href="#" class="download" id="pdfButton">
+          Download PDF
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- SECTION 5: TEST -->
+
+  <section class="lesson-section" id="section5">
+
+    <div class="section-number">05 — MINI TEST</div>
+
+    <h2 class="section-title">Test Your Understanding</h2>
+
+    <p class="section-description">
+      Answer all three questions. You must pass the mini test
+      before this lesson can be marked complete.
+    </p>
+
+
+    <div class="question">
+
+      <h3>
+        1. What is one important responsibility of an editor?
+      </h3>
+
+      <label class="option">
+        <input type="radio" name="q1" value="a">
+        Rewrite the author's entire manuscript.
+      </label>
+
+      <label class="option">
+        <input type="radio" name="q1" value="b">
+        Help the manuscript communicate effectively.
+      </label>
+
+      <label class="option">
+        <input type="radio" name="q1" value="c">
+        Remove the author's personal writing style.
+      </label>
+
+    </div>
+
+
+    <div class="question">
+
+      <h3>
+        2. An editor should generally treat the author's voice as:
+      </h3>
+
+      <label class="option">
+        <input type="radio" name="q2" value="a">
+        Something to respect and preserve.
+      </label>
+
+      <label class="option">
+        <input type="radio" name="q2" value="b">
+        Something that should always be removed.
+      </label>
+
+      <label class="option">
+        <input type="radio" name="q2" value="c">
+        Something that does not matter.
+      </label>
+
+    </div>
+
+
+    <div class="question">
+
+      <h3>
+        3. Which three perspectives can help an editor do their
+        work well?
+      </h3>
+
+      <label class="option">
+        <input type="radio" name="q3" value="a">
+        Reader, craftsperson, and partner.
+      </label>
+
+      <label class="option">
+        <input type="radio" name="q3" value="b">
+        Publisher, marketer, and celebrity.
+      </label>
+
+      <label class="option">
+        <input type="radio" name="q3" value="c">
+        Reader, actor, and designer.
+      </label>
+
+    </div>
+
+    <button class="nav-button primary" onclick="submitTest()">
+      Submit Test
+    </button>
+
+    <p id="testResult"></p>
+
+  </section>
+
+
+  <!-- COMPLETION -->
+
+  <div class="completion" id="completion">
+
+    <div class="completion-symbol">✦</div>
+
+    <h2>Lesson Complete</h2>
+
+    <p>
+      Beautiful work. You've completed
+      <strong>Who Is an Editor?</strong>
+    </p>
+
+    <p>
+      The next lesson is now unlocked.
+    </p>
+
+    <a href="#" class="download">
+      Continue to Lesson 02 →
+    </a>
+
+  </div>
+
+
+  <!-- NAVIGATION -->
+
+  <div class="navigation">
+
+    <button
+      class="nav-button"
+      id="backButton"
+      onclick="previousSection()"
+      disabled>
+      ← Back
+    </button>
+
+    <button
+      class="nav-button primary"
+      id="nextButton"
+      onclick="nextSection()">
+      Continue →
+    </button>
+
+  </div>
+
+</main>
+
+
+<script>
+
+  let currentSection = 1;
+  const totalSections = 5;
+
+  let activityCompleted = false;
+  let testCompleted = false;
+
+
+  function updateProgress() {
+
+    const percentage =
+      (currentSection / totalSections) * 100;
+
+    document.getElementById("progressFill").style.width =
+      percentage + "%";
+
+    document.getElementById("progressText").textContent =
+      currentSection + " / " + totalSections;
+  }
+
+
+  function showSection(number) {
+
+    document.querySelectorAll(".lesson-section")
+      .forEach(section => {
+        section.classList.remove("active");
+      });
+
+    document.getElementById("section" + number)
+      .classList.add("active");
+
+    currentSection = number;
+
+    document.getElementById("backButton").disabled =
+      currentSection === 1;
+
+    updateProgress();
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+
+
+  function nextSection() {
+
+    if (currentSection === 3 && !activityCompleted) {
+      alert("Please explore all three activity cards first.");
+      return;
+    }
+
+    if (currentSection < totalSections) {
+
+      showSection(currentSection + 1);
+
+    }
+  }
+
+
+  function previousSection() {
+
+    if (currentSection > 1) {
+      showSection(currentSection - 1);
+    }
+
+  }
+
+
+  function toggleActivity(card) {
+
+    card.classList.toggle("open");
+
+    const cards =
+      document.querySelectorAll(".activity-card");
+
+    const opened =
+      document.querySelectorAll(".activity-card.open");
+
+    if (opened.length === cards.length) {
+      activityCompleted = true;
+    }
+
+  }
+
+
+  function submitTest() {
+
+    const q1 =
+      document.querySelector('input[name="q1"]:checked');
+
+    const q2 =
+      document.querySelector('input[name="q2"]:checked');
+
+    const q3 =
+      document.querySelector('input[name="q3"]:checked');
+
+    const result =
+      document.getElementById("testResult");
+
+    if (!q1 || !q2 || !q3) {
+
+      result.textContent =
+        "Please answer all three questions.";
+
+      result.style.color = "#F4D58D";
+
+      return;
+    }
+
+
+    let s
