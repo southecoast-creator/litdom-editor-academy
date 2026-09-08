@@ -1,927 +1,1159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Module 3 — Editor–Author Relationship</title>
-
-  <style>
-    :root {
-      --obsidian: #0B0B0F;
-      --charcoal: #17171C;
-      --gold: #D4AF37;
-      --champagne: #F4D58D;
-      --ivory: #FFF8E7;
-      --muted: #AAA595;
-      --line: rgba(212,175,55,0.2);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      background:
-        radial-gradient(circle at 50% 0%, rgba(212,175,55,0.07), transparent 35%),
-        var(--obsidian);
-      color: var(--ivory);
-      font-family: Arial, sans-serif;
-    }
-
-    header {
-      border-bottom: 1px solid var(--line);
-      padding: 18px 20px;
-      background: rgba(11,11,15,0.92);
-    }
-
-    .header-inner {
-      max-width: 850px;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .brand {
-      font-family: Georgia, serif;
-      font-size: 18px;
-    }
-
-    .brand span {
-      color: var(--gold);
-    }
-
-    .lesson-count {
-      color: var(--muted);
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    main {
-      max-width: 850px;
-      margin: auto;
-      padding: 55px 20px 100px;
-    }
-
-    .lesson-label {
-      text-align: center;
-      color: var(--gold);
-      font-size: 10px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-    }
-
-    h1 {
-      text-align: center;
-      font-family: Georgia, serif;
-      font-size: clamp(38px, 8vw, 64px);
-      font-weight: normal;
-      margin: 15px 0;
-    }
-
-    .intro {
-      max-width: 600px;
-      margin: auto;
-      text-align: center;
-      color: var(--muted);
-      line-height: 1.8;
-      font-size: 15px;
-    }
-
-    /* PROGRESS */
-
-    .progress {
-      max-width: 600px;
-      margin: 45px auto 55px;
-    }
-
-    .progress-text {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 9px;
-      color: var(--muted);
-      font-size: 10px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    .progress-bar {
-      height: 3px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      width: 20%;
-      height: 100%;
-      background: linear-gradient(
-        90deg,
-        var(--gold),
-        var(--champagne)
-      );
-      transition: width .4s ease;
-    }
-
-    /* SECTIONS */
-
-    .lesson-section {
-      display: none;
-      animation: appear .35s ease;
-    }
-
-    .lesson-section.active {
-      display: block;
-    }
-
-    @keyframes appear {
-      from {
-        opacity: 0;
-        transform: translateY(12px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .section-number {
-      color: var(--gold);
-      font-family: Georgia, serif;
-      font-size: 13px;
-      letter-spacing: 2px;
-      margin-bottom: 10px;
-    }
-
-    .section-title {
-      font-family: Georgia, serif;
-      font-weight: normal;
-      font-size: 31px;
-      margin: 0 0 12px;
-    }
-
-    .section-description {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.7;
-      margin-bottom: 30px;
-    }
-
-    /* VISUALS */
-
-    .visual-card {
-      margin-bottom: 18px;
-      background: var(--charcoal);
-      border: 1px solid rgba(244,213,141,.14);
-      border-radius: 22px;
-      overflow: hidden;
-    }
-
-    .visual-placeholder {
-      min-height: 280px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 30px;
-      background:
-        radial-gradient(circle, rgba(212,175,55,.12), transparent 60%),
-        #121217;
-    }
-
-    .visual-icon {
-      font-size: 42px;
-      color: var(--gold);
-      margin-bottom: 12px;
-    }
-
-    .visual-placeholder h3 {
-      font-family: Georgia, serif;
-      font-size: 23px;
-      font-weight: normal;
-      margin: 5px 0;
-    }
-
-    .visual-placeholder p {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .visual-caption {
-      padding: 17px 20px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    /* VIDEO */
-
-    .video-box {
-      background: var(--charcoal);
-      border: 1px solid rgba(244,213,141,.15);
-      border-radius: 22px;
-      overflow: hidden;
-    }
-
-    .video-screen {
-      aspect-ratio: 16/9;
-      background: #101014;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 25px;
-    }
-
-    .play-symbol {
-      width: 70px;
-      height: 70px;
-      border: 1px solid var(--gold);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--gold);
-      font-size: 24px;
-      margin: auto;
-    }
-
-    .timer-area {
-      padding: 25px;
-      text-align: center;
-    }
-
-    .timer-label {
-      color: var(--muted);
-      font-size: 10px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
-
-    .timer {
-      font-family: Georgia, serif;
-      color: var(--champagne);
-      font-size: 45px;
-      margin: 10px 0;
-    }
-
-    .timer-bar {
-      height: 3px;
-      background: rgba(255,255,255,.08);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-
-    .timer-fill {
-      width: 0%;
-      height: 100%;
-      background: var(--gold);
-      transition: width 1s linear;
-    }
-
-    .video-status {
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 14px;
-    }
-
-    /* ACTIVITY */
-
-    .activity-grid {
-      display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 15px;
-    }
-
-    .activity-card {
-      min-height: 190px;
-      padding: 23px 17px;
-      background: var(--charcoal);
-      border: 1px solid rgba(244,213,141,.14);
-      border-radius: 20px;
-      text-align: center;
-      cursor: pointer;
-      transition: .25s;
-    }
-
-    .activity-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--gold);
-    }
-
-    .activity-card.completed {
-      border-color: var(--gold);
-      box-shadow: 0 0 25px rgba(212,175,55,.08);
-    }
-
-    .activity-circle {
-      width: 65px;
-      height: 65px;
-      margin: 0 auto 14px;
-      border: 1px solid var(--gold);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--champagne);
-      font-family: Georgia, serif;
-      font-size: 19px;
-    }
-
-    .activity-card h3 {
-      font-family: Georgia, serif;
-      font-weight: normal;
-      font-size: 17px;
-      margin: 0 0 8px;
-    }
-
-    .activity-card p {
-      display: none;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.6;
-    }
-
-    .activity-card.open p {
-      display: block;
-    }
-
-    .activity-card.open .activity-circle::after {
-      content: " ✓";
-      color: var(--gold);
-    }
-
-    .activity-note {
-      text-align: center;
-      color: var(--muted);
-      font-size: 11px;
-      margin-top: 20px;
-    }
-
-    /* PDF */
-
-    .pdf-box {
-      background: var(--charcoal);
-      border: 1px solid rgba(244,213,141,.14);
-      border-radius: 22px;
-      padding: 27px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .pdf-icon {
-      width: 60px;
-      height: 60px;
-      flex-shrink: 0;
-      border: 1px solid var(--gold);
-      border-radius: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--champagne);
-      font-family: Georgia, serif;
-      font-size: 12px;
-    }
-
-    .pdf-info h3 {
-      font-family: Georgia, serif;
-      font-weight: normal;
-      margin: 0 0 7px;
-    }
-
-    .pdf-info p {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.5;
-      margin: 0;
-    }
-
-    .download {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 11px 18px;
-      background: var(--gold);
-      color: var(--obsidian);
-      border-radius: 999px;
-      text-decoration: none;
-      font-size: 11px;
-      font-weight: bold;
-    }
-
-    .download.disabled {
-      opacity: .4;
-      pointer-events: none;
-    }
-
-    /* TEST */
-
-    .question {
-      padding: 22px;
-      margin-bottom: 15px;
-      background: var(--charcoal);
-      border: 1px solid rgba(244,213,141,.12);
-      border-radius: 18px;
-    }
-
-    .question h3 {
-      margin: 0 0 15px;
-      font-size: 14px;
-      line-height: 1.6;
-      font-weight: normal;
-    }
-
-    .option {
-      display: block;
-      padding: 11px 13px;
-      margin: 7px 0;
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 10px;
-      color: var(--muted);
-      font-size: 12px;
-      cursor: pointer;
-    }
-
-    .option:hover {
-      border-color: var(--gold);
-      color: var(--ivory);
-    }
-
-    .option input {
-      margin-right: 8px;
-    }
-
-    /* NAVIGATION */
-
-    .navigation {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      margin-top: 40px;
-    }
-
-    .nav-button {
-      padding: 13px 21px;
-      border-radius: 999px;
-      border: 1px solid var(--gold);
-      background: transparent;
-      color: var(--champagne);
-      font-size: 11px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .nav-button.primary {
-      background: var(--gold);
-      color: var(--obsidian);
-    }
-
-    .nav-button:disabled {
-      opacity: .3;
-      cursor: not-allowed;
-    }
-
-    .completion {
-      display: none;
-      text-align: center;
-      padding: 45px 20px;
-      border: 1px solid var(--gold);
-      border-radius: 22px;
-      background: rgba(212,175,55,.04);
-    }
-
-    .completion.show {
-      display: block;
-    }
-
-    .completion-symbol {
-      color: var(--gold);
-      font-size: 42px;
-    }
-
-    .completion h2 {
-      font-family: Georgia, serif;
-      font-weight: normal;
-      font-size: 30px;
-    }
-
-    .completion p {
-      color: var(--muted);
-      line-height: 1.7;
-      font-size: 13px;
-    }
-
-    @media(max-width:650px) {
-
-      .lesson-count {
-        display: none;
-      }
-
-      main {
-        padding-top: 42px;
-      }
-
-      .activity-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .pdf-box {
-        align-items: flex-start;
-      }
-
-      .navigation {
-        position: sticky;
-        bottom: 10px;
-        padding: 10px;
-        background: rgba(11,11,15,.95);
-        border-radius: 16px;
-        backdrop-filter: blur(10px);
-      }
-
-      .nav-button {
-        flex: 1;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Module 3 — Editor–Author Relationship</title>
+
+<style>
+
+:root {
+  --obsidian: #0B0B0F;
+  --gold: #D4AF37;
+  --champagne: #F4D58D;
+  --ivory: #FFF8E7;
+  --charcoal: #17171C;
+  --muted: #AAA595;
+  --border: #8C7625;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--obsidian);
+  color: var(--ivory);
+  font-family: Arial, sans-serif;
+  line-height: 1.7;
+}
+
+.container {
+  width: min(900px, 92%);
+  margin: auto;
+}
+
+/* HEADER */
+
+header {
+  padding: 28px 0 22px;
+  border-bottom: 1px solid rgba(212,175,55,.35);
+}
+
+.brand {
+  color: var(--champagne);
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.lesson-number {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 7px;
+}
+
+/* HERO */
+
+.hero {
+  padding: 55px 0 30px;
+}
+
+.eyebrow {
+  color: var(--gold);
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: Georgia, serif;
+}
+
+h1 {
+  font-size: clamp(38px, 8vw, 64px);
+  line-height: 1.05;
+  margin: 0 0 20px;
+}
+
+.hero-text {
+  color: var(--muted);
+  max-width: 700px;
+  font-size: 16px;
+}
+
+/* PROGRESS */
+
+.progress-wrapper {
+  margin: 15px 0 45px;
+}
+
+.progress-top {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.progress-bar {
+  height: 5px;
+  background: var(--charcoal);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--gold),
+    var(--champagne)
+  );
+}
+
+/* SECTIONS */
+
+.lesson-section {
+  margin-bottom: 55px;
+}
+
+.section-label {
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.section-title {
+  font-size: 34px;
+  margin: 7px 0 14px;
+}
+
+.section-intro {
+  color: var(--muted);
+  max-width: 720px;
+}
+
+/* CARDS */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.card {
+  background: var(--charcoal);
+  border: 1px solid rgba(212,175,55,.28);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.card-icon {
+  font-size: 27px;
+  margin-bottom: 12px;
+}
+
+.card h3 {
+  color: var(--champagne);
+  margin: 0 0 8px;
+}
+
+.card p {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+/* PRESENTATION */
+
+.presentation {
+  margin-top: 30px;
+}
+
+.slide {
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(212,175,55,.10),
+      transparent 40%
+    ),
+    var(--charcoal);
+
+  border: 1px solid rgba(212,175,55,.35);
+  border-radius: 20px;
+  padding: 42px 30px;
+  min-height: 390px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.slide-number {
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+}
+
+.slide h3 {
+  font-size: 35px;
+  margin: 0 0 18px;
+}
+
+.slide p {
+  color: var(--muted);
+  max-width: 650px;
+}
+
+.quote {
+  font-family: Georgia, serif;
+  font-size: 24px;
+  color: var(--champagne);
+  border-left: 2px solid var(--gold);
+  padding-left: 18px;
+  margin-top: 20px;
+}
+
+.slide-list {
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.slide-list li {
+  background: var(--obsidian);
+  border-left: 2px solid var(--gold);
+  padding: 12px 15px;
+  margin: 10px 0;
+  color: var(--muted);
+  border-radius: 7px;
+}
+
+/* SCENARIO */
+
+.scenario {
+  margin-top: 28px;
+  background: var(--charcoal);
+  border: 1px solid rgba(212,175,55,.28);
+  border-radius: 18px;
+  padding: 25px;
+}
+
+.dialogue {
+  padding: 17px;
+  margin: 12px 0;
+  background: var(--obsidian);
+  border-radius: 10px;
+}
+
+.dialogue.editor {
+  border-left: 3px solid var(--gold);
+}
+
+.dialogue.author {
+  border-left: 3px solid var(--border);
+}
+
+.dialogue strong {
+  color: var(--champagne);
+}
+
+/* CHOICES */
+
+.choice {
+  background: var(--charcoal);
+  border: 1px solid rgba(212,175,55,.25);
+  border-radius: 12px;
+  padding: 17px;
+  margin: 12px 0;
+  color: var(--muted);
+}
+
+.choice strong {
+  color: var(--champagne);
+}
+
+/* PRACTICAL */
+
+.practice-grid {
+  display: grid;
+  gap: 14px;
+  margin-top: 25px;
+}
+
+.practice-card {
+  background: var(--charcoal);
+  border: 1px solid rgba(212,175,55,.25);
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.practice-card h3 {
+  color: var(--champagne);
+  margin-top: 0;
+}
+
+.professional {
+  border-left: 3px solid var(--gold);
+}
+
+.unprofessional {
+  border-left: 3px solid #555;
+}
+
+.practice-card p {
+  color: var(--muted);
+}
+
+/* TEST */
+
+.question {
+  background: var(--charcoal);
+  border: 1px solid rgba(212,175,55,.25);
+  border-radius: 16px;
+  padding: 22px;
+  margin: 18px 0;
+}
+
+.question-number {
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.question h3 {
+  color: var(--ivory);
+  font-size: 18px;
+}
+
+.option {
+  display: block;
+  padding: 10px 0;
+  color: var(--muted);
+}
+
+input {
+  accent-color: var(--gold);
+}
+
+/* BUTTONS */
+
+.button {
+  display: inline-block;
+  text-decoration: none;
+  border: 0;
+  border-radius: 10px;
+  padding: 13px 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.primary {
+  background: var(--gold);
+  color: var(--obsidian);
+}
+
+.secondary {
+  background: var(--charcoal);
+  border: 1px solid var(--border);
+  color: var(--champagne);
+}
+
+/* COMPLETION */
+
+.completion {
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(212,175,55,.10),
+      transparent 60%
+    ),
+    var(--charcoal);
+
+  border: 1px solid var(--gold);
+  border-radius: 20px;
+  padding: 45px 25px;
+  text-align: center;
+  margin: 50px 0;
+}
+
+.completion-icon {
+  font-size: 42px;
+  color: var(--champagne);
+}
+
+.completion h2 {
+  color: var(--champagne);
+}
+
+.completion p {
+  color: var(--muted);
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 25px 0 50px;
+  border-top: 1px solid rgba(212,175,55,.2);
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    padding-top: 40px;
+  }
+
+  .slide {
+    min-height: 430px;
+    padding: 30px 22px;
+  }
+
+  .slide h3 {
+    font-size: 29px;
+  }
+
+  .quote {
+    font-size: 20px;
+  }
+
+  .navigation {
+    flex-direction: row;
+  }
+
+  .navigation .button {
+    flex: 1;
+    text-align: center;
+  }
+
+}
+
+</style>
+<main>
 </head>
+
 
 <body>
 
+<div class="container">
+
+
 <header>
-  <div class="header-inner">
 
-    <div class="brand">
-      Litdom <span>Editor Academy</span>
-    </div>
-
-    <div class="lesson-count">
-      Lesson 01 / Fundamentals
-    </div>
-
+  <div class="brand">
+    Litdom Editor Academy
   </div>
+
+  <div class="lesson-number">
+    Lesson 01 / Fundamentals of Editing
+  </div>
+
 </header>
 
 
-<main>
+<section class="hero">
 
-  <div class="lesson-label">
-    Fundamentals of Editing
+  <div class="eyebrow">
+    Module 03
   </div>
 
-  <h1>Who Is an Editor?</h1>
+  <h1>
+    Editor–Author Relationship
+  </h1>
 
-  <p class="intro">
-    Before you can edit well, you must understand the person
-    behind the edits. Discover the editor's role, responsibility,
-    and place in the publishing process.
+  <p class="hero-text">
+    Great editing is built on more than technical skill.
+    It requires communication, trust, respect, professional
+    boundaries, and a shared commitment to making the
+    manuscript stronger.
+  </p>
+
+</section>
+
+
+<div class="progress-wrapper">
+
+  <div class="progress-top">
+    <span>Module Progress</span>
+    <span>3 / 5</span>
+  </div>
+
+  <div class="progress-bar">
+    <div class="progress-fill"></div>
+  </div>
+
+</div>
+
+
+<!-- SECTION 1 -->
+
+<section class="lesson-section">
+
+  <div class="section-label">
+    Part 01
+  </div>
+
+  <h2 class="section-title">
+    Two People. One Manuscript.
+  </h2>
+
+  <p class="section-intro">
+    The author creates the manuscript. The editor helps
+    strengthen it. Their responsibilities are different,
+    but their work should move toward the same goal.
   </p>
 
 
-  <!-- PROGRESS -->
+  <div class="card-grid">
 
-  <div class="progress">
+    <article class="card">
 
-    <div class="progress-text">
-      <span>Lesson Progress</span>
-      <span id="progressText">1 / 5</span>
+      <div class="card-icon">✍🏽</div>
+
+      <h3>The Author</h3>
+
+      <p>
+        Brings the story, ideas, characters, voice,
+        creative vision, and purpose behind the manuscript.
+      </p>
+
+    </article>
+
+
+    <article class="card">
+
+      <div class="card-icon">✦</div>
+
+      <h3>The Editor</h3>
+
+      <p>
+        Brings objectivity, editorial knowledge, technical
+        skill, and a reader-focused perspective.
+      </p>
+
+    </article>
+
+
+    <article class="card">
+
+      <div class="card-icon">◆</div>
+
+      <h3>The Shared Goal</h3>
+
+      <p>
+        To help the manuscript communicate its ideas clearly
+        and provide the strongest possible reading experience.
+      </p>
+
+    </article>
+
+  </div>
+
+</section>
+
+
+<!-- SECTION 2 -->
+
+<section class="lesson-section">
+
+  <div class="section-label">
+    Part 02
+  </div>
+
+  <h2 class="section-title">
+    Presentation
+  </h2>
+
+  <p class="section-intro">
+    Working with authors requires both editorial skill
+    and emotional intelligence. Study each principle below.
+  </p>
+
+
+  <div class="presentation">
+
+
+    <article class="slide">
+
+      <div class="slide-number">
+        SLIDE 01
+      </div>
+
+      <h3>
+        Two People, One Manuscript
+      </h3>
+
+      <p>
+        The editor and author may have different roles,
+        but they are working toward the same result:
+        a stronger manuscript.
+      </p>
+
+      <div class="quote">
+        “The manuscript is the shared ground.”
+      </div>
+
+    </article>
+
+
+    <article class="slide">
+
+      <div class="slide-number">
+        SLIDE 02
+      </div>
+
+      <h3>
+        Different Roles. Shared Goal.
+      </h3>
+
+      <ul class="slide-list">
+        <li>The author protects the creative vision.</li>
+        <li>The editor protects the quality of the manuscript.</li>
+        <li>Both work toward a better reading experience.</li>
+      </ul>
+
+    </article>
+
+
+    <article class="slide">
+
+      <div class="slide-number">
+        SLIDE 03
+      </div>
+
+      <h3>
+        What the Author Brings
+      </h3>
+
+      <p>
+        An author brings something an editor cannot
+        manufacture: the author's creative vision.
+      </p>
+
+      <ul class="slide-list">
+        <li>Story and ideas</li>
+        <li>Character intentions</li>
+        <li>Personal voice and style</li>
+        <li>Creative purpose</li>
+      </ul>
+
+    </article>
+
+
+    <article class="slide">
+
+      <div class="slide-number">
+        SLIDE 04
+      </div>
+
+      <h3>
+        What the Editor Brings
+      </h3>
+
+      <p>
+        The editor provides an outside perspective and
+        professional judgment.
+      </p>
+
+      <ul class="slide-list">
+        <li>Objectivity</li>
+        <li>Technical knowledge</li>
+        <li>Reader awareness</li>
+        <li>Editorial experience</li>
+      </ul>
+
+    </article>
+
+
+    <article class="slide">
+
+      <div class="slide-number">
+        SLIDE 05
+      </div>
+
+      <h3>
+        Trust, Communication &amp; Respect
+      </h3>
+
+      <p>
+        Good editing requires communication. An editor should
+        be able to explain recommendations clearly without
+        belittling the author.
+      </p>
+
+      <div class="quote">
+        “Professional feedback improves the manuscript
+        without attacking the person.”
+      </div>
+
+    </article>
+
+
+    <article class="slide">
+
+      <div class="slide-number">
+        SLIDE 06
+      </div>
+
+      <h3>
+        When You Disagree
+      </h3>
+
+      <ul class="slide-list">
+        <li>Explain the editorial concern.</li>
+        <li>Listen to the author's reasoning.</li>
+        <li>Consider alternatives.</li>
+        <li>Return the discussion to the manuscript.</li>
+      </ul>
+
+    </article>
+
+
+    <article class="slide">
+
+      <div class="slide-number">
+        SLIDE 07
+      </div>
+
+      <h3>
+        Professional Boundaries
+      </h3>
+
+      <ul class="slide-list">
+        <li>Respect deadlines and agreed responsibilities.</li>
+        <li>Keep manuscript information confidential.</li>
+        <li>Do not insult or humiliate the author.</li>
+        <li>Do not impose your personal writing style.</li>
+      </ul>
+
+    </article>
+
+
+    <article class="slide">
+
+      <div class="slide-number">
+        SLIDE 08
+      </div>
+
+      <h3>
+        The Golden Rule
+      </h3>
+
+      <div class="quote">
+        “Edit the manuscript, not the author.”
+      </div>
+
+      <p>
+        Your responsibility is to improve the work while
+        respecting the person who created it.
+      </p>
+
+    </article>
+
+  </div>
+
+
+  <p style="text-align:center; margin-top:25px;">
+    <span class="button primary">
+      ✓ I've Completed the Presentation
+    </span>
+  </p>
+
+</section>
+
+
+<!-- SECTION 3 -->
+
+<section class="lesson-section">
+
+  <div class="section-label">
+    Part 03
+  </div>
+
+  <h2 class="section-title">
+    When Editor and Author Disagree
+  </h2>
+
+  <p class="section-intro">
+    Disagreement is a normal part of editing. What matters
+    is how the disagreement is handled.
+  </p>
+
+
+  <div class="scenario">
+
+    <div class="dialogue editor">
+
+      <strong>Editor:</strong>
+
+      <br>
+
+      “I think this scene could be shortened because
+      the middle section slows the pacing.”
+
     </div>
 
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressFill"></div>
+
+    <div class="dialogue author">
+
+      <strong>Author:</strong>
+
+      <br>
+
+      “I understand, but that section is important to
+      the character's emotional development.”
+
     </div>
 
   </div>
 
 
-  <!-- 01 VISUALS -->
+  <h3>
+    What should the editor do?
+  </h3>
 
-  <section class="lesson-section active" id="section1">
 
-    <div class="section-number">01 — VISUAL INTRODUCTION</div>
+  <div class="choice">
 
-    <h2 class="section-title">Meet the Editor</h2>
+    <strong>Option A</strong>
 
-    <p class="section-description">
-      Explore all three visuals before continuing.
-    </p>
+    <br>
 
+    Tell the author that the editor knows best
+    and remove the section.
 
-    <div class="visual-card">
+  </div>
 
-      <div class="visual-placeholder">
-        <div>
-          <div class="visual-icon">✦</div>
-          <h3>Visual One</h3>
-          <p>Your first lesson image will appear here.</p>
-        </div>
-      </div>
 
-      <div class="visual-caption">
-        The editor works between the author's ideas and the
-        reader's experience.
-      </div>
+  <div class="choice">
 
-    </div>
+    <strong>Option B</strong>
 
+    <br>
 
-    <div class="visual-card">
+    Discuss the concern, listen to the author's reasoning,
+    and explore whether the scene can be strengthened
+    without losing its purpose.
 
-      <div class="visual-placeholder">
-        <div>
-          <div class="visual-icon">◈</div>
-          <h3>Visual Two</h3>
-          <p>Your second lesson image will appear here.</p>
-        </div>
-      </div>
+  </div>
 
-      <div class="visual-caption">
-        Good editing protects the author's voice while improving
-        the manuscript.
-      </div>
 
-    </div>
+  <div class="choice">
 
+    <strong>Option C</strong>
 
-    <div class="visual-card">
+    <br>
 
-      <div class="visual-placeholder">
-        <div>
-          <div class="visual-icon">◇</div>
-          <h3>Visual Three</h3>
-          <p>Your third lesson image will appear here.</p>
-        </div>
-      </div>
+    Stop communicating with the author and simply make
+    whatever changes seem necessary.
 
-      <div class="visual-caption">
-        An editor helps writing communicate more effectively.
-      </div>
+  </div>
 
-    </div>
+</section>
 
-  </section>
 
+<!-- SECTION 4 -->
 
-  <!-- 03 ACTIVITY -->
+<section class="lesson-section">
 
-  <section class="lesson-section" id="section3">
+  <div class="section-label">
+    Part 04
+  </div>
 
-    <div class="section-number">03 — INTERACTIVE ACTIVITY</div>
+  <h2 class="section-title">
+    Professional or Unprofessional?
+  </h2>
 
-    <h2 class="section-title">The Editor's Three Roles</h2>
+  <p class="section-intro">
+    A good editor knows that technical skill alone is not
+    enough. Professional conduct matters too.
+  </p>
 
-    <p class="section-description">
-      Tap each circle to reveal its explanation. Explore all three
-      before continuing.
-    </p>
 
+  <div class="practice-grid">
 
-    <div class="activity-grid">
-
-      <div class="activity-card"
-           onclick="toggleActivity(this)">
-
-        <div class="activity-circle">01</div>
-
-        <h3>The Reader</h3>
-
-        <p>
-          An editor considers how the manuscript will be
-          understood and experienced by its intended reader.
-        </p>
-
-      </div>
-
-
-      <div class="activity-card"
-           onclick="toggleActivity(this)">
-
-        <div class="activity-circle">02</div>
-
-        <h3>The Craftsperson</h3>
-
-        <p>
-          An editor works with language, clarity, consistency,
-          structure, and technique to strengthen a manuscript.
-        </p>
-
-      </div>
-
-
-      <div class="activity-card"
-           onclick="toggleActivity(this)">
-
-        <div class="activity-circle">03</div>
-
-        <h3>The Partner</h3>
-
-        <p>
-          An editor collaborates with the author while respecting
-          the author's purpose, voice, and creative ownership.
-        </p>
-
-      </div>
-
-    </div>
-
-
-    <div class="activity-note">
-      0 of 3 explored
-    </div>
-
-  </section>
-
-
-  <!-- 04 PDF -->
-
-  <section class="lesson-section" id="section4">
-
-    <div class="section-number">04 — DOWNLOAD</div>
-
-    <h2 class="section-title">Your Lesson Workbook</h2>
-
-    <p class="section-description">
-      Download the workbook and keep it as part of your
-      editorial reference library.
-    </p>
-
-
-    <div class="pdf-box">
-
-      <div class="pdf-icon">
-        PDF
-      </div>
-
-      <div class="pdf-info">
-
-        <h3>Who Is an Editor? — Workbook</h3>
-
-        <p>
-          Lesson notes, key concepts, and space for your own
-          editorial observations.
-        </p>
-
-        <a
-          href="#"
-          class="download"
-          id="pdfButton">
-          Download PDF
-        </a>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- 05 TEST -->
-
-  <section class="lesson-section" id="section5">
-
-    <div class="section-number">05 — MINI TEST</div>
-
-    <h2 class="section-title">Test Your Understanding</h2>
-
-    <p class="section-description">
-      Answer all three questions. You need at least 2 correct
-      answers to complete this lesson.
-    </p>
-
-
-    <div class="question">
+    <article class="practice-card professional">
 
       <h3>
-        1. What is one important responsibility of an editor?
+        ✓ Professional
       </h3>
 
-      <label class="option">
-        <input type="radio" name="q1" value="a">
-        Rewrite the author's entire manuscript.
-      </label>
+      <p>
+        Explain why you are recommending a change.
+      </p>
 
-      <label class="option">
-        <input type="radio" name="q1" value="b">
-        Help the manuscript communicate effectively.
-      </label>
-
-      <label class="option">
-        <input type="radio" name="q1" value="c">
-        Remove the author's personal writing style.
-      </label>
-
-    </div>
+    </article>
 
 
-    <div class="question">
+    <article class="practice-card unprofessional">
 
       <h3>
-        2. An editor should generally treat the author's voice as:
+        ✕ Unprofessional
       </h3>
 
-      <label class="option">
-        <input type="radio" name="q2" value="a">
-        Something to respect and preserve.
-      </label>
+      <p>
+        Tell the author their writing is terrible.
+      </p>
 
-      <label class="option">
-        <input type="radio" name="q2" value="b">
-        Something that should always be removed.
-      </label>
-
-      <label class="option">
-        <input type="radio" name="q2" value="c">
-        Something that does not matter.
-      </label>
-
-    </div>
+    </article>
 
 
-    <div class="question">
+    <article class="practice-card professional">
 
       <h3>
-        3. Which three perspectives can help an editor do their
-        work well?
+        ✓ Professional
       </h3>
 
-      <label class="option">
-        <input type="radio" name="q3" value="a">
-        Reader, craftsperson, and partner.
-      </label>
+      <p>
+        Respect the author's creative voice while identifying
+        genuine problems in the manuscript.
+      </p>
 
-      <label class="option">
-        <input type="radio" name="q3" value="b">
-        Publisher, marketer, and celebrity.
-      </label>
+    </article>
 
-      <label class="option">
-        <input type="radio" name="q3" value="c">
-        Reader, actor, and designer.
-      </label>
 
+    <article class="practice-card unprofessional">
+
+      <h3>
+        ✕ Unprofessional
+      </h3>
+
+      <p>
+        Rewrite every sentence simply because you prefer
+        your own writing style.
+      </p>
+
+    </article>
+
+
+    <article class="practice-card professional">
+
+      <h3>
+        ✓ Professional
+      </h3>
+
+      <p>
+        Keep communication focused on the manuscript
+        and agreed editorial goals.
+      </p>
+
+    </article>
+
+
+    <article class="practice-card unprofessional">
+
+      <h3>
+        ✕ Unprofessional
+      </h3>
+
+      <p>
+        Attack or humiliate the author when they disagree
+        with your recommendation.
+      </p>
+
+    </article>
+
+  </div>
+
+
+  <div class="card" style="margin-top:25px;">
+
+    <h3>
+      Remember
+    </h3>
+
+    <p>
+      A professional editor does not need to agree with
+      everything an author writes. They need to communicate
+      their concerns respectfully and provide sound
+      editorial reasoning.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- SECTION 5 -->
+
+<section class="lesson-section">
+
+  <div class="section-label">
+    Part 05
+  </div>
+
+  <h2 class="section-title">
+    Module 3 Mini Test
+  </h2>
+
+  <p class="section-intro">
+    Answer all three questions. You need at least 2/3
+    to pass this module.
+  </p>
+
+
+  <div class="question">
+
+    <div class="question-number">
+      Question 01
     </div>
 
+    <h3>
+      What is one of the editor's main responsibilities
+      in the editor–author relationship?
+    </h3>
 
-    <button
-      class="nav-button primary"
-      onclick="submitTest()">
+    <label class="option">
+      <input type="radio" name="q1">
+      To control every creative decision.
+    </label>
+
+    <label class="option">
+      <input type="radio" name="q1">
+      To provide professional editorial guidance.
+    </label>
+
+    <label class="option">
+      <input type="radio" name="q1">
+      To replace the author's voice.
+    </label>
+
+  </div>
+
+
+  <div class="question">
+
+    <div class="question-number">
+      Question 02
+    </div>
+
+    <h3>
+      What should an editor do when an author disagrees
+      with an editorial recommendation?
+    </h3>
+
+    <label class="option">
+      <input type="radio" name="q2">
+      Ignore the author.
+    </label>
+
+    <label class="option">
+      <input type="radio" name="q2">
+      Insist that the editor is always right.
+    </label>
+
+    <label class="option">
+      <input type="radio" name="q2">
+      Discuss the concern and consider the author's reasoning.
+    </label>
+
+  </div>
+
+
+  <div class="question">
+
+    <div class="question-number">
+      Question 03
+    </div>
+
+    <h3>
+      Which principle best describes professional editing?
+    </h3>
+
+    <label class="option">
+      <input type="radio" name="q3">
+      Edit the manuscript, not the author.
+    </label>
+
+    <label class="option">
+      <input type="radio" name="q3">
+      Rewrite everything in your own style.
+    </label>
+
+    <label class="option">
+      <input type="radio" name="q3">
+      Avoid giving authors honest feedback.
+    </label>
+
+  </div>
+
+
+  <p style="margin-top:25px;">
+    <span class="button primary">
       Submit Test
-    </button>
+    </span>
+  </p>
 
-    <p id="testResult"></p>
-
-  </section>
+</section>
 
 
-  <!-- COMPLETION -->
+<!-- COMPLETION -->
 
-  <div class="completion" id="completion">
+<section class="completion">
 
-    <div class="completion-symbol">
-      ✦
-    </div>
-
-    <h2>Lesson Complete</h2>
-
-    <p>
-      You've successfully completed
-      <strong>Who Is an Editor?</strong>
-    </p>
-
-    <p>
-      Your next lesson is now unlocked.
-    </p>
-
-    <a href="#" class="download">
-      Continue to Lesson 02 →
-    </a>
-
+  <div class="completion-icon">
+    ✓
   </div>
 
+  <h2>
+    Module Complete
+  </h2>
 
-  <!-- NAVIGATION -->
+  <p>
+    You've successfully completed
+    <strong>Editor–Author Relationship</strong>.
+  </p>
 
-  <div class="navigation">
+  <p>
+    Your next module is now unlocked.
+  </p>
 
-    <button
-      class="nav-button"
-      id="backButton"
-      onclick="previousSection()"
-      disabled>
-      ← Back
-    </button>
+  <a
+    href="lesson-04.html"
+    class="button primary">
+    Continue to Module 4 →
+  </a>
 
-    <button
-      class="nav-button primary"
-      id="nextButton"
-      onclick="nextSection()">
-      Continue →
-    </button>
+</section>
 
-  </div>
+
+<!-- NAVIGATION -->
+
+<nav class="navigation">
+
+  <a
+    href="lesson-02.html"
+    class="button secondary">
+    ← Previous Module
+  </a>
+
+  <a
+    href="lesson-04.html"
+    class="button primary">
+    Next Module →
+  </a>
+
+</nav>
+
+
+</div>
 
 </main>
 <script>
