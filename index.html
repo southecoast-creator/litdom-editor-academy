@@ -14,157 +14,641 @@
       --champagne: #F4D58D;
       --ivory: #FFF8E7;
       --muted: #AAA595;
+      --line: rgba(212, 175, 55, 0.22);
     }
 
     * {
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      background: var(--obsidian);
+      background:
+        radial-gradient(circle at 50% 0%, rgba(212,175,55,0.08), transparent 35%),
+        var(--obsidian);
       color: var(--ivory);
       font-family: Arial, sans-serif;
     }
 
-    .academy {
-      min-height: 100vh;
-      padding: 24px;
-    }
+    /* ---------- HEADER ---------- */
 
     header {
-      max-width: 1100px;
+      width: 100%;
+      border-bottom: 1px solid var(--line);
+      background: rgba(11,11,15,0.82);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .nav {
+      max-width: 1150px;
       margin: auto;
-      padding: 20px 0;
-      border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .brand {
-      color: var(--ivory);
-      font-size: 24px;
-      font-weight: bold;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      letter-spacing: 0.3px;
     }
 
-    .subtitle {
-      margin-top: 6px;
+    .brand span {
       color: var(--gold);
-      font-size: 10px;
-      letter-spacing: 3px;
+    }
+
+    .nav-label {
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 2px;
       text-transform: uppercase;
     }
 
-    main {
-      max-width: 1100px;
-      margin: 70px auto;
+    /* ---------- HERO ---------- */
+
+    .hero {
+      max-width: 1000px;
+      margin: auto;
+      padding: 95px 24px 75px;
       text-align: center;
     }
 
-    .kicker {
-      color: var(--gold);
-      font-size: 12px;
-      letter-spacing: 3px;
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--champagne);
+      font-size: 11px;
+      letter-spacing: 4px;
       text-transform: uppercase;
     }
 
-    h1 {
-      font-family: Georgia, serif;
-      font-size: clamp(42px, 8vw, 76px);
-      font-weight: normal;
-      margin: 18px 0;
+    .eyebrow::before,
+    .eyebrow::after {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.65;
     }
 
-    .intro {
-      max-width: 620px;
+    h1 {
+      margin: 24px 0 20px;
+      font-family: Georgia, serif;
+      font-size: clamp(48px, 10vw, 86px);
+      font-weight: normal;
+      line-height: 0.98;
+      letter-spacing: -2px;
+    }
+
+    h1 em {
+      color: var(--champagne);
+      font-style: italic;
+    }
+
+    .hero-text {
+      max-width: 650px;
       margin: auto;
       color: var(--muted);
-      line-height: 1.8;
       font-size: 16px;
+      line-height: 1.9;
     }
+
+    /* ---------- PROGRESS ---------- */
+
+    .progress-wrap {
+      max-width: 700px;
+      margin: 45px auto 0;
+      text-align: left;
+    }
+
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .progress-top span:first-child {
+      color: var(--champagne);
+    }
+
+    .progress-top span:last-child {
+      color: var(--muted);
+    }
+
+    .progress-bar {
+      height: 3px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        var(--gold),
+        var(--champagne)
+      );
+    }
+
+    /* ---------- JOURNEY ---------- */
+
+    .journey {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px 24px 100px;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 55px;
+    }
+
+    .section-heading small {
+      color: var(--gold);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-size: 10px;
+    }
+
+    .section-heading h2 {
+      font-family: Georgia, serif;
+      font-size: 38px;
+      font-weight: normal;
+      margin: 12px 0;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      max-width: 520px;
+      margin: auto;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    /* ---------- STAGE ---------- */
 
     .stage {
-      max-width: 500px;
-      margin: 50px auto 0;
-      padding: 35px;
-      background: var(--charcoal);
-      border: 1px solid rgba(244, 213, 141, 0.2);
-      border-radius: 24px;
+      position: relative;
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 30px;
+      align-items: start;
     }
 
-    .stage-number {
+    .stage::before {
+      content: "";
+      position: absolute;
+      left: 49px;
+      top: 95px;
+      bottom: -70px;
+      width: 1px;
+      background: linear-gradient(
+        to bottom,
+        var(--gold),
+        rgba(212,175,55,0.08)
+      );
+    }
+
+    .stage:last-child::before {
+      display: none;
+    }
+
+    .stage-marker {
+      position: relative;
+      z-index: 2;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 1px solid var(--gold);
+      background: var(--obsidian);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        0 0 0 8px rgba(212,175,55,0.035),
+        0 0 35px rgba(212,175,55,0.10);
+    }
+
+    .stage-marker span {
+      font-family: Georgia, serif;
       color: var(--champagne);
-      font-family: Georgia, serif;
-      font-size: 40px;
+      font-size: 28px;
     }
 
-    .stage h2 {
+    .stage-card {
+      position: relative;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(244,213,141,0.055),
+          rgba(255,255,255,0.015)
+        ),
+        var(--charcoal);
+      border: 1px solid rgba(244,213,141,0.16);
+      border-radius: 22px;
+      padding: 32px;
+      transition: 0.3s ease;
+      overflow: hidden;
+    }
+
+    .stage-card::after {
+      content: "";
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      right: -80px;
+      top: -80px;
+      background: rgba(212,175,55,0.08);
+      filter: blur(10px);
+    }
+
+    .stage-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(244,213,141,0.4);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.3);
+    }
+
+    .stage-status {
+      color: var(--gold);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 13px;
+    }
+
+    .stage-card h3 {
+      margin: 0;
       font-family: Georgia, serif;
+      font-size: 29px;
       font-weight: normal;
-      margin: 10px 0;
     }
 
-    .stage p {
+    .stage-card p {
       color: var(--muted);
-      line-height: 1.6;
+      line-height: 1.8;
+      font-size: 14px;
+      max-width: 650px;
     }
 
-    .start-button {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 14px 28px;
+    .lessons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 22px 0;
+    }
+
+    .lesson-pill {
+      border: 1px solid rgba(244,213,141,0.13);
+      background: rgba(255,255,255,0.025);
+      color: #c8c1b2;
+      padding: 8px 11px;
+      border-radius: 999px;
+      font-size: 11px;
+    }
+
+    .begin {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+      padding: 13px 20px;
       border-radius: 999px;
       background: var(--gold);
       color: var(--obsidian);
       text-decoration: none;
+      font-size: 12px;
       font-weight: bold;
+      letter-spacing: 0.5px;
+      transition: 0.25s ease;
     }
 
-    .start-button:hover {
+    .begin:hover {
       background: var(--champagne);
+      transform: translateY(-2px);
+    }
+
+    .arrow {
+      font-size: 16px;
+    }
+
+    /* ---------- UPCOMING ---------- */
+
+    .upcoming {
+      margin-top: 80px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .locked {
+      padding: 25px;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.015);
+      opacity: 0.65;
+    }
+
+    .locked-number {
+      color: var(--gold);
+      font-family: Georgia, serif;
+      font-size: 25px;
+    }
+
+    .locked h4 {
+      margin: 10px 0 5px;
+      font-family: Georgia, serif;
+      font-size: 18px;
+      font-weight: normal;
+    }
+
+    .locked p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    /* ---------- FOOTER ---------- */
+
+    footer {
+      border-top: 1px solid var(--line);
+      text-align: center;
+      padding: 35px 20px;
+      color: #77746b;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+    }
+
+    footer strong {
+      color: var(--champagne);
+      font-family: Georgia, serif;
+      font-weight: normal;
+    }
+
+    /* ---------- MOBILE ---------- */
+
+    @media (max-width: 650px) {
+
+      .nav {
+        padding: 16px 18px;
+      }
+
+      .brand {
+        font-size: 17px;
+      }
+
+      .nav-label {
+        display: none;
+      }
+
+      .hero {
+        padding: 75px 20px 60px;
+      }
+
+      h1 {
+        font-size: 54px;
+      }
+
+      .hero-text {
+        font-size: 14px;
+      }
+
+      .journey {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .section-heading h2 {
+        font-size: 31px;
+      }
+
+      .stage {
+        grid-template-columns: 65px 1fr;
+        gap: 18px;
+      }
+
+      .stage::before {
+        left: 32px;
+        top: 65px;
+      }
+
+      .stage-marker {
+        width: 65px;
+        height: 65px;
+      }
+
+      .stage-marker span {
+        font-size: 21px;
+      }
+
+      .stage-card {
+        padding: 24px 20px;
+        border-radius: 18px;
+      }
+
+      .stage-card h3 {
+        font-size: 23px;
+      }
+
+      .upcoming {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <div class="academy">
+  <!-- HEADER -->
 
-    <header>
-      <div class="brand">Litdom Editor Academy</div>
-      <div class="subtitle">Professional Editorial Training</div>
-    </header>
+  <header>
+    <div class="nav">
+      <div class="brand">
+        Litdom <span>Editor Academy</span>
+      </div>
 
-    <main>
+      <div class="nav-label">
+        Professional Editorial Training
+      </div>
+    </div>
+  </header>
 
-      <div class="kicker">Your Learning Journey</div>
 
-      <h1>Become an Editor.</h1>
+  <!-- HERO -->
 
-      <p class="intro">
-        Learn the principles, techniques, ethics, and practical skills
-        required to become a confident professional editor.
+  <section class="hero">
+
+    <div class="eyebrow">
+      The Editorial Journey
+    </div>
+
+    <h1>
+      Become an <em>Editor.</em>
+    </h1>
+
+    <p class="hero-text">
+      Learn the craft behind powerful writing. Develop the
+      judgment, precision, ethics, and practical skills required
+      to transform manuscripts into polished, compelling works.
+    </p>
+
+    <div class="progress-wrap">
+
+      <div class="progress-top">
+        <span>Your Progress</span>
+        <span>0% Complete</span>
+      </div>
+
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- JOURNEY -->
+
+  <main class="journey">
+
+    <div class="section-heading">
+      <small>Your Learning Journey</small>
+
+      <h2>Six stages. One craft.</h2>
+
+      <p>
+        Move through each stage at your own pace.
+        Complete your lessons, sharpen your skills,
+        and progress toward your final assessment.
       </p>
+    </div>
 
-      <section class="stage">
 
-        <div class="stage-number">01</div>
+    <!-- STAGE 01 -->
 
-        <h2>Fundamentals of Editing</h2>
+    <section class="stage">
+
+      <div class="stage-marker">
+        <span>01</span>
+      </div>
+
+      <div class="stage-card">
+
+        <div class="stage-status">
+          First Stage · Begin Here
+        </div>
+
+        <h3>Fundamentals of Editing</h3>
 
         <p>
-          Begin your journey by understanding what editors do,
-          how editors work with authors, and the principles that
-          guide professional editing.
+          Before you edit a single sentence, you need to understand
+          the editor's role. Discover what professional editors do,
+          how they work with authors, and the principles that shape
+          responsible editorial practice.
         </p>
 
-        <a href="#" class="start-button">
+        <div class="lessons">
+
+          <div class="lesson-pill">
+            Who Is an Editor?
+          </div>
+
+          <div class="lesson-pill">
+            What Does an Editor Do?
+          </div>
+
+          <div class="lesson-pill">
+            Editor–Author Relationship
+          </div>
+
+          <div class="lesson-pill">
+            Editorial Ethics
+          </div>
+
+          <div class="lesson-pill">
+            The Editing Workflow
+          </div>
+
+        </div>
+
+        <a href="#" class="begin">
           Begin Stage
+          <span class="arrow">→</span>
         </a>
 
-      </section>
+      </div>
 
-    </main>
+    </section>
 
-  </div>
+
+    <!-- UPCOMING STAGES -->
+
+    <div class="upcoming">
+
+      <div class="locked">
+        <div class="locked-number">02</div>
+        <h4>Grammar & Punctuation</h4>
+        <p>Master the rules that give writing clarity and precision.</p>
+      </div>
+
+      <div class="locked">
+        <div class="locked-number">03</div>
+        <h4>Copy Editing</h4>
+        <p>Learn to improve correctness, consistency, and readability.</p>
+      </div>
+
+      <div class="locked">
+        <div class="locked-number">04</div>
+        <h4>Line Editing</h4>
+        <p>Strengthen language, voice, rhythm, and sentence-level style.</p>
+      </div>
+
+      <div class="locked">
+        <div class="locked-number">05</div>
+        <h4>Developmental Editing</h4>
+        <p>Learn to work with structure, story, ideas, and big-picture problems.</p>
+      </div>
+
+      <div class="locked">
+        <div class="locked-number">06</div>
+        <h4>Proofreading</h4>
+        <p>Catch the final errors before a manuscript reaches publication.</p>
+      </div>
+
+      <div class="locked">
+        <div class="locked-number">✦</div>
+        <h4>Final Assessment</h4>
+        <p>Put your editorial knowledge to the test and earn your certificate.</p>
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+    <strong>Litdom Editor Academy</strong>
+    <br><br>
+    Learn the craft. Refine the words. Become the editor.
+  </footer>
 
 </body>
 </html>
