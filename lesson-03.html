@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Module 2 — What Does an Editor Do?</title>
+  <title>Module 3 — Editor–Author Relationship</title>
 
   <style>
     :root {
@@ -665,68 +665,6 @@
   </section>
 
 
-  <!-- 02 VIDEO -->
-
-  <section class="lesson-section" id="section2">
-
-    <div class="section-number">02 — WATCH</div>
-
-    <h2 class="section-title">Your Instructor</h2>
-
-    <p class="section-description">
-      Watch the complete ten-minute lesson before continuing.
-    </p>
-
-
-    <div class="video-box">
-
-      <div class="video-screen">
-
-        <div>
-          <div class="play-symbol">▶</div>
-
-          <p style="color:#AAA595;font-size:12px;">
-            Your instructor video will be placed here.
-          </p>
-        </div>
-
-      </div>
-
-
-      <div class="timer-area">
-
-        <div class="timer-label">
-          Required viewing time
-        </div>
-
-        <div class="timer" id="timer">
-          00:00
-        </div>
-
-        <div class="timer-bar">
-          <div class="timer-fill" id="timerFill"></div>
-        </div>
-
-        <div class="video-status" id="videoStatus">
-          The 10-minute timer will begin when you start the lesson.
-        </div>
-
-        <br>
-
-        <button
-          class="nav-button primary"
-          id="startVideo"
-          onclick="startVideoTimer()">
-          Start Video
-        </button>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
   <!-- 03 ACTIVITY -->
 
   <section class="lesson-section" id="section3">
@@ -996,7 +934,6 @@ let currentSection = 1;
 const totalSections = 5;
 
 let visualsCompleted = false;
-let videoCompleted = false;
 let activityCompleted = false;
 let pdfCompleted = false;
 let testCompleted = false;
@@ -1076,14 +1013,6 @@ function nextSection() {
     visualsCompleted = true;
   }
 
-  /* Section 2 — video */
-  if (currentSection === 2) {
-    if (!videoCompleted) {
-      alert("Please complete the 10-minute video session first.");
-      return;
-    }
-  }
-
   /* Section 3 — activity */
   if (currentSection === 3) {
     if (!activityCompleted) {
@@ -1113,51 +1042,6 @@ function previousSection() {
   if (currentSection > 1) {
     showSection(currentSection - 1);
   }
-}
-
-/* ---------------------------------
-   VIDEO TIMER
---------------------------------- */
-
-function startVideoTimer() {
-
-  if (timerInterval) return;
-
-  const timerDisplay =
-    document.getElementById("timer");
-
-  if (!timerDisplay) return;
-
-  timerInterval = setInterval(() => {
-
-    timerSeconds--;
-
-    const minutes =
-      Math.floor(timerSeconds / 60);
-
-    const seconds =
-      timerSeconds % 60;
-
-    timerDisplay.textContent =
-      String(minutes).padStart(2, "0") +
-      ":" +
-      String(seconds).padStart(2, "0");
-
-    if (timerSeconds <= 0) {
-
-      clearInterval(timerInterval);
-      timerInterval = null;
-
-      videoCompleted = true;
-
-      timerDisplay.textContent = "10:00";
-
-      alert(
-        "Video session complete. You may continue."
-      );
-    }
-
-  }, 1000);
 }
 
 /* ---------------------------------
@@ -1259,7 +1143,7 @@ function submitTest() {
 function completeModule() {
 
   localStorage.setItem(
-    ""litdom_lesson_1_module_2_complete"",
+    ""litdom_lesson_1_module_3_complete"",
     "true"
   );
 
@@ -1296,20 +1180,6 @@ if (backButton) {
   backButton.addEventListener(
     "click",
     previousSection
-  );
-}
-
-/* ---------------------------------
-   START TIMER WHEN VIDEO SECTION OPENS
---------------------------------- */
-
-function checkVideoSection() {
-
-  if (currentSection === 2) {
-    startVideoTimer();
-  }
-
-}
 
 /* ---------------------------------
    OVERRIDE SECTION DISPLAY
@@ -1339,7 +1209,7 @@ showSection(1);
 
 if (
   localStorage.getItem(
-    ""litdom_lesson_1_module_2_complete""
+    ""litdom_lesson_1_module_3_complete""
   ) === "true"
 ) {
 
