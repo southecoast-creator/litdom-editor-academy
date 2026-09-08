@@ -927,59 +927,75 @@
 <script>
 /* =================================
    LITDOM EDITOR ACADEMY
-   MODULE 1 — WHO IS AN EDITOR?
+   MODULE 3 — EDITOR–AUTHOR RELATIONSHIP
 ================================= */
 
 let currentSection = 1;
 const totalSections = 5;
 
-let visualsCompleted = false;
+let presentationCompleted = false;
 let activityCompleted = false;
-let pdfCompleted = false;
+let practicalCompleted = false;
 let testCompleted = false;
 
-let timerSeconds = 600;
-let timerInterval = null;
+const progressFill =
+  document.getElementById("progressFill");
 
-const progressFill = document.getElementById("progressFill");
-const progressText = document.getElementById("progressText");
+const progressText =
+  document.getElementById("progressText");
 
-const backButton = document.getElementById("backButton");
-const nextButton = document.getElementById("nextButton");
+const backButton =
+  document.getElementById("backButton");
 
-const completion = document.getElementById("completion");
-const testResult = document.getElementById("testResult");
+const nextButton =
+  document.getElementById("nextButton");
+
+const completion =
+  document.getElementById("completion");
+
+const testResult =
+  document.getElementById("testResult");
+
 
 /* ---------------------------------
    SECTION PROGRESS
 --------------------------------- */
 
 function updateProgress() {
+
   const percentage =
-    ((currentSection - 1) / (totalSections - 1)) * 100;
+    ((currentSection - 1) /
+    (totalSections - 1)) * 100;
 
   if (progressFill) {
-    progressFill.style.width = percentage + "%";
+    progressFill.style.width =
+      percentage + "%";
   }
 
   if (progressText) {
     progressText.textContent =
-      currentSection + " / " + totalSections;
+      currentSection + " / " +
+      totalSections;
   }
 }
+
 
 /* ---------------------------------
    SHOW SECTION
 --------------------------------- */
 
 function showSection(number) {
-  document.querySelectorAll(".lesson-section").forEach(section => {
-    section.style.display = "none";
-  });
 
-  const selected = document.getElementById(
-    "section" + number
-  );
+  document
+    .querySelectorAll(".lesson-section")
+    .forEach(section => {
+      section.style.display = "none";
+    });
+
+  const selected =
+    document.getElementById(
+      "section" + number
+    );
 
   if (selected) {
     selected.style.display = "block";
@@ -989,7 +1005,9 @@ function showSection(number) {
 
   if (backButton) {
     backButton.style.display =
-      currentSection === 1 ? "none" : "inline-flex";
+      currentSection === 1
+        ? "none"
+        : "inline-flex";
   }
 
   if (nextButton) {
@@ -1000,7 +1018,13 @@ function showSection(number) {
   }
 
   updateProgress();
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 }
+
 
 /* ---------------------------------
    NEXT SECTION
@@ -1008,50 +1032,235 @@ function showSection(number) {
 
 function nextSection() {
 
-  /* Section 1 */
+  /* Section 1 — Introduction */
+
   if (currentSection === 1) {
-    visualsCompleted = true;
+    showSection(2);
+    return;
   }
 
-  /* Section 3 — activity */
+
+  /* Section 2 — Presentation */
+
+  if (currentSection === 2) {
+
+    if (!presentationCompleted) {
+
+      alert(
+        "Please complete the presentation before continuing."
+      );
+
+      return;
+    }
+
+    showSection(3);
+    return;
+  }
+
+
+  /* Section 3 — Scenario Activity */
+
   if (currentSection === 3) {
+
     if (!activityCompleted) {
-      alert("Please complete all three activity cards first.");
+
+      alert(
+        "Please complete the activity before continuing."
+      );
+
       return;
     }
+
+    showSection(4);
+    return;
   }
 
-  /* Section 4 — PDF */
+
+  /* Section 4 — Practical Activity */
+
   if (currentSection === 4) {
-    if (!pdfCompleted) {
-      alert("Please open the PDF/workbook before continuing.");
+
+    if (!practicalCompleted) {
+
+      alert(
+        "Please complete the practical activity before continuing."
+      );
+
       return;
     }
-  }
 
-  if (currentSection < totalSections) {
-    showSection(currentSection + 1);
+    showSection(5);
+    return;
   }
 }
+
 
 /* ---------------------------------
    PREVIOUS SECTION
 --------------------------------- */
 
 function previousSection() {
+
   if (currentSection > 1) {
-    showSection(currentSection - 1);
+
+    showSection(
+      currentSection - 1
+    );
+
   }
 }
+
+
+/* ---------------------------------
+   PRESENTATION
+--------------------------------- */
+
+let currentSlide = 1;
+const totalSlides = 8;
+
+const slides =
+  document.querySelectorAll(".presentation-slide");
+
+const slideCounter =
+  document.getElementById("slideCounter");
+
+const previousSlideButton =
+  document.getElementById("previousSlide");
+
+const nextSlideButton =
+  document.getElementById("nextSlide");
+
+const presentationCompleteButton =
+  document.getElementById(
+    "presentationComplete"
+  );
+
+
+function showSlide(number) {
+
+  slides.forEach(slide => {
+    slide.style.display = "none";
+  });
+
+  const selectedSlide =
+    document.getElementById(
+      "slide" + number
+    );
+
+  if (selectedSlide) {
+    selectedSlide.style.display =
+      "block";
+  }
+
+  currentSlide = number;
+
+  if (slideCounter) {
+    slideCounter.textContent =
+      currentSlide + " / " +
+      totalSlides;
+  }
+
+  if (previousSlideButton) {
+
+    previousSlideButton.disabled =
+      currentSlide === 1;
+
+  }
+
+  if (nextSlideButton) {
+
+    nextSlideButton.disabled =
+      currentSlide === totalSlides;
+
+  }
+}
+
+
+function nextSlide() {
+
+  if (currentSlide < totalSlides) {
+
+    showSlide(
+      currentSlide + 1
+    );
+
+  }
+}
+
+
+function previousSlide() {
+
+  if (currentSlide > 1) {
+
+    showSlide(
+      currentSlide - 1
+    );
+
+  }
+}
+
+
+if (nextSlideButton) {
+
+  nextSlideButton.addEventListener(
+    "click",
+    nextSlide
+  );
+
+}
+
+
+if (previousSlideButton) {
+
+  previousSlideButton.addEventListener(
+    "click",
+    previousSlide
+  );
+
+}
+
+
+if (presentationCompleteButton) {
+
+  presentationCompleteButton.addEventListener(
+    "click",
+    () => {
+
+      if (currentSlide < totalSlides) {
+
+        alert(
+          "Please view all presentation slides first."
+        );
+
+        return;
+      }
+
+      presentationCompleted = true;
+
+      presentationCompleteButton.textContent =
+        "✓ Presentation Completed";
+
+      presentationCompleteButton.disabled =
+        true;
+
+    }
+  );
+
+}
+
 
 /* ---------------------------------
    ACTIVITY CARDS
 --------------------------------- */
 
 const activityCards =
-  document.querySelectorAll(".activity-card");
+  document.querySelectorAll(
+    ".activity-card"
+  );
 
-let openedActivities = new Set();
+let openedActivities =
+  new Set();
+
 
 function toggleActivity(card) {
 
@@ -1062,27 +1271,47 @@ function toggleActivity(card) {
     card.querySelector("h3")?.textContent ||
     Math.random();
 
-  openedActivities.add(activityId);
+  openedActivities.add(
+    activityId
+  );
 
   if (openedActivities.size >= 3) {
+
     activityCompleted = true;
+
   }
 }
 
+
 /* ---------------------------------
-   PDF
+   PRACTICAL ACTIVITY
 --------------------------------- */
 
-const pdfButton =
-  document.getElementById("pdfButton");
+const practicalOptions =
+  document.querySelectorAll(
+    ".practical-option"
+  );
 
-if (pdfButton) {
-  pdfButton.addEventListener("click", () => {
 
-    pdfCompleted = true;
+practicalOptions.forEach(option => {
 
-  });
-}
+  option.addEventListener(
+    "click",
+    () => {
+
+      practicalOptions.forEach(item => {
+        item.classList.remove("selected");
+      });
+
+      option.classList.add("selected");
+
+      practicalCompleted = true;
+
+    }
+  );
+
+});
+
 
 /* ---------------------------------
    MINI TEST
@@ -1093,48 +1322,73 @@ function submitTest() {
   let score = 0;
 
   const answers = {
+
     q1: "b",
     q2: "c",
     q3: "a"
+
   };
 
-  Object.keys(answers).forEach(question => {
 
-    const selected =
-      document.querySelector(
-        'input[name="' + question + '"]:checked'
-      );
+  Object.keys(answers).forEach(
+    question => {
 
-    if (
-      selected &&
-      selected.value === answers[question]
-    ) {
-      score++;
+      const selected =
+        document.querySelector(
+          'input[name="' +
+          question +
+          '"]:checked'
+        );
+
+      if (
+        selected &&
+        selected.value ===
+        answers[question]
+      ) {
+
+        score++;
+
+      }
+
     }
+  );
 
-  });
 
   if (score >= 2) {
 
     testCompleted = true;
 
-    testResult.textContent =
-      "Passed — " + score + "/3";
+    if (testResult) {
 
-    testResult.style.color = "#F4D58D";
+      testResult.textContent =
+        "Passed — " +
+        score +
+        "/3";
+
+      testResult.style.color =
+        "#F4D58D";
+
+    }
 
     completeModule();
 
   } else {
 
-    testResult.textContent =
-      "You scored " + score +
-      "/3. You need at least 2/3 to pass.";
+    if (testResult) {
 
-    testResult.style.color = "#AAA595";
+      testResult.textContent =
+        "You scored " +
+        score +
+        "/3. You need at least 2/3 to pass.";
+
+      testResult.style.color =
+        "#AAA595";
+
+    }
 
   }
 }
+
 
 /* ---------------------------------
    COMPLETE MODULE
@@ -1143,59 +1397,71 @@ function submitTest() {
 function completeModule() {
 
   localStorage.setItem(
-    ""litdom_lesson_1_module_3_complete"",
+    "litdom_lesson_1_module_3_complete",
     "true"
   );
 
+
   if (completion) {
-    completion.style.display = "block";
+
+    completion.style.display =
+      "block";
+
   }
+
 
   if (nextButton) {
-    nextButton.style.display = "none";
+
+    nextButton.style.display =
+      "none";
+
   }
+
 
   if (backButton) {
-    backButton.style.display = "none";
+
+    backButton.style.display =
+      "none";
+
   }
 
+
   window.scrollTo({
-    top: document.body.scrollHeight,
-    behavior: "smooth"
+
+    top:
+      document.body.scrollHeight,
+
+    behavior:
+      "smooth"
+
   });
+
 }
+
 
 /* ---------------------------------
    NAVIGATION BUTTONS
 --------------------------------- */
 
 if (nextButton) {
+
   nextButton.addEventListener(
     "click",
     nextSection
   );
+
 }
 
+
 if (backButton) {
+
   backButton.addEventListener(
     "click",
     previousSection
+  );
 
-/* ---------------------------------
-   OVERRIDE SECTION DISPLAY
---------------------------------- */
+}
 
-const originalShowSection = showSection;
-
-showSection = function(number) {
-
-  originalShowSection(number);
-
-  if (number === 2) {
-    startVideoTimer();
-  }
-
-};
 
 /* ---------------------------------
    INITIAL STATE
@@ -1203,20 +1469,22 @@ showSection = function(number) {
 
 showSection(1);
 
+showSlide(1);
+
+
 /* ---------------------------------
    IF ALREADY COMPLETED
 --------------------------------- */
 
 if (
   localStorage.getItem(
-    ""litdom_lesson_1_module_3_complete""
+    "litdom_lesson_1_module_3_complete"
   ) === "true"
 ) {
 
-  visualsCompleted = true;
-  videoCompleted = true;
+  presentationCompleted = true;
   activityCompleted = true;
-  pdfCompleted = true;
+  practicalCompleted = true;
   testCompleted = true;
 
 }
