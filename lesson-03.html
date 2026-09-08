@@ -492,17 +492,18 @@ input {
 
   <div class="progress-top">
     <span>Module Progress</span>
-    <span>3 / 5</span>
+    <span id="progressText">3 / 5</span>
   </div>
 
   <div class="progress-bar">
-    <div class="progress-fill"></div>
+    <div class="progress-fill" id="progressFill"></div>
   </div>
 
 </div>
 
 
 <!-- SECTION 1 -->
+<section id="section1">
 
 <section class="lesson-section">
 
@@ -570,6 +571,7 @@ input {
 
 
 <!-- SECTION 2 -->
+<section id="section2">
 
 <section class="lesson-section">
 
@@ -780,6 +782,7 @@ input {
 
 
 <!-- SECTION 3 -->
+<section id="section3">
 
 <section class="lesson-section">
 
@@ -1139,16 +1142,18 @@ input {
 <nav class="navigation">
 
   <a
-    href="lesson-02.html"
-    class="button secondary">
-    ← Previous Module
-  </a>
+  href="lesson-02.html"
+  class="button secondary"
+  id="backButton">
+  ← Previous Module
+</a>
 
   <a
-    href="lesson-04.html"
-    class="button primary">
-    Next Module →
-  </a>
+  href="lesson-04.html"
+  class="button primary"
+  id="nextButton">
+  Next Module →
+</a>
 
 </nav>
 
