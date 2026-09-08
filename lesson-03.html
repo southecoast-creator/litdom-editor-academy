@@ -1173,4 +1173,175 @@ localStorage.removeItem(
 ========================= */
 
 const submitTest =
-  documen
+  document.getElementById("submitTest");
+
+const testMessage =
+  document.getElementById("testMessage");
+
+const completion =
+  document.getElementById("completion");
+
+const progressFill =
+  document.getElementById("progressFill");
+
+const progressText =
+  document.getElementById("progressText");
+
+
+/* =========================
+   INITIAL STATE
+========================= */
+
+progressFill.style.width = "0%";
+
+progressText.textContent =
+  "In Progress";
+
+completion.classList.remove("show");
+
+
+/* =========================
+   TEST
+========================= */
+
+submitTest.addEventListener("click", function () {
+
+  const answers = {
+    q1: "b",
+    q2: "c",
+    q3: "a"
+  };
+
+  let score = 0;
+
+  let unanswered = 0;
+
+
+  /*
+     Check each question
+  */
+
+  Object.keys(answers).forEach(function(question) {
+
+    const selected =
+      document.querySelector(
+        'input[name="' + question + '"]:checked'
+      );
+
+
+    if (!selected) {
+
+      unanswered++;
+
+      return;
+
+    }
+
+
+    if (
+      selected.value ===
+      answers[question]
+    ) {
+
+      score++;
+
+    }
+
+  });
+
+
+  /* =========================
+     REQUIRE ALL QUESTIONS
+  ========================= */
+
+  if (unanswered > 0) {
+
+    testMessage.textContent =
+      "Please answer all three questions before submitting.";
+
+    testMessage.style.color =
+      "#AAA595";
+
+    return;
+
+  }
+
+
+  /* =========================
+     PASSED
+  ========================= */
+
+  if (score >= 2) {
+
+    /*
+       NOW — and only now —
+       Module 3 becomes complete.
+    */
+
+    localStorage.setItem(
+      "litdom_lesson_1_module_3_complete",
+      "true"
+    );
+
+
+    progressFill.style.width =
+      "100%";
+
+
+    progressText.textContent =
+      "Complete";
+
+
+    testMessage.textContent =
+      "Passed — " + score + "/3";
+
+
+    testMessage.style.color =
+      "#F4D58D";
+
+
+    submitTest.textContent =
+      "✓ Test Passed";
+
+
+    submitTest.disabled =
+      true;
+
+
+    completion.classList.add("show");
+
+
+    setTimeout(function() {
+
+      completion.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+
+    }, 200);
+
+  }
+
+
+  /* =========================
+     FAILED
+  ========================= */
+
+  else {
+
+    testMessage.textContent =
+      "You scored " +
+      score +
+      "/3. You need at least 2/3 to pass. Review the lesson and try again.";
+
+    testMessage.style.color =
+      "#AAA595";
+
+  }
+
+});
+
+</script>
+
+</body>
+</html>
