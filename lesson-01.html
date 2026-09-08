@@ -1010,4 +1010,74 @@
     }
 
 
-    let s
+    let score = 0;
+
+    if (q1.value === "b") score++;
+    if (q2.value === "a") score++;
+    if (q3.value === "a") score++;
+
+
+    if (score >= 2) {
+
+      testCompleted = true;
+
+      result.textContent =
+        "Excellent! You scored " + score + "/3. Lesson completed.";
+
+      result.style.color = "#F4D58D";
+
+      localStorage.setItem(
+        "litdom_lesson_01_complete",
+        "true"
+      );
+
+      setTimeout(() => {
+
+        document
+          .getElementById("completion")
+          .classList.add("show");
+
+        document
+          .querySelector(".navigation")
+          .style.display = "none";
+
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth"
+        });
+
+      }, 700);
+
+    } else {
+
+      result.textContent =
+        "You scored " + score + "/3. Review the lesson and try again.";
+
+      result.style.color = "#AAA595";
+
+    }
+
+  }
+
+
+  document
+    .getElementById("pdfButton")
+    .addEventListener("click", function(event) {
+
+      if (this.getAttribute("href") === "#") {
+        event.preventDefault();
+
+        alert(
+          "Your lesson PDF will be connected here."
+        );
+      }
+
+    });
+
+
+  updateProgress();
+
+</script>
+
+</body>
+</html>
