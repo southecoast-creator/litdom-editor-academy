@@ -1172,4 +1172,82 @@ const moduleKey =
 
 
 /* =========================================
-   INITI
+   INITIAL STATE
+
+   The module starts incomplete.
+========================================= */
+
+completion.classList.remove("visible");
+
+progressFill.style.width = "0%";
+
+progressText.textContent = "0 / 5";
+
+
+/* =========================================
+   COMPLETE MODULE
+========================================= */
+
+completeButton.addEventListener(
+  "click",
+  function() {
+
+
+    /* Save completion */
+
+    localStorage.setItem(
+      moduleKey,
+      "true"
+    );
+
+
+    /* Update progress */
+
+    progressFill.style.width =
+      "100%";
+
+    progressText.textContent =
+      "Complete";
+
+
+    /* Update completion panel */
+
+    completion.classList.add(
+      "visible"
+    );
+
+
+    completeButton.textContent =
+      "✓ Module Completed";
+
+    completeButton.disabled =
+      true;
+
+
+    /* Unlock Module 5 */
+
+    nextButton.classList.add(
+      "unlocked"
+    );
+
+
+    /* Scroll to completion */
+
+    setTimeout(function() {
+
+      completion.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+
+    }, 200);
+
+  }
+);
+
+</script>
+
+
+</body>
+
+</html>
