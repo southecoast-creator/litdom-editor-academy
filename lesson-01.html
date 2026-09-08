@@ -1034,4 +1034,336 @@
 
     document
       .querySelectorAll(".lesson-section")
-      .forEach(se
+      .forEach(section => {
+        section.classList.remove("active");
+      });
+
+    document
+      .getElementById("section" + number)
+      .classList.add("active");
+
+    currentSection = number;
+
+    document.getElementById("backButton").disabled =
+      currentSection === 1;
+
+    document.getElementById("nextButton").disabled =
+      false;
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  }
+
+
+  function nextSection() {
+
+    if (currentSection === 1) {
+
+      visualsCompleted = true;
+
+      showSection(2);
+
+    }
+
+    else if (currentSection === 2) {
+
+      if (!videoCompleted) {
+
+        alert(
+          "Please watch the full 10-minute lesson first."
+        );
+
+        return;
+
+      }
+
+      showSection(3);
+
+    }
+
+    else if (currentSection === 3) {
+
+      if (!activityCompleted) {
+
+        alert(
+          "Please explore all three activity cards first."
+        );
+
+        return;
+
+      }
+
+      showSection(4);
+
+    }
+
+    else if (currentSection === 4) {
+
+      if (!pdfCompleted) {
+
+        alert(
+          "Please download the lesson PDF first."
+        );
+
+        return;
+
+      }
+
+      showSection(5);
+
+    }
+
+    else if (currentSection === 5) {
+
+      if (!testCompleted) {
+
+        alert(
+          "Please pass the mini test first."
+        );
+
+        return;
+
+      }
+
+    }
+
+  }
+
+
+  function previousSection() {
+
+    if (currentSection > 1) {
+      showSection(currentSection - 1);
+    }
+
+  }
+
+
+  /* VIDEO TIMER */
+
+  function startVideoTimer() {
+
+    const button =
+      document.getElementById("startVideo");
+
+    button.disabled = true;
+
+    button.textContent = "Video In Progress";
+
+    document.getElementById("videoStatus")
+      .textContent =
+      "Stay here until the 10-minute lesson is complete.";
+
+    videoTimer = setInterval(() => {
+
+      videoSeconds++;
+
+      const minutes =
+        Math.floor(videoSeconds / 60);
+
+      const seconds =
+        videoSeconds % 60;
+
+      document.getElementById("timer")
+        .textContent =
+        String(minutes).padStart(2,"0") +
+        ":" +
+        String(seconds).padStart(2,"0");
+
+      const percentage =
+        (videoSeconds / 600) * 100;
+
+      document.getElementById("timerFill")
+        .style.width =
+        Math.min(percentage,100) + "%";
+
+
+      if (videoSeconds >= 600) {
+
+        clearInterval(videoTimer);
+
+        videoCompleted = true;
+
+        document.getElementById("videoStatus")
+          .textContent =
+          "✓ Lesson video completed. You may continue.";
+
+        document.getElementById("startVideo")
+          .textContent =
+          "Video Complete ✓";
+
+        updateProgress();
+
+      }
+
+    },1000);
+
+  }
+
+
+  /* ACTIVITY */
+
+  function toggleActivity(card) {
+
+    card.classList.toggle("open");
+    card.classList.add("completed");
+
+    const cards =
+      document.querySelectorAll(".activity-card");
+
+    const completed =
+      document.querySelectorAll(
+        ".activity-card.completed"
+      );
+
+    document.querySelector(".activity-note")
+      .textContent =
+      completed.length +
+      " of " +
+      cards.length +
+      " explored";
+
+
+    if (completed.length === cards.length) {
+
+      activityCompleted = true;
+
+      document.querySelector(".activity-note")
+        .textContent =
+        "✓ Activity completed. You may continue.";
+
+      updateProgress();
+
+    }
+
+  }
+
+
+  /* PDF */
+
+  document
+    .getElementById("pdfButton")
+    .addEventListener("click", function(event) {
+
+      if (this.getAttribute("href") === "#") {
+
+        event.preventDefault();
+
+        alert(
+          "Your real PDF will be connected here. " +
+          "For now, this button records the download step."
+        );
+
+      }
+
+      pdfCompleted = true;
+
+      this.textContent =
+        "PDF Downloaded ✓";
+
+      updateProgress();
+
+    });
+
+
+  /* TEST */
+
+  function submitTest() {
+
+    const q1 =
+      document.querySelector(
+        'input[name="q1"]:checked'
+      );
+
+    const q2 =
+      document.querySelector(
+        'input[name="q2"]:checked'
+      );
+
+    const q3 =
+      document.querySelector(
+        'input[name="q3"]:checked'
+      );
+
+    const result =
+      document.getElementById("testResult");
+
+
+    if (!q1 || !q2 || !q3) {
+
+      result.textContent =
+        "Please answer all three questions.";
+
+      result.style.color =
+        "#F4D58D";
+
+      return;
+
+    }
+
+
+    let score = 0;
+
+    if (q1.value === "b") score++;
+    if (q2.value === "a") score++;
+    if (q3.value === "a") score++;
+
+
+    if (score >= 2) {
+
+      testCompleted = true;
+
+      localStorage.setItem(
+        "litdom_lesson_01_complete",
+        "true"
+      );
+
+      result.textContent =
+        "Excellent! You scored " +
+        score +
+        "/3.";
+
+      result.style.color =
+        "#F4D58D";
+
+      updateProgress();
+
+      document
+        .getElementById("completion")
+        .classList.add("show");
+
+      document
+        .querySelector(".navigation")
+        .style.display = "none";
+
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
+      });
+
+    }
+
+    else {
+
+      result.textContent =
+        "You scored " +
+        score +
+        "/3. Review the lesson and try again.";
+
+      result.style.color =
+        "#AAA595";
+
+    }
+
+  }
+
+
+  updateProgress();
+
+</script>
+
+</body>
+</html>
