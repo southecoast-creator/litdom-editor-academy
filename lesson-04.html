@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Module 4 — Editorial Ethics | Litdom Editor Academy</title>
+
+<style>
+
+/* =========================================
+   LITDOM EDITOR ACADEMY
+   MODULE 4 — EDITORIAL ETHICS
+========================================= */
+
+:root {
+  --obsidian: #0B0B0F;
+  --gold: #D4AF37;
+  --champagne: #F4D58D;
+  --ivory: #FFF8E7;
+  --charcoal: #17171C;
+  --muted: #AAA595;
+  --border: #8C7625;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--obsidian);
+  color: var(--ivory);
+  font-family: Arial, sans-serif;
+  line-height: 1.7;
+}
+
+.container {
+  width: min(920px, 92%);
+  margin: auto;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+header {
+  padding: 28px 0 22px;
+  border-bottom: 1px solid rgba(212,175,55,.35);
+}
+
+.brand {
+  color: var(--champagne);
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.lesson-number {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 7px;
+}
+
+
+/* =========================================
+   HERO
+========================================= */
+
+.hero {
+  padding: 60px 0 35px;
+}
+
+.eyebrow {
+  color: var(--gold);
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: Georgia, serif;
+}
+
+h1 {
+  font-size: clamp(40px, 9vw, 68px);
+  line-height: 1.04;
+  margin: 0 0 22px;
+}
+
+.hero-text {
+  color: var(--muted);
+  max-width: 720px;
+  font-size: 17px;
+}
+
+
+/* =========================================
+   PROGRESS
+========================================= */
+
+.progress-wrapper {
+  margin: 10px 0 60px;
+}
+
+.progress-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 9px;
+}
+
+.progress-bar {
+  height: 5px;
+  background: var(--charcoal);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--gold),
+    var(--champagne)
+  );
+
+  transition: width .5s ease;
+}
+
+
+/* =========================================
+   LESSON SECTIONS
+========================================= */
+
+.lesson-section {
+  margin-bottom: 75px;
+}
+
+.section-label {
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.section-title {
+  font-size: 35px;
+  line-height: 1.2;
+  margin: 7px 0 15px;
+}
+
+.section-intro {
+  color: var(--muted);
+  max-width: 730px;
+  font-size: 16px;
+}
+
+
+/* =========================================
+   INTRO CARD
+========================================= */
+
+.intro-card {
+  margin-top: 30px;
+  padding: 30px;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(212,175,55,.11),
+      transparent 45%
+    ),
+    var(--charcoal);
+
+  border: 1px solid rgba(212,175,55,.3);
+  border-radius: 20px;
+}
+
+.intro-card h3 {
+  color: var(--champagne);
+  margin-top: 0;
+  font-size: 24px;
+}
+
+.intro-card p {
+  color: var(--muted);
+  margin-bottom: 0;
+}
+
+
+/* =========================================
+   INFOGRAPHIC AREA
+========================================= */
+
+.infographic-card {
+  margin-top: 35px;
+  background: var(--charcoal);
+  border: 1px solid rgba(212,175,55,.32);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 18px 45px rgba(0,0,0,.25);
+}
+
+.infographic-label {
+  padding: 16px 22px;
+  border-bottom: 1px solid rgba(212,175,55,.2);
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.infographic-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 300px;
+  object-fit: cover;
+  background: var(--obsidian);
+}
+
+.infographic-caption {
+  padding: 22px 25px 26px;
+}
+
+.infographic-caption h3 {
+  color: var(--champagne);
+  margin: 0 0 8px;
+  font-size: 23px;
+}
+
+.infographic-caption p {
+  color: var(--muted);
+  margin: 0;
+}
+
+
+/* =========================================
+   ETHICS PRINCIPLES
+========================================= */
+
+.principles {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 30px;
+}
+
+.principle {
+  padding: 23px;
+  background: var(--charcoal);
+  border: 1px solid rgba(212,175,55,.23);
+  border-radius: 16px;
+}
+
+.principle-number {
+  color: var(--gold);
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.principle h3 {
+  color: var(--champagne);
+  margin: 8px 0;
+}
+
+.principle p {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+
+/* =========================================
+   PDF DOWNLOAD
+========================================= */
+
+.pdf-card {
+  margin-top: 35px;
+  padding: 32px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(212,175,55,.10),
+      transparent
+    ),
+    var(--charcoal);
+
+  border: 1px solid var(--border);
+  border-radius: 20px;
+}
+
+.pdf-label {
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.pdf-card h3 {
+  color: var(--champagne);
+  font-size: 28px;
+  margin: 10px 0;
+}
+
+.pdf-card p {
+  color: var(--muted);
+  max-width: 650px;
+}
+
+.pdf-button {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 14px 22px;
+  background: var(--gold);
+  color: var(--obsidian);
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.pdf-button:hover {
+  opacity: .9;
+}
+
+
+/* =========================================
+   COMPLETION
+========================================= */
+
+.completion {
+  display: none;
+
+  margin: 70px 0 40px;
+  padding: 48px 28px;
+  text-align: center;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(212,175,55,.12),
+      transparent 60%
+    ),
+    var(--charcoal);
+
+  border: 1px solid var(--gold);
+  border-radius: 22px;
+}
+
+.completion.visible {
+  display: block;
+}
+
+.completion-icon {
+  font-size: 45px;
+  color: var(--champagne);
+}
+
+.completion h2 {
+  color: var(--champagne);
+  font-size: 32px;
+}
+
+.completion p {
+  color: var(--muted);
+}
+
+.complete-button {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 14px 24px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--gold);
+  color: var(--obsidian);
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.complete-button:hover {
+  opacity: .9;
+}
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 25px 0 60px;
+  border-top: 1px solid rgba(212,175,55,.2);
+}
+
+.nav-button {
+  display: inline-block;
+  padding: 13px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.previous {
+  background: var(--charcoal);
+  border: 1px solid var(--border);
+  color: var(--champagne);
+}
+
+.next {
+  background: var(--gold);
+  color: var(--obsidian);
+  opacity: .45;
+  pointer-events: none;
+}
+
+.next.unlocked {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+  .hero {
+    padding-top: 42px;
+  }
+
+  .principles {
+    grid-template-columns: 1fr;
+  }
+
+  .infographic-image {
+    min-height: 220px;
+  }
+
+  .infographic-caption {
+    padding: 20px;
+  }
+
+  .navigation {
+    flex-direction: row;
+  }
+
+  .nav-button {
+    flex: 1;
+    text-align: center;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<main>
+
+<div class="container">
+
+
+<!-- =====================================
+     HEADER
+===================================== -->
+
+<header>
+
+  <div class="brand">
+    Litdom Editor Academy
+  </div>
+
+  <div class="lesson-number">
+    Lesson 01 / Fundamentals of Editing
+  </div>
+
+</header>
+
+
+<!-- =====================================
+     HERO
+===================================== -->
+
+<section class="hero">
+
+  <div class="eyebrow">
+    Module 04
+  </div>
+
+  <h1>
+    Editorial Ethics
+  </h1>
+
+  <p class="hero-text">
+    Editing is a position of trust. An editor works with
+    another person's ideas, words, creative work, and often
+    private information. Professional editing therefore
+    requires more than technical ability — it requires
+    integrity.
+  </p>
+
+</section>
+
+
+<!-- =====================================
+     PROGRESS
+===================================== -->
+
+<div class="progress-wrapper">
+
+  <div class="progress-top">
+
+    <span>
+      Module Progress
+    </span>
+
+    <span id="progressText">
+      0 / 5
+    </span>
+
+  </div>
+
+  <div class="progress-bar">
+
+    <div
+      class="progress-fill"
+      id="progressFill">
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================
+     PART 01
+===================================== -->
+
+<section class="lesson-section">
+
+  <div class="section-label">
+    Part 01
+  </div>
+
+  <h2 class="section-title">
+    What Is Editorial Ethics?
+  </h2>
+
+  <p class="section-intro">
+    Editorial ethics refers to the principles that guide
+    an editor's professional decisions and behaviour.
+    An ethical editor protects the integrity of the work
+    while treating the author with honesty and respect.
+  </p>
+
+
+  <div class="intro-card">
+
+    <h3>
+      Editing Is a Position of Trust
+    </h3>
+
+    <p>
+      Authors give editors access to work that may be
+      unpublished, personal, commercially valuable, or
+      deeply meaningful to them. That access creates
+      responsibility. An editor must handle the manuscript
+      carefully, communicate honestly, and avoid abusing
+      the trust placed in them.
+    </p>
+
+  </div>
+
+
+  <div class="infographic-card">
+
+    <div class="infographic-label">
+      Infographic 01
+    </div>
+
+    <img
+      src="images/ethics-01.jpg"
+      alt="Infographic explaining the editor's ethical responsibility"
+      class="infographic-image">
+
+    <div class="infographic-caption">
+
+      <h3>
+        The Editor's Ethical Responsibility
+      </h3>
+
+      <p>
+        Study the infographic and consider how each
+        responsibility affects your work as an editor.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================
+     PART 02
+===================================== -->
+
+<section class="lesson-section">
+
+  <div class="section-label">
+    Part 02
+  </div>
+
+  <h2 class="section-title">
+    The Principles of Ethical Editing
+  </h2>
+
+  <p class="section-intro">
+    Ethical editing rests on several core principles.
+    These principles should guide your decisions even
+    when a situation is difficult.
+  </p>
+
+
+  <div class="principles">
+
+
+    <article class="principle">
+
+      <div class="principle-number">
+        PRINCIPLE 01
+      </div>
+
+      <h3>
+        Confidentiality
+      </h3>
+
+      <p>
+        Protect manuscripts, private information, and
+        unpublished material entrusted to you.
+      </p>
+
+    </article>
+
+
+    <article class="principle">
+
+      <div class="principle-number">
+        PRINCIPLE 02
+      </div>
+
+      <h3>
+        Honesty
+      </h3>
+
+      <p>
+        Give truthful editorial feedback rather than
+        telling an author what they simply want to hear.
+      </p>
+
+    </article>
+
+
+    <article class="principle">
+
+      <div class="principle-number">
+        PRINCIPLE 03
+      </div>
+
+      <h3>
+        Respect
+      </h3>
+
+      <p>
+        Treat the author and their creative work with
+        professionalism, even when you disagree.
+      </p>
+
+    </article>
+
+
+    <article class="principle">
+
+      <div class="principle-number">
+        PRINCIPLE 04
+      </div>
+
+      <h3>
+        Objectivity
+      </h3>
+
+      <p>
+        Base editorial recommendations on the manuscript
+        and agreed goals rather than personal preferences.
+      </p>
+
+    </article>
+
+
+    <article class="principle">
+
+      <div class="principle-number">
+        PRINCIPLE 05
+      </div>
+
+      <h3>
+        Ownership
+      </h3>
+
+      <p>
+        Remember that the manuscript belongs to the author.
+        Your role is to edit, not claim creative ownership.
+      </p>
+
+    </article>
+
+
+    <article class="principle">
+
+      <div class="principle-number">
+        PRINCIPLE 06
+      </div>
+
+      <h3>
+        Professional Boundaries
+      </h3>
+
+      <p>
+        Keep the working relationship professional and
+        respect agreed responsibilities and limits.
+      </p>
+
+    </article>
+
+
+  </div>
+
+
+  <div class="infographic-card">
+
+    <div class="infographic-label">
+      Infographic 02
+    </div>
+
+    <img
+      src="images/ethics-02.jpg"
+      alt="Infographic showing the core principles of ethical editing"
+      class="infographic-image">
+
+    <div class="infographic-caption">
+
+      <h3>
+        The Ethical Editor's Principles
+      </h3>
+
+      <p>
+        Use this visual as a quick reference for the
+        principles every professional editor should follow.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================
+     PART 03
+===================================== -->
+
+<section class="lesson-section">
+
+  <div class="section-label">
+    Part 03
+  </div>
+
+  <h2 class="section-title">
+    Confidentiality &amp; Trust
+  </h2>
+
+  <p class="section-intro">
+    An editor may see material that has not been published
+    and may never be intended for public viewing. Protecting
+    that information is one of the most basic responsibilities
+    of professional editing.
+  </p>
+
+
+  <div class="infographic-card">
+
+    <div class="infographic-label">
+      Infographic 03
+    </div>
+
+    <img
+      src="images/ethics-03.jpg"
+      alt="Infographic about confidentiality in editorial work"
+      class="infographic-image">
+
+    <div class="infographic-caption">
+
+      <h3>
+        The Confidentiality Rule
+      </h3>
+
+      <p>
+        Never treat an author's manuscript, personal
+        information, or unpublished ideas as material
+        that you are free to share.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div class="intro-card">
+
+    <h3>
+      Think Before You Share
+    </h3>
+
+    <p>
+      Do not send manuscripts to friends for opinions,
+      publish excerpts without permission, use an author's
+      ideas for your own work, or discuss private manuscript
+      information casually with people who are not involved
+      in the project.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================
+     PART 04
+===================================== -->
+
+<section class="lesson-section">
+
+  <div class="section-label">
+    Part 04
+  </div>
+
+  <h2 class="section-title">
+    Honesty, Objectivity &amp; Conflicts
+  </h2>
+
+  <p class="section-intro">
+    An ethical editor must be able to separate professional
+    judgment from personal preference. You are not editing
+    the manuscript to make it sound like you.
+  </p>
+
+
+  <div class="infographic-card">
+
+    <div class="infographic-label">
+      Infographic 04
+    </div>
+
+    <img
+      src="images/ethics-04.jpg"
+      alt="Infographic about objectivity and conflicts of interest"
+      class="infographic-image">
+
+    <div class="infographic-caption">
+
+      <h3>
+        Objective Editing
+      </h3>
+
+      <p>
+        Strong editorial decisions are based on the needs
+        of the manuscript, its intended audience, and the
+        agreed editorial goals.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div class="principles">
+
+
+    <article class="principle">
+
+      <div class="principle-number">
+        ASK YOURSELF
+      </div>
+
+      <h3>
+        Is This Actually a Problem?
+      </h3>
+
+      <p>
+        Do not recommend a change merely because you would
+        personally write the sentence differently.
+      </p>
+
+    </article>
+
+
+    <article class="principle">
+
+      <div class="principle-number">
+        ASK YOURSELF
+      </div>
+
+      <h3>
+        Am I Being Objective?
+      </h3>
+
+      <p>
+        Consider whether your recommendation serves the
+        manuscript rather than your personal taste.
+      </p>
+
+    </article>
+
+
+  </div>
+
+</section>
+
+
+<!-- =====================================
+     PART 05
+===================================== -->
+
+<section class="lesson-section">
+
+  <div class="section-label">
+    Part 05
+  </div>
+
+  <h2 class="section-title">
+    Professional Conduct
+  </h2>
+
+  <p class="section-intro">
+    Ethics also appears in the everyday behaviour of an
+    editor. The way you communicate, handle disagreements,
+    manage information, and respect boundaries all contribute
+    to your professional reputation.
+  </p>
+
+
+  <div class="infographic-card">
+
+    <div class="infographic-label">
+      Infographic 05
+    </div>
+
+    <img
+      src="images/ethics-05.jpg"
+      alt="Infographic about professional conduct for editors"
+      class="infographic-image">
+
+    <div class="infographic-caption">
+
+      <h3>
+        The Ethical Editor
+      </h3>
+
+      <p>
+        Professionalism is not only about what you edit.
+        It is also about how you conduct yourself while
+        working with another person's creative work.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div class="intro-card">
+
+    <h3>
+      Remember
+    </h3>
+
+    <p>
+      An editor's reputation is built through trust.
+      Protect confidential information. Give honest feedback.
+      Respect authorial ownership. Avoid conflicts of interest.
+      Maintain professional boundaries. And when you encounter
+      a serious ethical concern, handle it responsibly rather
+      than ignoring it.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================
+     PDF RESOURCE
+===================================== -->
+
+<section class="lesson-section">
+
+  <div class="section-label">
+    Resource
+  </div>
+
+  <h2 class="section-title">
+    Editorial Ethics Guide
+  </h2>
+
+  <p class="section-intro">
+    Download this guide and keep it as a reference while
+    working on manuscripts for Litdom.
+  </p>
+
+
+  <div class="pdf-card">
+
+    <div class="pdf-label">
+      Litdom Editor Academy
+    </div>
+
+    <h3>
+      Editorial Ethics Guide
+    </h3>
+
+    <p>
+      A practical reference covering confidentiality,
+      honesty, objectivity, authorial ownership,
+      professional boundaries, conflicts of interest,
+      and responsible editorial conduct.
+    </p>
+
+
+    <a
+      href="pdf/editorial-ethics-guide.pdf"
+      class="pdf-button"
+      download>
+
+      ↓ Download PDF Guide
+
+    </a>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================
+     COMPLETION
+===================================== -->
+
+<section
+  class="completion"
+  id="completion">
+
+  <div class="completion-icon">
+    ✓
+  </div>
+
+  <h2>
+    Ready to Complete Module 4?
+  </h2>
+
+  <p>
+    You've reached the end of the Editorial Ethics lesson.
+  </p>
+
+  <p>
+    Before continuing, make sure you have studied all five
+    infographics and downloaded the Editorial Ethics Guide.
+  </p>
+
+
+  <button
+    type="button"
+    class="complete-button"
+    id="completeButton">
+
+    ✓ I've Completed This Module
+
+  </button>
+
+</section>
+
+
+<!-- =====================================
+     NAVIGATION
+===================================== -->
+
+<nav class="navigation">
+
+  <a
+    href="lesson-03.html"
+    class="nav-button previous">
+
+    ← Previous Module
+
+  </a>
+
+
+  <a
+    href="lesson-05.html"
+    class="nav-button next"
+    id="nextButton">
+
+    Continue to Module 5 →
+
+  </a>
+
+</nav>
+
+
+</div>
+
+</main>
+
+
+<script>
+
+/* =========================================
+   MODULE 4 — EDITORIAL ETHICS
+   SIMPLE COMPLETION SYSTEM
+========================================= */
+
+const completion =
+  document.getElementById("completion");
+
+const completeButton =
+  document.getElementById("completeButton");
+
+const nextButton =
+  document.getElementById("nextButton");
+
+const progressFill =
+  document.getElementById("progressFill");
+
+const progressText =
+  document.getElementById("progressText");
+
+
+/* =========================================
+   MODULE KEY
+========================================= */
+
+const moduleKey =
+  "litdom_lesson_1_module_4_complete";
+
+
+/* =========================================
+   INITI
