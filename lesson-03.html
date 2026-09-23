@@ -523,7 +523,23 @@ h1 {
 
 
 <body>
+<script>
+/* ACCESS GUARD + COMPLETION — same block, different values per page */
+const THIS_MODULE_KEY = "litdom_lesson_1_module_1_complete"; // ← change per file, see table below
+const PREV_MODULE_KEY = null;                                 // ← change per file, see table below
+const NEXT_PAGE = "lesson-02.html";                            // ← change per file, see table below
 
+// Block access if the previous module isn't done yet
+if (PREV_MODULE_KEY && localStorage.getItem(PREV_MODULE_KEY) !== "true") {
+  window.location.href = "index.html"; // ← your hub page filename
+}
+
+// Call this from your existing test-pass / "I've completed" logic
+function markComplete() {
+  localStorage.setItem(THIS_MODULE_KEY, "true");
+  window.location.href = NEXT_PAGE;
+}
+</script>
 <main>
 
 <div class="container">
