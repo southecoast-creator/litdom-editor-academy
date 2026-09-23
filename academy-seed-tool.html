@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Litdom Academy — Seed Tool (one-time use)</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #0B0B0F; color: #FFF8E7; padding: 30px 20px; }
+  button { padding: 14px 22px; background: #D4AF37; color: #0B0B0F; border: none; border-radius: 8px; font-weight: bold; font-size: 15px; cursor: pointer; }
+  #log { margin-top: 20px; font-size: 13px; color: #AAA595; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+
+<h2>Litdom Academy — One-Time Seed Tool</h2>
+<p>This loads "Editor Academy" (Lesson 1) into Firestore. Run this once, then delete this page.</p>
+<button id="seedBtn">Seed Editor Academy Course</button>
+<div id="log"></div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, doc, setDoc, collection } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "REPLACE-WITH-YOUR-FIREBASE-API-KEY",
+    authDomain: "REPLACE-WITH-YOUR-PROJECT.firebaseapp.com",
+    projectId: "REPLACE-WITH-YOUR-PROJECT-ID",
+    storageBucket: "REPLACE-WITH-YOUR-PROJECT.appspot.com",
+    messagingSenderId: "REPLACE-WITH-SENDER-ID",
+    appId: "REPLACE-WITH-APP-ID"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const log = document.getElementById("log");
+
+  function print(msg) { log.textContent += msg + "\n"; }
+
+  document.getElementById("seedBtn").addEventListener("click", async () => {
+    log.textContent = "";
+    try {
+      const courseRef = doc(db, "courses", "editor-academy");
+      await setDoc(courseRef, {
+        title: "Editor Academy",
+        description: "Learn the craft behind powerful writing. Develop the judgment, precision, ethics, and practical skills required to transform manuscripts into polished, compelling works.",
+        level: "Beginner",
+        duration_estimate: "4-6 hours",
+        general_path_enabled: true,
+        general_price: 0,
+        practical_path_enabled: false,
+        image_url: "",
+        order_index: 1
+      });
+      print("Course created: editor-academy");
+
+      const lessonRef = doc(collection(courseRef, "lessons"), "lesson-1");
+      await setDoc(lessonRef, { title: "Fundamentals of Editing", order_index: 1 });
+      print("Lesson created: Fundamentals of Editing");
+
+      const moduleRef = doc(collection(lessonRef, "modules"), "module-1");
+      await setDoc(moduleRef, { title: "Introduction", order_index: 1 });
+      print("Module created: Introduction");
+
+      const section1Ref = doc(collection(moduleRef, "sections"), "section-1");
+      await setDoc(section1Ref, { title: "Who Is an Editor?", order_index: 1 });
+      print("Section created: Who Is an Editor?");
+
+      await setDoc(doc(collection(section1Ref, "content_blocks"), "block-1"), {
+        order_index: 1, block_type: "text",
+        config: { html: "<p>Before you can edit well, you must understand the person behind the edits. Discover the editor's role, responsibility, and place in the publishing process.</p><p>An editor works between the author's ideas and the reader's experience.</p>" }
+      });
+      await setDoc(doc(collection(section1Ref, "content_blocks"), "block-2"), {
+        order_index: 2, block_type: "video",
+        config: { url: "REPLACE-WITH-VIDEO-EMBED-URL" }
+      });
+      await setDoc(doc(collection(section1Ref, "content_blocks"), "block-3"), {
+        order_index: 3, block_type: "download",
+        config: { url: "REPLACE-WITH-PDF-URL", label: "Download Lesson Workbook" }
+      });
+      print("Content blocks added to: Who Is an Editor?");
+
+      const section2Ref = doc(collection(moduleRef, "sections"), "section-2");
+      await setDoc(section2Ref, { title: "What Does an Editor Do?", order_index: 2 });
+      await setDoc(doc(collection(section2Ref, "content_blocks"), "block-1"), {
+        order_index: 1, block_type: "text",
+        config: { html: "<p>Good editing protects the author's voice while improving the manuscript. An editor helps writing communicate more effectively.</p>" }
+      });
+      print("Section created: What Does an Editor Do?");
+
+      const section3Ref = doc(collection(moduleRef, "sections"), "section-3");
+      await setDoc(section3Ref, { title: "Editor-Author Relationship", order_index: 3 });
+      await setDoc(doc(collection(section3Ref, "content_blocks"), "block-1"), {
+        order_index: 1, block_type: "text",
+        config: { html: "<p>An editor collaborates with the author while respecting the author's purpose, voice, and creative ownership.</p>" }
+      });
+      print("Section created: Editor-Author Relationship");
+
+      print("\nDONE. All Editor Academy content is now in Firestore.");
+      print("You can delete this seed page now.");
+
+    } catch (err) {
+      print("ERROR: " + err.message);
+      console.error(err);
+    }
+  });
+</script>
+</body>
+</html>
