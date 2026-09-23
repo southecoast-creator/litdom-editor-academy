@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Litdom Academy</title>
+<style>
+  :root {
+    --obsidian: #0B0B0F;
+    --charcoal: #17171C;
+    --gold: #D4AF37;
+    --champagne: #F4D58D;
+    --ivory: #FFF8E7;
+    --muted: #AAA595;
+    --line: rgba(212,175,55,0.22);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(212,175,55,0.08), transparent 35%), var(--obsidian);
+    color: var(--ivory);
+    font-family: Arial, sans-serif;
+  }
+  header {
+    border-bottom: 1px solid var(--line);
+    padding: 18px 20px;
+    background: rgba(11,11,15,0.9);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .header-inner { max-width: 1000px; margin: auto; display: flex; justify-content: space-between; align-items: center; }
+  .brand { font-family: Georgia, serif; font-size: 18px; }
+  .brand span { color: var(--gold); }
+  .back-link { color: var(--muted); text-decoration: none; font-size: 13px; cursor: pointer; }
+  main { max-width: 1000px; margin: auto; padding: 40px 20px 100px; }
+
+  .hub-heading { text-align: center; margin-bottom: 40px; }
+  .hub-heading h1 { font-family: Georgia, serif; font-size: 34px; font-weight: normal; margin: 0 0 10px; }
+  .hub-heading p { color: var(--muted); max-width: 480px; margin: auto; line-height: 1.7; font-size: 14px; }
+
+  .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
+  .course-card { background: var(--charcoal); border: 1px solid rgba(244,213,141,0.16); border-radius: 18px; overflow: hidden; cursor: pointer; transition: 0.2s ease; }
+  .course-card:hover { transform: translateY(-3px); border-color: rgba(244,213,141,0.4); }
+  .course-image { width: 100%; aspect-ratio: 16/10; background-size: cover; background-position: center; background-color: #1c1c22; }
+  .course-body { padding: 16px; }
+  .course-body h3 { font-family: Georgia, serif; font-size: 18px; margin: 0 0 6px; font-weight: normal; }
+  .course-body p { color: var(--muted); font-size: 12px; line-height: 1.6; margin: 0 0 10px; }
+  .course-meta { display: flex; gap: 10px; font-size: 10px; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; }
+
+  .path-overlay { position: fixed; inset: 0; z-index: 999; background: rgba(0,0,0,0.75); display: none; align-items: center; justify-content: center; padding: 20px; }
+  .path-overlay.open { display: flex; }
+  .path-sheet { background: var(--charcoal); border: 1px solid var(--line); border-radius: 20px; padding: 28px 22px; max-width: 420px; width: 100%; }
+  .path-sheet h2 { font-family: Georgia, serif; font-size: 22px; margin: 0 0 20px; text-align: center; font-weight: normal; }
+  .path-option { display: block; width: 100%; text-align: left; background: rgba(255,255,255,0.03); border: 1px solid rgba(244,213,141,0.16); border-radius: 14px; padding: 16px; margin-bottom: 12px; color: var(--ivory); cursor: pointer; }
+  .path-option.disabled { opacity: 0.45; cursor: not-allowed; }
+  .path-option strong { display: block; font-family: Georgia, serif; font-size: 16px; color: var(--champagne); margin-bottom: 4px; }
+  .path-option span { display: block; font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .path-close { display: block; width: 100%; text-align: center; margin-top: 6px; background: none; border: none; color: var(--muted); font-size: 12px; cursor: pointer; }
+
+  .course-header { text-align: center; margin-bottom: 40px; }
+  .course-header h1 { font-family: Georgia, serif; font-size: 32px; font-weight: normal; margin: 10px 0; }
+  .course-header p { color: var(--muted); max-width: 500px; margin: auto; font-size: 14px; line-height: 1.7; }
+
+  .lesson-block { margin-bottom: 30px; }
+  .lesson-title { font-family: Georgia, serif; font-size: 13px; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 14px; }
+  .module-block { margin-bottom: 18px; }
+  .module-title { font-size: 14px; color: var(--champagne); margin-bottom: 8px; font-weight: bold; }
+  .section-item { display: flex; justify-content: space-between; align-items: center; background: var(--charcoal); border: 1px solid rgba(244,213,141,0.12); border-radius: 12px; padding: 13px 16px; margin-bottom: 8px; cursor: pointer; }
+  .section-item:hover { border-color: rgba(244,213,141,0.35); }
+  .section-item span.done { color: var(--gold); font-size: 12px; }
+
+  .content-block { margin-bottom: 22px; }
+  .block-video, .block-pdf, .block-audio { background: var(--charcoal); border: 1px solid rgba(244,213,141,0.14); border-radius: 18px; overflow: hidden; }
+  .block-video iframe { width: 100%; display: block; aspect-ratio: 16/9; border: none; }
+  .block-text { background: var(--charcoal); border: 1px solid rgba(244,213,141,0.14); border-radius: 18px; padding: 22px; line-height: 1.8; font-size: 15px; color: var(--ivory); }
+  .block-image img { width: 100%; border-radius: 18px; display: block; }
+  .block-pdf-inner, .block-audio-inner { padding: 20px; }
+  .block-download { display: inline-block; padding: 12px 20px; background: var(--gold); color: var(--obsidian); border-radius: 999px; text-decoration: none; font-size: 13px; font-weight: bold; }
+  .mark-complete-btn { display: block; width: 100%; margin-top: 10px; padding: 13px; border-radius: 12px; border: 1px solid var(--gold); background: transparent; color: var(--champagne); font-size: 13px; cursor: pointer; }
+  .mark-complete-btn.done { background: var(--gold); color: var(--obsidian); border-color: var(--gold); }
+
+  .status-text { text-align: center; color: var(--muted); padding: 40px 20px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand">Litdom <span>Academy</span></div>
+    <a class="back-link" id="backLink" style="display:none;">&larr; Back</a>
+  </div>
+</header>
+
+<main id="app"><div class="status-text">Loading Academy...</div></main>
+
+<div class="path-overlay" id="pathOverlay">
+  <div class="path-sheet">
+    <h2>Choose Your Path</h2>
+    <button class="path-option" id="practicalOption">
+      <strong>&#128295; Intensive Practical Learning</strong>
+      <span>Don't just learn it. Do it. A guided experience with real tasks and instructor feedback.</span>
+    </button>
+    <button class="path-option" id="generalOption">
+      <strong>&#128214; One-Way Learning</strong>
+      <span>Learn at your own pace. Explore freely, no mandatory check-ins.</span>
+    </button>
+    <button class="path-close" id="pathClose">Cancel</button>
+  </div>
+</div>
+
+<script type="module">
+/* =====================================================
+   LITDOM ACADEMY ENGINE — FIREBASE VERSION
+   Phase 1: General Path only
+   Routing via query params: ?course=slug  &section=id
+   Note: uses Firebase Anonymous Auth, separate from
+   your Litdom/Supabase accounts — this only remembers
+   this device's progress, not a named user.
+===================================================== */
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getFirestore, doc, getDoc, setDoc, collection, getDocs, query, orderBy
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import {
+  getAuth, signInAnonymously, onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAFL10yMCsxvE1QCFWMROlk6yMzweeSVew",
+  authDomain: "litdom-academy.firebaseapp.com",
+  projectId: "litdom-academy",
+  storageBucket: "litdom-academy.firebasestorage.app",
+  messagingSenderId: "488768172903",
+  appId: "1:488768172903:web:933c616d81f5529979b5c2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+let currentUser = null;
+signInAnonymously(auth).catch(err => console.error("Anonymous sign-in failed:", err));
+onAuthStateChanged(auth, (user) => { currentUser = user; });
+
+const appEl = document.getElementById("app");
+const backLink = document.getElementById("backLink");
+const params = new URLSearchParams(window.location.search);
+
+function goTo(newParams) {
+  const url = new URL(window.location.href);
+  url.search = "";
+  Object.entries(newParams).forEach(([k, v]) => { if (v) url.searchParams.set(k, v); });
+  window.location.href = url.toString();
+}
+
+async function getOrdered(colRef) {
+  const q = query(colRef, orderBy("order_index"));
+  const snap = await getDocs(q);
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+/* ---------------- HUB VIEW ---------------- */
+async function renderHub() {
+  backLink.style.display = "none";
+
+  const coursesSnap = await getDocs(query(collection(db, "courses"), orderBy("order_index")));
+  const courses = coursesSnap.docs
+    .map(d => ({ id: d.id, ...d.data() }))
+    .filter(c => c.general_path_enabled);
+
+  if (courses.length === 0) {
+    appEl.innerHTML = `<div class="status-text">No courses available yet.</div>`;
+    return;
+  }
+
+  appEl.innerHTML = `
+    <div class="hub-heading">
+      <h1>Welcome to Litdom Academy</h1>
+      <p>Learn different writing skills in the way that suits you best. Choose an academy below and begin your learning journey.</p>
+    </div>
+    <div class="course-grid" id="courseGrid"></div>
+  `;
+
+  const grid = document.getElementById("courseGrid");
+  courses.forEach(course => {
+    const card = document.createElement("div");
+    card.className = "course-card";
+    card.innerHTML = `
+      <div class="course-image" style="background-image:url(${course.image_url || ''})"></div>
+      <div class="course-body">
+        <h3>${course.title}</h3>
+        <p>${course.description || ''}</p>
+        <div class="course-meta">
+          ${course.level ? `<span>${course.level}</span>` : ''}
+          ${course.duration_estimate ? `<span>${course.duration_estimate}</span>` : ''}
+        </div>
+      </div>
+    `;
+    card.addEventListener("click", () => openPathSelection(course));
+    grid.appendChild(card);
+  });
+}
+
+function openPathSelection(course) {
+  const overlay = document.getElementById("pathOverlay");
+  const practicalBtn = document.getElementById("practicalOption");
+  const generalBtn = document.getElementById("generalOption");
+
+  if (course.practical_path_enabled) {
+    practicalBtn.classList.remove("disabled");
+    practicalBtn.querySelector("span").textContent =
+      "Don't just learn it. Do it. A guided experience with real tasks and instructor feedback.";
+  } else {
+    practicalBtn.classList.add("disabled");
+    practicalBtn.querySelector("span").textContent = "Coming soon for this course.";
+  }
+
+  overlay.classList.add("open");
+
+  generalBtn.onclick = () => goTo({ course: course.id });
+  practicalBtn.onclick = () => { if (course.practical_path_enabled) alert("Practical Path coming soon."); };
+  document.getElementById("pathClose").onclick = () => overlay.classList.remove("open");
+}
+
+/* ---------------- COURSE VIEW ---------------- */
+async function renderCourse(courseId) {
+  backLink.style.display = "inline";
+  backLink.onclick = () => goTo({});
+
+  const courseSnap = await getDoc(doc(db, "courses", courseId));
+  if (!courseSnap.exists()) {
+    appEl.innerHTML = `<div class="status-text">Course not found.</div>`;
+    return;
+  }
+  const course = courseSnap.data();
+
+  appEl.innerHTML = `
+    <div class="course-header"><h1>${course.title}</h1><p>${course.description || ''}</p></div>
+    <div id="lessonList"></div>
+  `;
+  const lessonList = document.getElementById("lessonList");
+
+  const lessons = await getOrdered(collection(db, "courses", courseId, "lessons"));
+
+  for (const lesson of lessons) {
+    const lessonEl = document.createElement("div");
+    lessonEl.className = "lesson-block";
+    lessonEl.innerHTML = `<div class="lesson-title">${lesson.title}</div><div class="modulesHolder"></div>`;
+    lessonList.appendChild(lessonEl);
+
+    const modules = await getOrdered(collection(db, "courses", courseId, "lessons", lesson.id, "modules"));
+    const modulesHolder = lessonEl.querySelector(".modulesHolder");
+
+    for (const mod of modules) {
+      const modEl = document.createElement("div");
+      modEl.className = "module-block";
+      modEl.innerHTML = `<div class="module-title">${mod.title}</div><div class="sectionsHolder"></div>`;
+      modulesHolder.appendChild(modEl);
+
+      const sections = await getOrdered(collection(db, "courses", courseId, "lessons", lesson.id, "modules", mod.id, "sections"));
+      const sectionsHolder = modEl.querySelector(".sectionsHolder");
+
+      sections.forEach(section => {
+        const secEl = document.createElement("div");
+        secEl.className = "section-item";
+        secEl.innerHTML = `<span>${section.title}</span>`;
+        secEl.addEventListener("click", () =>
+          goTo({ course: courseId, lesson: lesson.id, module: mod.id, section: section.id })
+        );
+        sectionsHolder.appendChild(secEl);
+      });
+    }
+  }
+}
+
+/* ---------------- SECTION VIEW ---------------- */
+async function renderSection(courseId, lessonId, moduleId, sectionId) {
+  backLink.style.display = "inline";
+  backLink.onclick = () => goTo({ course: courseId });
+
+  const sectionPath = ["courses", courseId, "lessons", lessonId, "modules", moduleId, "sections", sectionId];
+  const sectionSnap = await getDoc(doc(db, ...sectionPath));
+  if (!sectionSnap.exists()) {
+    appEl.innerHTML = `<div class="status-text">Section not found.</div>`;
+    return;
+  }
+  const section = sectionSnap.data();
+
+  const blocks = await getOrdered(collection(db, ...sectionPath, "content_blocks"));
+
+  appEl.innerHTML = `<div class="course-header"><h1>${section.title}</h1></div><div id="blocksHolder"></div>`;
+  const holder = document.getElementById("blocksHolder");
+
+  for (const block of blocks) {
+    const el = document.createElement("div");
+    el.className = "content-block";
+    const cfg = block.config || {};
+
+    if (block.block_type === "video") {
+      el.innerHTML = `<div class="block-video"><iframe src="${cfg.url || ''}" allowfullscreen></iframe></div>`;
+    } else if (block.block_type === "text") {
+      el.innerHTML = `<div class="block-text">${cfg.html || ''}</div>`;
+    } else if (block.block_type === "image") {
+      el.innerHTML = `<div class="block-image"><img src="${cfg.url || ''}" alt="${cfg.alt || ''}"/></div>`;
+    } else if (block.block_type === "pdf") {
+      el.innerHTML = `<div class="block-pdf"><div class="block-pdf-inner"><a class="block-download" href="${cfg.url || '#'}" target="_blank">Open PDF</a></div></div>`;
+    } else if (block.block_type === "audio") {
+      el.innerHTML = `<div class="block-audio"><div class="block-audio-inner"><audio controls style="width:100%;" src="${cfg.url || ''}"></audio></div></div>`;
+    } else if (block.block_type === "download") {
+      el.innerHTML = `<a class="block-download" href="${cfg.url || '#'}" target="_blank">${cfg.label || 'Download'}</a>`;
+    } else {
+      el.innerHTML = `<div class="block-text">Unsupported block type: ${block.block_type}</div>`;
+    }
+
+    const markBtn = document.createElement("button");
+    markBtn.className = "mark-complete-btn";
+    markBtn.textContent = "Mark as Complete";
+
+    const progressId = () => `${currentUser?.uid}_${block.id}`;
+
+    if (currentUser) {
+      const progSnap = await getDoc(doc(db, "progress", progressId()));
+      if (progSnap.exists() && progSnap.data().status === "completed") {
+        markBtn.textContent = "\u2713 Completed";
+        markBtn.classList.add("done");
+      }
+    }
+
+    markBtn.addEventListener("click", async () => {
+      if (!currentUser) { alert("Still connecting, try again in a moment."); return; }
+      await setDoc(doc(db, "progress", progressId()), {
+        user_id: currentUser.uid,
+        content_block_id: block.id,
+        status: "completed",
+        updated_at: new Date().toISOString()
+      });
+      markBtn.textContent = "\u2713 Completed";
+      markBtn.classList.add("done");
+    });
+
+    el.appendChild(markBtn);
+    holder.appendChild(el);
+  }
+}
+
+/* ---------------- ROUTER ---------------- */
+function route() {
+  const course = params.get("course");
+  const lesson = params.get("lesson");
+  const module_ = params.get("module");
+  const section = params.get("section");
+
+  if (course && lesson && module_ && section) {
+    renderSection(course, lesson, module_, section);
+  } else if (course) {
+    renderCourse(course);
+  } else {
+    renderHub();
+  }
+}
+
+route();
+</script>
+</body>
+</html>
